@@ -3227,7 +3227,7 @@
 											"top": 118,
 											"width": 445.87841796875,
 											"height": 13,
-											"text": "+Entity(parentEntity: Entity = null, x: double = 0, y: double = 0, radius: double)",
+											"text": "+Entity(radius: double, parentEntity: Entity = null, x: double = 0, y: double = 0)",
 											"horizontalAlignment": 0
 										},
 										{
@@ -3261,7 +3261,7 @@
 											"top": 148,
 											"width": 445.87841796875,
 											"height": 13,
-											"text": "+getX(): int {query}",
+											"text": "+getX(): double {query}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -3278,7 +3278,7 @@
 											"top": 163,
 											"width": 445.87841796875,
 											"height": 13,
-											"text": "+setX(x: int): void",
+											"text": "+setX(x: double): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -3295,7 +3295,7 @@
 											"top": 178,
 											"width": 445.87841796875,
 											"height": 13,
-											"text": "+getY(): int {query}",
+											"text": "+getY(): double {query}",
 											"horizontalAlignment": 0
 										},
 										{
@@ -3312,7 +3312,7 @@
 											"top": 193,
 											"width": 445.87841796875,
 											"height": 13,
-											"text": "+setY(y: int): void",
+											"text": "+setY(y: double): void",
 											"horizontalAlignment": 0
 										},
 										{
@@ -3351,6 +3351,23 @@
 										},
 										{
 											"_type": "UMLOperationView",
+											"_id": "AAAAAAFr4PQbLBds8OU=",
+											"_parent": {
+												"$ref": "AAAAAAFr39IAex+ggEY="
+											},
+											"model": {
+												"$ref": "AAAAAAFr4PQa6xdpwGk="
+											},
+											"font": "Arial;13;0",
+											"left": 638.8646240234375,
+											"top": 238,
+											"width": 445.87841796875,
+											"height": 13,
+											"text": "+isInscribed(ano: Entity): bool {query}",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
 											"_id": "AAAAAAFr39IArCAEgeE=",
 											"_parent": {
 												"$ref": "AAAAAAFr39IAex+ggEY="
@@ -3360,7 +3377,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 638.8646240234375,
-											"top": 238,
+											"top": 253,
 											"width": 445.87841796875,
 											"height": 13,
 											"text": "+isOverlapped(ano: Entity): bool {query}",
@@ -3377,7 +3394,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 638.8646240234375,
-											"top": 253,
+											"top": 268,
 											"width": 445.87841796875,
 											"height": 13,
 											"text": "+isContained(ano: Entity): bool {query}",
@@ -3394,7 +3411,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 638.8646240234375,
-											"top": 268,
+											"top": 283,
 											"width": 445.87841796875,
 											"height": 13,
 											"text": "+isDisjointed(ano: Entity): bool {query}",
@@ -3411,7 +3428,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 638.8646240234375,
-											"top": 283,
+											"top": 298,
 											"width": 445.87841796875,
 											"height": 13,
 											"text": "+contains(ano: Entity): bool {query}",
@@ -3428,7 +3445,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 638.8646240234375,
-											"top": 298,
+											"top": 313,
 											"width": 445.87841796875,
 											"height": 13,
 											"text": "+getDistance(ano: Entity): double {query}",
@@ -3445,7 +3462,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 638.8646240234375,
-											"top": 313,
+											"top": 328,
 											"width": 445.87841796875,
 											"height": 13,
 											"text": "+getRelativeAngle(ano: Entity): double {query}",
@@ -3462,7 +3479,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 638.8646240234375,
-											"top": 328,
+											"top": 343,
 											"width": 445.87841796875,
 											"height": 13,
 											"text": "+toVector2D(ano: Entity): Vector2D",
@@ -3479,7 +3496,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 638.8646240234375,
-											"top": 343,
+											"top": 358,
 											"width": 445.87841796875,
 											"height": 13,
 											"text": "+toString(): String {query}",
@@ -3496,7 +3513,7 @@
 											},
 											"font": "Arial;13;0",
 											"left": 638.8646240234375,
-											"top": 358,
+											"top": 373,
 											"width": 445.87841796875,
 											"height": 13,
 											"text": "+~Entity()",
@@ -3507,7 +3524,7 @@
 									"left": 633.8646240234375,
 									"top": 113,
 									"width": 455.87841796875,
-									"height": 263
+									"height": 278
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -3547,7 +3564,7 @@
 							"left": 633.8646240234375,
 							"top": 20,
 							"width": 455.87841796875,
-							"height": 369,
+							"height": 371,
 							"nameCompartment": {
 								"$ref": "AAAAAAFr39IAex+aKTY="
 							},
@@ -4022,7 +4039,7 @@
 								"$ref": "AAAAAAFr3+DOmSjNOP8="
 							},
 							"lineStyle": 3,
-							"points": "1543:426;1543:404;1090:271",
+							"points": "1543:426;1543:404;1090:272",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFr3+DOnSjgfoU="
@@ -6240,6 +6257,16 @@
 									"parameters": [
 										{
 											"_type": "UMLParameter",
+											"_id": "AAAAAAFr3ABeDG2MVO8=",
+											"_parent": {
+												"$ref": "AAAAAAFr2/AQyW0ILGc="
+											},
+											"name": "radius",
+											"documentation": "碰撞半径，必须指定，不能再次修改",
+											"type": "double"
+										},
+										{
+											"_type": "UMLParameter",
 											"_id": "AAAAAAFr2/CTTG0QnLc=",
 											"_parent": {
 												"$ref": "AAAAAAFr2/AQyW0ILGc="
@@ -6270,16 +6297,6 @@
 											"documentation": "y坐标，默认0",
 											"type": "double",
 											"defaultValue": "0"
-										},
-										{
-											"_type": "UMLParameter",
-											"_id": "AAAAAAFr3ABeDG2MVO8=",
-											"_parent": {
-												"$ref": "AAAAAAFr2/AQyW0ILGc="
-											},
-											"name": "radius",
-											"documentation": "碰撞半径，必须指定，不能再次修改",
-											"type": "double"
 										}
 									]
 								},
@@ -6323,7 +6340,7 @@
 												"$ref": "AAAAAAFr2/ibpm0oMyE="
 											},
 											"documentation": "x坐标",
-											"type": "int",
+											"type": "double",
 											"direction": "return"
 										}
 									],
@@ -6347,7 +6364,7 @@
 											},
 											"name": "x",
 											"documentation": "x坐标",
-											"type": "int"
+											"type": "double"
 										},
 										{
 											"_type": "UMLParameter",
@@ -6377,7 +6394,7 @@
 												"$ref": "AAAAAAFr2/nSiG002KE="
 											},
 											"documentation": "y坐标",
-											"type": "int",
+											"type": "double",
 											"direction": "return"
 										}
 									],
@@ -6401,7 +6418,7 @@
 											},
 											"name": "y",
 											"documentation": "y坐标",
-											"type": "int"
+											"type": "double"
 										},
 										{
 											"_type": "UMLParameter",
@@ -6444,7 +6461,7 @@
 										"$ref": "AAAAAAFr2+ZpRGyi7Xg="
 									},
 									"name": "isTangency",
-									"documentation": "是否与另一个实体相切",
+									"documentation": "是否与另一个实体外切",
 									"isLeaf": true,
 									"parameters": [
 										{
@@ -6466,6 +6483,39 @@
 												"$ref": "AAAAAAFr2/oEG21G3VA="
 											},
 											"documentation": "是否相切",
+											"type": "bool",
+											"direction": "return"
+										}
+									],
+									"isQuery": true
+								},
+								{
+									"_type": "UMLOperation",
+									"_id": "AAAAAAFr4PQa6xdpwGk=",
+									"_parent": {
+										"$ref": "AAAAAAFr2+ZpRGyi7Xg="
+									},
+									"name": "isInscribed",
+									"documentation": "是否与另一个实体内切",
+									"parameters": [
+										{
+											"_type": "UMLParameter",
+											"_id": "AAAAAAFr4PReNxdwLRw=",
+											"_parent": {
+												"$ref": "AAAAAAFr4PQa6xdpwGk="
+											},
+											"name": "ano",
+											"documentation": "另一个实体",
+											"type": {
+												"$ref": "AAAAAAFr2+ZpRGyi7Xg="
+											}
+										},
+										{
+											"_type": "UMLParameter",
+											"_id": "AAAAAAFr4PReOBdxs50=",
+											"_parent": {
+												"$ref": "AAAAAAFr4PQa6xdpwGk="
+											},
 											"type": "bool",
 											"direction": "return"
 										}
@@ -8835,9 +8885,9 @@
 											"_parent": {
 												"$ref": "AAAAAAFr382Ieh1MI2I="
 											},
-											"name": "ano Vector2D",
+											"name": "ano",
 											"documentation": "另一个向量",
-											"type": ""
+											"type": " Vector2D"
 										},
 										{
 											"_type": "UMLParameter",
@@ -8849,7 +8899,8 @@
 											"type": "double",
 											"direction": "return"
 										}
-									]
+									],
+									"isQuery": true
 								},
 								{
 									"_type": "UMLOperation",
@@ -8858,7 +8909,7 @@
 										"$ref": "AAAAAAFr382IeR0tBw0="
 									},
 									"name": "rotate",
-									"documentation": "生成新向量表示此向量旋转固定角度的结果，顺时针为正",
+									"documentation": "生成新向量表示此向量旋转固定角度的结果，逆时针为正",
 									"parameters": [
 										{
 											"_type": "UMLParameter",
@@ -8866,9 +8917,9 @@
 											"_parent": {
 												"$ref": "AAAAAAFr382Ieh1PLYs="
 											},
-											"name": "rad double",
-											"documentation": "旋转的度数，顺时针为正，弧度制",
-											"type": ""
+											"name": "rad",
+											"documentation": "旋转的度数，逆时针为正，弧度制",
+											"type": " double"
 										},
 										{
 											"_type": "UMLParameter",
@@ -8882,7 +8933,8 @@
 											},
 											"direction": "return"
 										}
-									]
+									],
+									"isQuery": true
 								}
 							]
 						}

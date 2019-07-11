@@ -8,7 +8,7 @@
 #include "Entity.h"
 #define EPS 1e-6
 #include <cmath>
-using std::abs, std::sqrt;
+using std::abs, std::sqrt, std::acos;
 
 /**
  * Entity implementation
@@ -79,11 +79,11 @@ double Entity::getDistance(const Entity& ano) const{
 }
 
 double Entity::getRelativeAngle(const Entity& ano) const{
-    return 0.0;
+    return acos(Vector2D(x, y+1).getCosineWith(toVector2D(ano)));
 }
 
 Vector2D Entity::toVector2D(const Entity& ano) const{
-    return Vector2D();
+    return Vector2D(ano.x - x, ano.y - y);
 }
 
 string Entity::toString() const{
