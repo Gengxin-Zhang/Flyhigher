@@ -8,7 +8,7 @@
 #include "Entity.h"
 #define EPS 1e-6
 #include <cmath>
-using std::abs, std::sqrt, std::acos;
+using std::abs, std::sqrt, std::acos, std::to_string;
 
 /**
  * Entity implementation
@@ -17,7 +17,7 @@ using std::abs, std::sqrt, std::acos;
  */
 
 
-Entity::Entity(double radius, Entity* parentEntity, double x, double y) {
+Entity::Entity(const double radius, Entity* const parentEntity, const double x, const double y) {
     this->radius = radius;
     this->parentEntity = parentEntity;
     this->x = x;
@@ -87,7 +87,10 @@ Vector2D Entity::toVector2D(const Entity& ano) const{
 }
 
 string Entity::toString() const{
-    return "";
+    string str = "";
+    if(parentEntity) str += "[" + parentEntity->toString() + "]\n";
+    str += "x:" + to_string(x) + " y:" + to_string(y) + " radius:" + to_string(radius) + "\n";
+    return str;
 }
 
 Entity::~Entity() {

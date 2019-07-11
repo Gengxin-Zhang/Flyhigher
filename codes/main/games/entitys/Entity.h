@@ -21,7 +21,7 @@ class Entity {
          * @param x x坐标
          * @param y y坐标
          */
-        Entity(double radius, Entity* parentEntity = (Entity*)0, double x = 0, double y = 0);
+        Entity(const double radius, Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
             
         /**
          * 获取父类对象

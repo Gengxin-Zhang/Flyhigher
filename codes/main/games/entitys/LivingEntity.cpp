@@ -12,91 +12,29 @@
  */
 
 
-/**
- * @param parentEntity
- * @param x
- * @param y
- * @param radius
- * @param maxHealth
- */
-void LivingEntity::LivingEntity(Entity parentEntity, double x, double y, double radius, int maxHealth) {
-
+LivingEntity::LivingEntity(const double radius, const int maxHealth, const Vector2D speed,
+ Entity* const parentEntity, const double x, const double y): MovableEntity(radius, speed, parentEntity, x, y) {
+     this->maxHealth = maxHealth;
 }
 
-/**
- * @return int
- */
-int LivingEntity::getMaxHealth() {
-    return 0;
+int LivingEntity::getMaxHealth() const{
+    return maxHealth;
 }
 
-/**
- * @return int
- */
-int LivingEntity::getNowHealth() {
-    return 0;
+int LivingEntity::getNowHealth() const{
+    return nowHealth;
 }
 
-/**
- * @param health
- * @return void
- */
-void LivingEntity::heal(int health) {
-    return;
+void LivingEntity::heal(const int health) {
+    nowHealth += health;
+    if(nowHealth > maxHealth) nowHealth = maxHealth;
 }
 
-/**
- * @param damage
- * @return void
- */
-void LivingEntity::damage(int damage) {
-    return;
+void LivingEntity::damage(const int damage) {
+    nowHealth -= damage;
+    if(nowHealth < 0) die();
 }
 
-/**
- * 出生
- * @return void
- */
-virtual void LivingEntity::init() {
-    return;
-}
+LivingEntity::~LivingEntity() {
 
-/**
- * 消亡
- * @return void
- */
-virtual void LivingEntity::die() {
-    return;
-}
-
-/**
- * 析构函数
- */
-void LivingEntity::~LivingEntity() {
-
-}
-
-/**
- * 视野内的所有实体
- * @return vector<Entity>
- */
-virtual vector<Entity> LivingEntity::see() {
-    return null;
-}
-
-/**
- * 判断实体是否在视野内
- * @param ano
- * @return bool
- */
-virtual bool LivingEntity::isInSight(Entity ano) {
-    return false;
-}
-
-/**
- * @param direction
- * @return bool
- */
-virtual bool LivingEntity::shoot(double direction) {
-    return false;
 }

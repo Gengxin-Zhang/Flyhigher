@@ -6,51 +6,34 @@
 
 
 #include "MovableEntity.h"
+#define PI 3.141592653589793
 
 /**
  * MovableEntity implementation
  */
 
-
-/**
- * 构造函数
- * @param parentEntity
- * @param x
- * @param y
- * @param radius
- */
-void MovableEntity::MovableEntity(Entity parentEntity, double x, double y, double radius) {
-
+MovableEntity::MovableEntity(const double radius, const Vector2D speed,
+ Entity* const parentEntity, const double x, const double y): Entity(radius, parentEntity, x, y) {
+        this->speed = Vector2D(speed);
 }
 
-/**
- * 获取速度向量
- * @return Vector2D
- */
-Vector2D MovableEntity::getSpeed() {
-    return null;
+Vector2D MovableEntity::getSpeed() const{
+    return speed;
 }
 
-/**
- * 改变速度向量的方向，弧度制，每次改变不能超过绝对值pai/24
- * @param rad
- * @return void
- */
-void MovableEntity::turnDirection(double rad) {
-    return;
+void MovableEntity::turnDirection(const double rad) {
+    if(rad < -PI/24 || rad > PI/24) return;
+    speed = speed.rotate(rad);
 }
 
-/**
- * 向当前速度向量的位置移动，时间是1tick。
- * @return void
- */
 void MovableEntity::goNextTick() {
-    return;
+    setX(getX() + speed.getX());
+    setY(getY() + speed.getY());
 }
 
 /**
  * 析构函数
  */
-void MovableEntity::~MovableEntity() {
+MovableEntity::~MovableEntity() {
 
 }
