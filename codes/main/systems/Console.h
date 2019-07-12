@@ -8,6 +8,8 @@
 #ifndef _CONSOLE_H
 #define _CONSOLE_H
 
+#include "Logger.h"
+
 class Console {
 private: 
     Logger logger;

@@ -13,7 +13,7 @@
  * 母舰类
  */
 
-Carrier::Carrier(const CarrierConfiguration& config) {
+Carrier::Carrier(const CarrierConfiguration& config): LivingEntity() {
     this->config = config;
     //TODO: 通过配置项调用父类构造函数
     //TODO: 通过配置项构造mainWeapon

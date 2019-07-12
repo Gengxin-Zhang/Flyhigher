@@ -12,7 +12,7 @@
  */
 
 
-Fighter::Fighter(const FighterConfiguration& config) {
+Fighter::Fighter(const FighterConfiguration& config): LivingEntity() {
     this->config = config;
     this->isCollecting = false;
     //TODO: 通过配置项调用父类构造函数

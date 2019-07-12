@@ -11,39 +11,19 @@
  * Bullet implementation
  */
 
-
-/**
- * 构造函数
- * @param parentEntity
- * @param x
- * @param y
- * @param radius
- * @param speed
- * @param damage
- */
-void Bullet::Bullet(Entity parentEntity, double x, double y, double radius, Vector2D speed, int damage) {
-
+Bullet::Bullet(const double radius, const Vector2D speed, const int damage,
+ Entity* const parentEntity, const double x, const double y): MovableEntity(radius, speed, parentEntity, x, y) {
+     this->damage = damage;
 }
 
-/**
- * 获取击中实体造成的伤害值
- * @return int
- */
-int Bullet::getDamage() {
-    return 0;
+int Bullet::getDamage() const{
+    return damage;
 }
 
-/**
- * 对一个实体造成伤害
- * @param entity LivingEntity
- */
-void Bullet::damageTo(void entity LivingEntity) {
-
+void Bullet::damageTo(LivingEntity& entity) const{
+    entity.damage(damage);
 }
 
-/**
- * 析构函数
- */
-void Bullet::~Bullet() {
+Bullet::~Bullet() {
 
 }

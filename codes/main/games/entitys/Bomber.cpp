@@ -12,7 +12,7 @@
  */
 
 
-Bomber::Bomber(const BomberConfiguration& config) {
+Bomber::Bomber(const BomberConfiguration& config): LivingEntity() {
     this->config = config;
 }
 
