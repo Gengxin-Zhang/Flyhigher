@@ -13,7 +13,8 @@
  * 母舰类
  */
 
-Carrier::Carrier(const CarrierConfiguration& config): LivingEntity() {
+Carrier::Carrier(Player* const player, const CarrierConfiguration& config, Entity* const parentEntity, const double x, const double y):
+ LivingEntity(player, config.getCarrierRadius(), config.getMaxHealth(), Vector2D(0, config.getSpeed()), parentEntity, x, y) {
     this->config = config;
     //TODO: 通过配置项调用父类构造函数
     //TODO: 通过配置项构造mainWeapon

@@ -12,10 +12,11 @@
  */
 
 
-Fighter::Fighter(const FighterConfiguration& config): LivingEntity() {
+Fighter::Fighter(Player* const player, const FighterConfiguration& config, Entity* const parentEntity, const double x, const double y):
+ LivingEntity(player, config.getFighterRadius(), config.getMaxHealth(), Vector2D(0, config.getSpeed()), parentEntity, x, y) {
     this->config = config;
     this->isCollecting = false;
-    //TODO: 通过配置项调用父类构造函数
+    this->weapon = Weapon();
     //TODO: 通过配置项构造weapon
 }
 
@@ -37,7 +38,7 @@ bool Fighter::isInSight(const Entity& ano) const{
 }
 
 bool Fighter::shoot(const double direction) const{
-    return weapon.shoot();
+    return weapon.shoot(direction);
 }
 
 bool Fighter::isCollecting() const{

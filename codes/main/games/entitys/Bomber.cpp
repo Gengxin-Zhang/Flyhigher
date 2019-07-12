@@ -12,7 +12,8 @@
  */
 
 
-Bomber::Bomber(const BomberConfiguration& config): LivingEntity() {
+Bomber::Bomber(Player* const player, const BomberConfiguration& config, Entity* const parentEntity, const double x, const double y):
+ LivingEntity(player, config.getBomberRadius(), config.getMaxHealth(), Vector2D(0, config.getSpeed()), parentEntity, x, y)  {
     this->config = config;
 }
 

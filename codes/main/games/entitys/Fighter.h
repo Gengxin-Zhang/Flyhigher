@@ -10,15 +10,22 @@
 
 #include "LivingEntity.h"
 #include "ResourceEntity.h"
+#include "../../configs/FighterConfiguration.h"
+#include "../conceptions/Weapon.h"
 
 
 class Fighter: public LivingEntity {
     public:
         /**
          * 构造函数
+         * @param player 所属玩家方
          * @param config 战斗机配置项
+         * @param parentEntity 父实体
+         * @param x x坐标
+         * @param y y坐标
          */
-        Fighter(const FighterConfiguration& config);
+        Fighter(Player* const player, const FighterConfiguration& config,
+         Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
             
         /**
          * 析构函数

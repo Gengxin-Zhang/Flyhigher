@@ -39,6 +39,18 @@ class MovableEntity: public Entity {
          * 向当前速度向量的位置移动，时间是1tick。
          */
         void goNextTick();
+
+        /**
+         * 是否处于移动状态，false表示静止
+         * @return 移动状态
+         */
+        bool isMoving() const;
+
+        /**
+         * 设置移动状态，false表示静止
+         * @param moving 移动状态
+         */
+        void setMoving(const bool moving);
             
         /**
          * 析构函数
@@ -47,6 +59,8 @@ class MovableEntity: public Entity {
     private: 
         //速度向量
         Vector2D speed;
+        //是否移动
+        bool moving;
 };
 
 #endif //_MOVABLEENTITY_H

@@ -15,6 +15,7 @@
 MovableEntity::MovableEntity(const double radius, const Vector2D speed,
  Entity* const parentEntity, const double x, const double y): Entity(radius, parentEntity, x, y) {
         this->speed = Vector2D(speed);
+        this->moving = false;
 }
 
 Vector2D MovableEntity::getSpeed() const{
@@ -29,6 +30,14 @@ void MovableEntity::turnDirection(const double rad) {
 void MovableEntity::goNextTick() {
     setX(getX() + speed.getX());
     setY(getY() + speed.getY());
+}
+
+bool MovableEntity::isMoving() const {
+    return moving;
+}
+
+void MovableEntity::setMoving(const bool moving) {
+    this->moving = moving;
 }
 
 MovableEntity::~MovableEntity() {

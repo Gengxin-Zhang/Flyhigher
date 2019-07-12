@@ -12,7 +12,7 @@
  */
 
 
-LivingEntity::LivingEntity(const double radius, const int maxHealth, const Vector2D speed,
+LivingEntity::LivingEntity(Player* const player, const double radius, const int maxHealth, const Vector2D speed,
  Entity* const parentEntity, const double x, const double y): MovableEntity(radius, speed, parentEntity, x, y) {
      this->maxHealth = maxHealth;
      this->nowHealth = 0;

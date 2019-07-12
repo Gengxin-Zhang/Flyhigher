@@ -9,6 +9,7 @@
 #define _CARRIER_H
 
 #include "LivingEntity.h"
+#include "../../configs/CarrierConfiguration.h"
 
 
 class Carrier: public LivingEntity {
@@ -17,7 +18,8 @@ class Carrier: public LivingEntity {
          * 构造函数
          * @param config 母舰配置项
          */
-        Carrier(const CarrierConfiguration& config);
+        Carrier(Player* const player, const CarrierConfiguration& config,
+         Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
             
         /**
          * 析构函数

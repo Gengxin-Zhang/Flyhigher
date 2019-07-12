@@ -9,6 +9,7 @@
 #define _BOMBER_H
 
 #include "LivingEntity.h"
+#include "../../configs/BomberConfiguration.h"
 
 
 class Bomber: public LivingEntity {
@@ -17,7 +18,8 @@ class Bomber: public LivingEntity {
          * 构造函数
          * @param config 轰炸机配置项
          */
-        Bomber(const BomberConfiguration& config);
+        Bomber(Player* const player, const BomberConfiguration& config,
+         Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
             
         /**
          * 析构函数

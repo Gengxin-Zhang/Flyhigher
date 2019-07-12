@@ -9,6 +9,7 @@
 #define _LIVINGENTITY_H
 
 #include "MovableEntity.h"
+#include "../conceptions/Player.h"
 #include <vector>
 using std::vector;
 
@@ -17,13 +18,14 @@ class LivingEntity: public MovableEntity {
     public: 
         /**
          * 构造函数
+         * @param player 所属玩家方
+         * @param radius 碰撞半径
+         * @param maxHealth 最大生命值
          * @param parentEntity 父实体
          * @param x x坐标
          * @param y y坐标
-         * @param radius 碰撞半径
-         * @param maxHealth 最大生命值
          */
-        LivingEntity(const double radius, const int maxHealth, const Vector2D speed = Vector2D(),
+        LivingEntity(Player* const player, const double radius, const int maxHealth, const Vector2D speed = Vector2D(),
         Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
 
         /**
@@ -87,6 +89,8 @@ class LivingEntity: public MovableEntity {
         int nowHealth;
         //最大生命值
         int maxHealth;
+        //所属玩家方
+        Player* player;
 };
 
 #endif //_LIVINGENTITY_H
