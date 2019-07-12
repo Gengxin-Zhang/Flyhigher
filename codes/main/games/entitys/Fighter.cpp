@@ -12,90 +12,59 @@
  */
 
 
-/**
- * 构造函数
- * @param config
- */
-void Fighter::Fighter(FighterConfiguration config) {
+Fighter::Fighter(const FighterConfiguration& config) {
+    this->config = config;
+    this->isCollecting = false;
+    //TODO: 通过配置项调用父类构造函数
+    //TODO: 通过配置项构造weapon
+}
+
+Fighter::~Fighter() {
 
 }
 
-/**
- * 析构函数
- */
-void Fighter::~Fighter() {
-
-}
-
-/**
- * 初始化
- * @return void
- */
-void Fighter::init() {
-    return;
-}
-
-/**
- * 死去
- * @return void
- */
 void Fighter::die() {
-    return;
+    if(collecting) stopCollecting();
+    LivingEntity::die();
 }
 
-/**
- * 获取视野内的实体
- * @return vector<Entity>
- */
-vector<Entity> Fighter::see() {
-    return null;
+vector<Entity*> Fighter::see() const{
+    //TODO: 思考怎么实现ing
 }
 
-/**
- * 判断实体是否位于视野内
- * @param ano
- * @return bool
- */
-bool Fighter::isInSight(Entity ano) {
-    return false;
+bool Fighter::isInSight(const Entity& ano) const{
+     //TODO: 思考怎么实现ing
 }
 
-/**
- * 射击
- * @param direction
- * @return bool
- */
-bool Fighter::shoot(double direction) {
-    return false;
+bool Fighter::shoot(const double direction) const{
+    return weapon.shoot();
 }
 
-/**
- * 是否处于采集状态
- * @return bool
- */
-bool Fighter::isCollecting() {
-    return false;
+bool Fighter::isCollecting() const{
+    return collecting;
 }
 
-/**
- * 采集资源实体
- * @param entity
- * @return void
- */
-void Fighter::collect(ResourceEntity entity) {
-    return;
+void Fighter::collect(ResourceEntity& entity) {
+    collectingEntity = &entity;
+    collectingEntity->setBeingCollected(true);
+    collecting = true;
+    startTime = ;
+    //TODO: 添加主时序的当前tick
 }
 
-/**
- * @return void
- */
 void Fighter::collectCompletely() {
-    return;
+    //TODO: 我方资源值+=采集的资源值
+    delete collectingEntity;
+    collectingEntity = (ResourceEntity*)0;
+    collecting = false
 }
 
-/**
- * @return void
- */
 void Fighter::stopCollecting() {
-    return;
+    collecting = false;
+    collectingEntity->setBeingCollected(false);
+    collectingEntity = (ResourceEntity*)0;
+}
+
+long Fighter::getStartTime() const{
+    return startTime;
 }

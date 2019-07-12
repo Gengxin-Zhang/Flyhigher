@@ -15,6 +15,7 @@
 LivingEntity::LivingEntity(const double radius, const int maxHealth, const Vector2D speed,
  Entity* const parentEntity, const double x, const double y): MovableEntity(radius, speed, parentEntity, x, y) {
      this->maxHealth = maxHealth;
+     this->nowHealth = 0;
 }
 
 int LivingEntity::getMaxHealth() const{
@@ -33,6 +34,16 @@ void LivingEntity::heal(const int health) {
 void LivingEntity::damage(const int damage) {
     nowHealth -= damage;
     if(nowHealth < 0) die();
+}
+
+void LivingEntity::init() {
+    nowHealth = maxHealth;
+    //TODO: 实体库中添加此实体
+}
+
+void LivingEntity::die() {
+    //TODO: 实体库中删除此实体
+    delete this;
 }
 
 LivingEntity::~LivingEntity() {

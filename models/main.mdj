@@ -734,7 +734,7 @@
 											"top": 953,
 											"width": 248.00927734375,
 											"height": 13,
-											"text": "+config: CarrierConfiguration",
+											"text": "-config: CarrierConfiguration",
 											"horizontalAlignment": 0
 										}
 									],
@@ -1364,7 +1364,7 @@
 											"top": 702,
 											"width": 249.67236328125,
 											"height": 13,
-											"text": "+config: LargeStarConfiguration",
+											"text": "-config: LargeStarConfiguration",
 											"horizontalAlignment": 0
 										}
 									],
@@ -2431,8 +2431,8 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": -125.427490234375,
-											"top": 316,
+											"left": -514.088623046875,
+											"top": 350,
 											"height": 13
 										},
 										{
@@ -2442,8 +2442,8 @@
 												"$ref": "AAAAAAFr33rBf3RHPys="
 											},
 											"font": "Arial;13;1",
-											"left": 1983.33056640625,
-											"top": 870,
+											"left": 1789,
+											"top": 887,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "Fighter"
@@ -2456,8 +2456,8 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": -125.427490234375,
-											"top": 316,
+											"left": -514.088623046875,
+											"top": 350,
 											"width": 75.841796875,
 											"height": 13,
 											"text": "(from entitys)"
@@ -2470,15 +2470,15 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": -125.427490234375,
-											"top": 316,
+											"left": -514.088623046875,
+											"top": 350,
 											"height": 13,
 											"horizontalAlignment": 1
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 1978.33056640625,
-									"top": 863,
+									"left": 1784,
+									"top": 880,
 									"width": 226.41064453125,
 									"height": 25,
 									"stereotypeLabel": {
@@ -2514,8 +2514,8 @@
 												"$ref": "AAAAAAFr4DMYMJ/wbsQ="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 893,
+											"left": 1789,
+											"top": 910,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "-weapon: Weapon",
@@ -2531,8 +2531,8 @@
 												"$ref": "AAAAAAFr4DNVGp/4oGY="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 908,
+											"left": 1789,
+											"top": 925,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "-config: FighterConfiguration",
@@ -2548,8 +2548,8 @@
 												"$ref": "AAAAAAFr4D9go6DeyP0="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 923,
+											"left": 1789,
+											"top": 940,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "-isCollecting: bool",
@@ -2565,19 +2565,36 @@
 												"$ref": "AAAAAAFr4FoOWaF3YM0="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 938,
+											"left": 1789,
+											"top": 955,
 											"width": 216.41064453125,
 											"height": 13,
-											"text": "+collectingEntity: ResourceEntity",
+											"text": "-collectingEntity: ResourceEntity",
+											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLAttributeView",
+											"_id": "AAAAAAFr5DMFsphCuEU=",
+											"_parent": {
+												"$ref": "AAAAAAFr33rBgHRM+fg="
+											},
+											"model": {
+												"$ref": "AAAAAAFr5DMFbZg/ZwU="
+											},
+											"font": "Arial;13;0",
+											"left": 1789,
+											"top": 970,
+											"width": 216.41064453125,
+											"height": 13,
+											"text": "-startTime: int",
 											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 1978.33056640625,
-									"top": 888,
+									"left": 1784,
+									"top": 905,
 									"width": 226.41064453125,
-									"height": 68
+									"height": 83
 								},
 								{
 									"_type": "UMLOperationCompartmentView",
@@ -2599,8 +2616,8 @@
 												"$ref": "AAAAAAFr4DOpA5//GoE="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 961,
+											"left": 1789,
+											"top": 993,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+Fighter(config: FighterConfiguration)",
@@ -2616,8 +2633,8 @@
 												"$ref": "AAAAAAFr4DPd96AJamQ="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 976,
+											"left": 1789,
+											"top": 1008,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+~Fighter()",
@@ -2633,8 +2650,8 @@
 												"$ref": "AAAAAAFr4DQVLqASSi8="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 991,
+											"left": 1789,
+											"top": 1023,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+init(): void",
@@ -2650,8 +2667,8 @@
 												"$ref": "AAAAAAFr4DQ6S6Ab448="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 1006,
+											"left": 1789,
+											"top": 1038,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+die(): void",
@@ -2667,8 +2684,8 @@
 												"$ref": "AAAAAAFr4DRUkqAkmEE="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 1021,
+											"left": 1789,
+											"top": 1053,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+see(): Entity[*] {query}",
@@ -2684,8 +2701,8 @@
 												"$ref": "AAAAAAFr4DSWd6Av0hI="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 1036,
+											"left": 1789,
+											"top": 1068,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+isInSight(ano: Entity): bool {query}",
@@ -2701,8 +2718,8 @@
 												"$ref": "AAAAAAFr4DWgoqA9AO4="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 1051,
+											"left": 1789,
+											"top": 1083,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+shoot(direction: double): bool",
@@ -2718,8 +2735,8 @@
 												"$ref": "AAAAAAFr4D+TmqDm1po="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 1066,
+											"left": 1789,
+											"top": 1098,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+isCollecting(): bool {query}",
@@ -2735,8 +2752,8 @@
 												"$ref": "AAAAAAFr4D/MNqDv+NE="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 1081,
+											"left": 1789,
+											"top": 1113,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+collect(entity: ResourceEntity): void",
@@ -2752,8 +2769,8 @@
 												"$ref": "AAAAAAFr4Fae+qFUVu4="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 1096,
+											"left": 1789,
+											"top": 1128,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+collectCompletely(): void",
@@ -2769,19 +2786,36 @@
 												"$ref": "AAAAAAFr4FnImKFuCcY="
 											},
 											"font": "Arial;13;0",
-											"left": 1983.33056640625,
-											"top": 1111,
+											"left": 1789,
+											"top": 1143,
 											"width": 216.41064453125,
 											"height": 13,
 											"text": "+stopCollecting(): void",
 											"horizontalAlignment": 0
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFr5DOjU5hNIa0=",
+											"_parent": {
+												"$ref": "AAAAAAFr33rBgHRN5co="
+											},
+											"model": {
+												"$ref": "AAAAAAFr5DOjJphKakY="
+											},
+											"font": "Arial;13;0",
+											"left": 1789,
+											"top": 1158,
+											"width": 216.41064453125,
+											"height": 13,
+											"text": "+getStartTime(): int {query}",
+											"horizontalAlignment": 0
 										}
 									],
 									"font": "Arial;13;0",
-									"left": 1978.33056640625,
-									"top": 956,
+									"left": 1784,
+									"top": 988,
 									"width": 226.41064453125,
-									"height": 173
+									"height": 188
 								},
 								{
 									"_type": "UMLReceptionCompartmentView",
@@ -2794,8 +2828,8 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": -62.7137451171875,
-									"top": 158,
+									"left": -257.0443115234375,
+									"top": 175,
 									"width": 10,
 									"height": 10
 								},
@@ -2810,18 +2844,18 @@
 									},
 									"visible": false,
 									"font": "Arial;13;0",
-									"left": -62.7137451171875,
-									"top": 158,
+									"left": -257.0443115234375,
+									"top": 175,
 									"width": 10,
 									"height": 10
 								}
 							],
 							"font": "Arial;13;0",
 							"containerChangeable": true,
-							"left": 1978.33056640625,
-							"top": 863,
+							"left": 1784,
+							"top": 880,
 							"width": 226.41064453125,
-							"height": 266,
+							"height": 296,
 							"nameCompartment": {
 								"$ref": "AAAAAAFr33rBf3RHPys="
 							},
@@ -3014,7 +3048,7 @@
 								"$ref": "AAAAAAFr33rBf3RGJoA="
 							},
 							"lineStyle": 3,
-							"points": "1977:919;1870:848;1845:833",
+							"points": "1875:879;1870:848;1845:833",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFr33s2eXSDC1w="
@@ -4260,7 +4294,7 @@
 											"top": 702,
 											"width": 238.09423828125,
 											"height": 13,
-											"text": "+config: LittleStarConfiguration",
+											"text": "-config: LittleStarConfiguration",
 											"horizontalAlignment": 0
 										}
 									],
@@ -4903,7 +4937,7 @@
 								"$ref": "AAAAAAFr33rBf3RGJoA="
 							},
 							"lineStyle": 3,
-							"points": "2092:862;2092:848;2091:713.5",
+							"points": "2010:923;2092:848;2091:713.5",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAFr4GeCRzwm1R4="
@@ -7260,6 +7294,7 @@
 									},
 									"name": "config",
 									"documentation": "母舰类配置项",
+									"visibility": "private",
 									"type": "CarrierConfiguration"
 								}
 							],
@@ -7489,6 +7524,7 @@
 									},
 									"name": "config",
 									"documentation": "大型资源行星配置项",
+									"visibility": "private",
 									"type": "LargeStarConfiguration"
 								}
 							],
@@ -8204,9 +8240,21 @@
 										"$ref": "AAAAAAFr33rBf3REZZk="
 									},
 									"name": "collectingEntity",
+									"visibility": "private",
 									"type": {
 										"$ref": "AAAAAAFr2+O3SGxuj1Y="
 									}
+								},
+								{
+									"_type": "UMLAttribute",
+									"_id": "AAAAAAFr5DMFbZg/ZwU=",
+									"_parent": {
+										"$ref": "AAAAAAFr33rBf3REZZk="
+									},
+									"name": "startTime",
+									"documentation": "开始采集的时间，单位tick",
+									"visibility": "private",
+									"type": "int"
 								}
 							],
 							"operations": [
@@ -8462,6 +8510,28 @@
 										}
 									],
 									"specification": "中止采集"
+								},
+								{
+									"_type": "UMLOperation",
+									"_id": "AAAAAAFr5DOjJphKakY=",
+									"_parent": {
+										"$ref": "AAAAAAFr33rBf3REZZk="
+									},
+									"name": "getStartTime",
+									"documentation": "获取开始采集的时间",
+									"parameters": [
+										{
+											"_type": "UMLParameter",
+											"_id": "AAAAAAFr5DPJO5hRo/Y=",
+											"_parent": {
+												"$ref": "AAAAAAFr5DOjJphKakY="
+											},
+											"documentation": "开始采集的时间，单位tick",
+											"type": "int",
+											"direction": "return"
+										}
+									],
+									"isQuery": true
 								}
 							]
 						},
@@ -8497,6 +8567,7 @@
 									},
 									"name": "config",
 									"documentation": "小型资源行星配置项",
+									"visibility": "private",
 									"type": "LittleStarConfiguration"
 								}
 							],

@@ -53,12 +53,12 @@ class LivingEntity: public MovableEntity {
         /**
          * 出生
          */
-        virtual void init() = 0;
+        virtual void init();
             
         /**
          * 消亡
          */
-        virtual void die() = 0;
+        virtual void die();
             
         /**
          * 析构函数
@@ -68,7 +68,7 @@ class LivingEntity: public MovableEntity {
         /**
          * 视野内的所有实体
          */
-        virtual vector<Entity> see() = 0;
+        virtual vector<Entity*> see() = 0;
             
         /**
          * 判断实体是否在视野内

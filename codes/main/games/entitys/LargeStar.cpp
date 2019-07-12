@@ -13,18 +13,11 @@
  * 大型资源行星
  */
 
-
-/**
- * 构造函数
- * @param config
- */
-void LargeStar::LargeStar(LargeStarConfiguration config) {
-
+LargeStar::LargeStar(const LargeStarConfiguration& config) {
+    this->config = config;
+    //TODO: 通过配置项调用父类构造函数
 }
 
-/**
- * 析构函数
- */
-void LargeStar::~LargeStar() {
+LargeStar::~LargeStar() {
 
 }

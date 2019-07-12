@@ -13,18 +13,11 @@
  * 小型资源行星
  */
 
-
-/**
- * 构造函数
- * @param config
- */
-void LittleStar::LittleStar(LittleStarConfiguration config) {
-
+LittleStar::LittleStar(const LittleStarConfiguration& config) {
+    this->config = config;
+    //TODO: 通过配置项调用父类构造函数
 }
 
-/**
- * 析构函数
- */
-void LittleStar::~LittleStar() {
+LittleStar::~LittleStar() {
 
 }

@@ -12,54 +12,39 @@
 
 
 class Bomber: public LivingEntity {
-public: 
-    
-/**
- * 构造函数
- * @param config
- */
-void Bomber(BomberConfiguration config);
-    
-/**
- * 析构函数
- */
-void ~Bomber();
-    
-/**
- * 初始化
- */
-void init();
-    
-/**
- * 死去
- */
-void die();
-    
-/**
- * 获得视野内的对象
- */
-vector<Entity> see();
-    
-/**
- * 实体是否位于视野中
- * @param ano
- */
-bool isInSight(Entity ano);
-    
-/**
- * 射击
- * @param direction
- */
-bool shoot(double direction);
-private: 
-    /**
- * 武器
- */
-Weapon weapon;
-    /**
- * 轰炸机配置项
- */
-BomberConfiguration config;
+    public: 
+        /**
+         * 构造函数
+         * @param config 轰炸机配置项
+         */
+        Bomber(const BomberConfiguration& config);
+            
+        /**
+         * 析构函数
+         */
+        ~Bomber();
+            
+        /**
+         * 获得视野内的对象
+         */
+        vector<Entity*> see() const;
+            
+        /**
+         * 实体是否位于视野中
+         * @param ano 实体
+         */
+        bool isInSight(const Entity& ano) const;
+            
+        /**
+         * 射击
+         * @param direction 方向，以y轴正半轴为0，逆时针为正，弧度制
+         */
+        bool shoot(const double direction) const;
+    private: 
+        //武器
+        Weapon weapon;
+        //轰炸机配置项
+        BomberConfiguration config;
 };
 
 #endif //_BOMBER_H

@@ -12,22 +12,20 @@
 
 
 class LargeStar: public ResourceEntity {
-public: 
-    /**
- * 大型资源行星配置项
- */
-LargeStarConfiguration config;
-    
-/**
- * 构造函数
- * @param config
- */
-void LargeStar(LargeStarConfiguration config);
-    
-/**
- * 析构函数
- */
-void ~LargeStar();
+    public: 
+        /**
+         * 构造函数
+         * @param config
+         */
+        LargeStar(const LargeStarConfiguration& config);
+            
+        /**
+         * 析构函数
+         */
+        ~LargeStar();
+    private:
+        //大型资源行星配置项
+        LargeStarConfiguration config;
 };
 
 #endif //_LARGESTAR_H

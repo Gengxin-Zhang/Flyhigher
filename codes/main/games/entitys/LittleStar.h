@@ -12,22 +12,21 @@
 
 
 class LittleStar: public ResourceEntity {
-public: 
-    /**
- * 小型资源行星配置项
- */
-LittleStarConfiguration config;
-    
-/**
- * 构造函数
- * @param config
- */
-void LittleStar(LittleStarConfiguration config);
-    
-/**
- * 析构函数
- */
-void ~LittleStar();
+    public:  
+        /**
+         * 构造函数
+         * @param config 配置项
+         */
+        LittleStar(const LittleStarConfiguration& config);
+            
+        /**
+         * 析构函数
+         */
+        ~LittleStar();
+    private: 
+        //小型资源行星配置项
+        LittleStarConfiguration config;
 };
+
 
 #endif //_LITTLESTAR_H

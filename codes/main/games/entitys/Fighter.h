@@ -9,77 +9,80 @@
 #define _FIGHTER_H
 
 #include "LivingEntity.h"
+#include "ResourceEntity.h"
 
 
 class Fighter: public LivingEntity {
-public: 
-    ResourceEntity collectingEntity;
-    
-/**
- * 构造函数
- * @param config
- */
-void Fighter(FighterConfiguration config);
-    
-/**
- * 析构函数
- */
-void ~Fighter();
-    
-/**
- * 初始化
- */
-void init();
-    
-/**
- * 死去
- */
-void die();
-    
-/**
- * 获取视野内的实体
- */
-vector<Entity> see();
-    
-/**
- * 判断实体是否位于视野内
- * @param ano
- */
-bool isInSight(Entity ano);
-    
-/**
- * 射击
- * @param direction
- */
-bool shoot(double direction);
-    
-/**
- * 是否处于采集状态
- */
-bool isCollecting();
-    
-/**
- * 采集资源实体
- * @param entity
- */
-void collect(ResourceEntity entity);
-    
-void collectCompletely();
-    
-void stopCollecting();
-private: 
-    /**
- * 武器
- */
-Weapon weapon;
-    /**
- * 战斗机配置项
- */
-FighterConfiguration config;
-    /**
- * 是否处于采集状态
- */
-bool isCollecting;
+    public:
+        /**
+         * 构造函数
+         * @param config 战斗机配置项
+         */
+        Fighter(const FighterConfiguration& config);
+            
+        /**
+         * 析构函数
+         */
+        ~Fighter();
+            
+        /**
+         * 死去
+         */
+        void die();
+            
+        /**
+         * 获取视野内的实体
+         */
+        vector<Entity*> see() const;
+            
+        /**
+         * 判断实体是否位于视野内
+         * @param ano 实体
+         */
+        bool isInSight(const Entity& ano) const;
+            
+        /**
+         * 射击
+         * @param direction 方向，以y轴正半轴为0，逆时针为正，弧度制
+         */
+        bool shoot(const double direction) const;
+            
+        /**
+         * 是否处于采集状态
+         */
+        bool isCollecting() const;
+            
+        /**
+         * 采集资源实体
+         * @param entity 资源实体
+         */
+        void collect(ResourceEntity& entity);
+
+        /**
+         * 采集实体完毕
+         */  
+        void collectCompletely();
+
+        /**
+         * 采集操作中止
+         */
+        void stopCollecting();
+
+        /**
+         * 开始采集的时间
+         */
+        long getStartTime() const;
+    private:
+        //正在采集的实体
+        ResourceEntity* collectingEntity;
+        //武器
+        Weapon weapon;
+        //战斗机配置项
+        FighterConfiguration config;
+        //是否处于采集状态
+        bool collecting;
+        //开始采集的时间
+        long startTime;
 };
 
 #endif //_FIGHTER_H

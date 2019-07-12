@@ -13,69 +13,29 @@
  * 母舰类
  */
 
+Carrier::Carrier(const CarrierConfiguration& config) {
+    this->config = config;
+    //TODO: 通过配置项调用父类构造函数
+    //TODO: 通过配置项构造mainWeapon
+    //TODO: 通过配置项构造godWeapon
+}
 
-/**
- * 构造函数
- * @param config
- */
-void Carrier::Carrier(CarrierConfiguration config) {
+Carrier::~Carrier() {
 
 }
 
-/**
- * 析构函数
- */
-void Carrier::~Carrier() {
-
+vector<Entity*> Carrier::see() const{
+    //TODO: 思考怎么实现ing
 }
 
-/**
- * 初始化状态
- * @return void
- */
-void Carrier::init() {
-    return;
+bool Carrier::isInSight(const Entity& ano) const{
+    //TODO: 思考怎么实现ing
 }
 
-/**
- * 死去
- * @return void
- */
-void Carrier::die() {
-    return;
+bool Carrier::shoot(const double direction) const{
+    return mainWeapon.shoot(direction);
 }
 
-/**
- * 视野内的实体
- * @return vector<Entity>
- */
-vector<Entity> Carrier::see() {
-    return null;
-}
-
-/**
- * 判断实体是否在视野内
- * @param ano
- * @return bool
- */
-bool Carrier::isInSight(Entity ano) {
-    return false;
-}
-
-/**
- * 射击
- * @param direction
- * @return bool
- */
-bool Carrier::shoot(double direction) {
-    return false;
-}
-
-/**
- * 发射必杀武器
- * @param direction
- * @return bool
- */
-bool Carrier::shootGodWeapon(double direction) {
-    return false;
+bool Carrier::shootGodWeapon(const double direction) const{
+    return godWeapon.shoot(direction);
 }

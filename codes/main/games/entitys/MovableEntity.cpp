@@ -31,9 +31,6 @@ void MovableEntity::goNextTick() {
     setY(getY() + speed.getY());
 }
 
-/**
- * 析构函数
- */
 MovableEntity::~MovableEntity() {
 
 }
