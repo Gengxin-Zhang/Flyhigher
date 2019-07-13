@@ -13,11 +13,11 @@
  * 武器类
  */
 
-Weapon::Weapon(double radius, double damage, int speed, int delay) {
-    this->radius = radius;
-    this->damage = damage;
-    this->speed = speed;
-    this->delay = delay;
+Weapon::Weapon(const WeaponConfiguration& config) {
+    radius = config.getRadius();
+    damage = config.getDamage();
+    speed = config.getSpeed();
+    delay = config.getDelay();
     lastShoot = 0; 
 }
 

@@ -5,34 +5,26 @@
  */
 
 
-#ifndef _NUKE_H
-#define _NUKE_H
+#ifndef _NUKECONFIGURATION_H
+#define _NUKECONFIGURATION_H
 
-#include "../../configs/NukeConfigration.h"
-
-class Nuke {
-    public:
+class NukeConfiguration {
+    public: 
         /**
-         * 是否已经发射
-         * @return 是否已经发射过
-         */
-        bool hasShoot() const;
-        
-        /**
-         * 获取AOE伤害值
+         * 获取AOE中心伤害
          * @return 伤害值
          */
         int getAoeDamage() const;
         
         /**
          * 获取AOE伤害半径
-         * @return AOE伤害半径
+         * @return 伤害半径
          */
         double getAoeDamageRadius() const;
         
         /**
-         * 获取伤害衰减，单位px
-         * @return 每px的衰减值
+         * 获取伤害缩减值，单位每tick
+         * @return 伤害缩减
          */
         int getDamageDecrease() const;
         
@@ -44,29 +36,25 @@ class Nuke {
         
         /**
          * 获取子弹速度标量
-         * #return 速度标量
+         * @return 速度
          */
         int getSpeed() const;
-        
-        /**
-         * 向固定方位开火，弧度制，与y轴正半轴的夹角，逆时针为正
-         * @param direction 方位角
-         * @return 是否成功开火
-         */
-        bool shoot(const double direction) const;
             
         /**
          * 构造函数
-         * @param config 配置项
+         * @param aoeDamage
+         * @param aoeDamageRadius
+         * @param damageDecrease
+         * @param radius
+         * @param speed
          */
-        Nuke(const NukeConfiguration& config);
-
+        NukeConfiguration(const int aoeDamage, const double aoeDamageRadius, const int damageDecrease, const double radius, const int speed);
+        
         /**
          * 析构函数
          */
-        ~Nuke();
+        ~NukeConfiguration();
     private: 
-        bool shooted;
         int aoeDamage;
         double aoeDamageRadius;
         int damageDecrease;
@@ -74,4 +62,4 @@ class Nuke {
         int speed;
 };
 
-#endif //_NUKE_H
+#endif //_NUKECONFIGURATION_H

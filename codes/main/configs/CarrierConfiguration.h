@@ -10,65 +10,25 @@
 
 class CarrierConfiguration {
 public: 
-    
-int getMaxHealth();
-    
-int getSpeed();
-    
-double getBulletRadius();
-    
-int getBulletDamage();
-    
-int getBulletSpeed();
-    
-int getBulletDelay();
-    
-int getNukeAOEDamage();
-    
-double getNukeAOEDamageRadius();
-    
-int getNukeDamageDecrease();
-    
-int getNukeCenterDamage();
-    
-double getNukeRadius();
-    
-int getNukeSpeed();
-    
-double getCarrierRadius();
+    NukeConfiguration nukeConfig;
+    PlaneConfiguration config;
     
 /**
- * @param maxHealth
- * @param speed
- * @param bulletRadius
- * @param bulletDamage
- * @param bullletSpeed
- * @param bulletDelay
- * @param nukeAOEDamage
- * @param nukeAOEDamageRadius
- * @param nukeDamageDecrease
- * @param nukeCenterDamage
- * @param nukeRadius
- * @param nukeSpeed
- * @param carrierRadius
+ * @param weaponConfig
+ * @param nukeConfig
+ * @param config
  */
-CarrierConfiguration(int maxHealth, int speed, double bulletRadius, int bulletDamage, int bullletSpeed, int bulletDelay, int nukeAOEDamage, double nukeAOEDamageRadius, int nukeDamageDecrease, inr nukeCenterDamage, double nukeRadius, int nukeSpeed, double carrierRadius);
+void CarrierConfiguration(WeaponConfiguration weaponConfig, NukeConfiguration nukeConfig, PlaneConfiguration config);
     
-~CarrierConfiguration();
+void ~CarrierConfiguration();
+    
+WeaponConfiguration getWeaponConfig();
+    
+NukeConfiguration getNukeConfig();
+    
+PlaneConfiguration getConfig();
 private: 
-    int maxHealth;
-    int speed;
-    double bulletRadius;
-    int bulletDamage;
-    int bulletSpeed;
-    int bulletDelay;
-    int nukeAOEDamage;
-    double nukeAOEDamageRadius;
-    int nukeDamageDecrease;
-    int nukeCenterDamage;
-    double nukeRadius;
-    int nukeSpeed;
-    double carrierRadius;
+    WeaponConfiguration weaponConfig;
 };
 
 #endif //_CARRIERCONFIGURATION_H

@@ -8,16 +8,15 @@
 #ifndef _WEAPON_H
 #define _WEAPON_H
 
+#include "../../configs/WeaponConfiguration.h"
+
 class Weapon {
     public: 
         /**
          * 构造函数
-         * @param radius 子弹碰撞半径
-         * @param damage 子弹伤害
-         * @param speed 子弹速度
-         * @param delay 子弹冷却时间，单位tick
+         * @param config 配置项
          */
-        Weapon(const double radius, const double damage, const int speed, const int delay);
+        Weapon(const WeaponConfiguration& config);
         
         /**
          * 析构函数
