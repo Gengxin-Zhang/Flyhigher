@@ -5,8 +5,8 @@
  */
 
 
-#include "Console.h"
+#include "Judger.h"
 
 /**
- * Console implementation
+ * Judger implementation
  */

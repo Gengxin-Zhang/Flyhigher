@@ -8,6 +8,8 @@
 #ifndef _VECTOR2D_H
 #define _VECTOR2D_H
 
+#include "Point2D.h"
+
 class Vector2D {
     public: 
         /**
@@ -27,6 +29,27 @@ class Vector2D {
          * @param ano 另一个向量
          */
         Vector2D(const Vector2D& ano);
+
+        /**
+         * 根据向量长度和方向角构造向量
+         * @param module 向量长度
+         * @param angle 相对于y轴正半轴的方向角，逆时针为正，弧度制
+         */
+        Vector2D(const double module, const double angle);
+
+        /**
+         * 根据向量长度和方向向量构造向量
+         * @param module 向量长度
+         * @param direction 方向向量
+         */
+        Vector2D(const double module, const Vector2D& direction);
+
+        /**
+         * 根据起始点和终末点来构造向量
+         * @param start 起始点
+         * @param end 终末点
+         */
+        Vector2D(const Point2D& start, const Point2D& end);
             
         /**
          * 获取x坐标

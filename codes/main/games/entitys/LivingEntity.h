@@ -9,7 +9,7 @@
 #define _LIVINGENTITY_H
 
 #include "MovableEntity.h"
-#include "../conceptions/Player.h"
+#include "../Player.h"
 #include "../../configs/PlaneConfiguration.h"
 #include <vector>
 using std::vector;

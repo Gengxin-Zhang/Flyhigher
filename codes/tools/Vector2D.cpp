@@ -28,6 +28,22 @@ Vector2D::Vector2D(const Vector2D& ano) {
     this->x = ano.x;
     this->y = ano.y;
 }
+Vector2D::Vector2D(const double module, const double angle){
+    double normal_angle = angle - M_PI/2;
+    x = module * cos(normal_angle);
+    y = module * sin(normal_angle);
+}
+
+Vector2D::Vector2D(const double module, const Vector2D& direction){
+    Vector2D normal_direction = direction.getDirection();
+    x = module * normal_direction.getX();
+    y = module * normal_direction.getY();
+}
+
+Vector2D::Vector2D(const Point2D& start, const Point2D& end){
+    x = end.getX() - start.getX();
+    y = end.getY() - start.getY();
+}
 
 double Vector2D::getX() const{
     return x;

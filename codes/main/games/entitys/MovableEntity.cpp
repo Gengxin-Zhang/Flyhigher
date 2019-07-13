@@ -6,7 +6,7 @@
 
 
 #include "MovableEntity.h"
-#define PI 3.141592653589793
+#include <cmath>
 
 /**
  * MovableEntity implementation
@@ -23,7 +23,7 @@ Vector2D MovableEntity::getSpeed() const{
 }
 
 void MovableEntity::turnDirection(const double rad) {
-    if(rad < -PI/24 || rad > PI/24) return;
+    if(rad < -M_PI/24 || rad > M_PI/24) return;
     speed = speed.rotate(rad);
 }
 

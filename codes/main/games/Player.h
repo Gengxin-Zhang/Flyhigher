@@ -9,11 +9,11 @@
 #define _PLAYER_H
 
 #include <string>
-#include "../entitys/Bomber.h"
-#include "../entitys/Carrier.h"
-#include "../entitys/Fighter.h"
+#include "./entitys/Bomber.h"
+#include "./entitys/Carrier.h"
+#include "./entitys/Fighter.h"
 #include "../../tools/Color.h"
-#include "../../PlayerConfiguration.h"
+#include "../../configs/PlayerConfiguration.h"
 using std::string;
 
 class Player {
