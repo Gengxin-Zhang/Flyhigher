@@ -8,7 +8,7 @@
 #ifndef _NUKE_H
 #define _NUKE_H
 
-#include "../../configs/NukeConfigration.h"
+#include "../../configs/NukeConfiguration.h"
 
 class Nuke {
     public:
@@ -59,7 +59,7 @@ class Nuke {
          * 构造函数
          * @param config 配置项
          */
-        Nuke(const NukeConfiguration& config);
+        Nuke(NukeConfiguration* const config);
 
         /**
          * 析构函数

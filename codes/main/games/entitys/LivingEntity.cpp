@@ -12,9 +12,13 @@
  */
 
 
-LivingEntity::LivingEntity(Player* const player, const double radius, const int maxHealth, const Vector2D speed,
- Entity* const parentEntity, const double x, const double y): MovableEntity(radius, speed, parentEntity, x, y) {
-     this->maxHealth = maxHealth;
+LivingEntity::LivingEntity(Player* const player, PlaneConfiguration* const config,
+ Entity* const parentEntity, const double x, const double y)
+ :MovableEntity(config->getRadius(), Vector2D(0, config->getSpeed()), parentEntity, x, y) {
+     this->player = player;
+     maxHealth = config->getMaxHealth();
+     healRate = config->getHealRate();
+     healPower = config->getHealPower();
      this->nowHealth = 0;
 }
 
@@ -44,6 +48,18 @@ void LivingEntity::init() {
 void LivingEntity::die() {
     //TODO: 实体库中删除此实体
     delete this;
+}
+
+Player* LivingEntity::getPlayer() const{
+    return player;
+}
+
+int LivingEntity::getHealRate() const{
+    return healRate;
+}
+
+int LivingEntity::getHealPower() const{
+    return healPower;
 }
 
 LivingEntity::~LivingEntity() {

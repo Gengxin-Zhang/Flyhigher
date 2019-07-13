@@ -12,13 +12,13 @@
  */
 
 
-Bomber::Bomber(Player* const player, const BomberConfiguration& config, Entity* const parentEntity, const double x, const double y):
- LivingEntity(player, config.getBomberRadius(), config.getMaxHealth(), Vector2D(0, config.getSpeed()), parentEntity, x, y)  {
-    this->config = config;
+Bomber::Bomber(Player* const player, BomberConfiguration* const config, Entity* const parentEntity, const double x, const double y):
+ LivingEntity(player, config->getConfig(), parentEntity, x, y)  {
+     weapon = new Weapon(config->getWeaponConfig());
 }
 
 Bomber::~Bomber() {
-
+    delete [] weapon;
 }
 
 vector<Entity*> Bomber::see() const{
@@ -30,5 +30,5 @@ bool Bomber::isInSight(const Entity& ano) const{
 }
 
 bool Bomber::shoot(const double direction) const{
-    return weapon.shoot(direction);
+    return weapon->shoot(direction);
 }

@@ -12,16 +12,17 @@
  */
 
 
-Fighter::Fighter(Player* const player, const FighterConfiguration& config, Entity* const parentEntity, const double x, const double y):
- LivingEntity(player, config.getFighterRadius(), config.getMaxHealth(), Vector2D(0, config.getSpeed()), parentEntity, x, y) {
-    this->config = config;
+Fighter::Fighter(Player* const player, FighterConfiguration* const config,
+ Entity* const parentEntity, const double x, const double y) 
+ :LivingEntity(player, config->getConfig(), parentEntity, x, y) {
     this->isCollecting = false;
-    this->weapon = Weapon();
+    RebuildableConfiguration* rConfig = config->getRebuildConfig();
+    this->weapon = new Weapon(config->getWeaponConfig());
     //TODO: 通过配置项构造weapon
 }
 
 Fighter::~Fighter() {
-
+    delete [] weapon;
 }
 
 void Fighter::die() {
@@ -38,7 +39,7 @@ bool Fighter::isInSight(const Entity& ano) const{
 }
 
 bool Fighter::shoot(const double direction) const{
-    return weapon.shoot(direction);
+    return weapon->shoot(direction);
 }
 
 bool Fighter::isCollecting() const{
@@ -49,7 +50,7 @@ void Fighter::collect(ResourceEntity& entity) {
     collectingEntity = &entity;
     collectingEntity->setBeingCollected(true);
     collecting = true;
-    startTime = ;
+    //startTime = ;
     //TODO: 添加主时序的当前tick
 }
 
@@ -57,7 +58,7 @@ void Fighter::collectCompletely() {
     //TODO: 我方资源值+=采集的资源值
     delete collectingEntity;
     collectingEntity = (ResourceEntity*)0;
-    collecting = false
+    collecting = false;
 }
 
 void Fighter::stopCollecting() {
@@ -68,4 +69,12 @@ void Fighter::stopCollecting() {
 
 long Fighter::getStartTime() const{
     return startTime;
+}
+
+int Fighter::getRebuildTicks() const{
+    return rebuildTicks;
+}
+
+int Fighter::getRebuildPower() const{
+    return rebuildPower;
 }

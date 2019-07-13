@@ -11,9 +11,9 @@
  * Player implementation
  */
 
-Player::Player(const string name, const Color color) {
-    this->name = name;
-    this->color = color;
+Player::Player(PlayerConfiguration* const config) {
+    name = config->getName();
+    color = config->getColor();
 }
 
 Player::~Player() {

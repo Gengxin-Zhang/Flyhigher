@@ -13,16 +13,16 @@
 #include "../entitys/Carrier.h"
 #include "../entitys/Fighter.h"
 #include "../../tools/Color.h"
+#include "../../PlayerConfiguration.h"
 using std::string;
 
 class Player {
     public:  
         /**
          * 构造函数
-         * @param name 玩家名
-         * @param color 颜色
+         * @param config 配置项
          */
-        Player(const string name, const Color color);
+        Player(PlayerConfiguration* const config);
 
         /**
          * 析构函数

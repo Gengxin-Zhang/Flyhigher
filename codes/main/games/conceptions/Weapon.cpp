@@ -13,11 +13,11 @@
  * 武器类
  */
 
-Weapon::Weapon(const WeaponConfiguration& config) {
-    radius = config.getRadius();
-    damage = config.getDamage();
-    speed = config.getSpeed();
-    delay = config.getDelay();
+Weapon::Weapon(WeaponConfiguration* const config) {
+    radius = config->getRadius();
+    damage = config->getDamage();
+    speed = config->getSpeed();
+    delay = config->getDelay();
     lastShoot = 0; 
 }
 

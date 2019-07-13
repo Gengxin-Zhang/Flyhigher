@@ -20,8 +20,8 @@ class FighterConfiguration {
          * @param rebuildConfig 重新制造配置项
          * @param config 主配置项
          */
-        FighterConfiguration(const WeaponConfiguration& weaponConfig, const RebuildableConfiguration& rebuildConfig,
-         const PlaneConfiguration& config);
+        FighterConfiguration(WeaponConfiguration* const weaponConfig, RebuildableConfiguration* const rebuildConfig,
+         PlaneConfiguration* const config);
 
         /**
          * 析构函数
@@ -31,21 +31,21 @@ class FighterConfiguration {
         /**
          * 获取武器配置项
          */
-        const WeaponConfiguration& getWeaponConfig() const;
+        WeaponConfiguration* getWeaponConfig() const;
 
         /**
          * 获取重新制造配置项
          */
-        const RebuildableConfiguration& getRebuildConfig() const;
+        RebuildableConfiguration* getRebuildConfig() const;
 
         /**
          * 获取主配置项
          */
-        const PlaneConfiguration& getConfig() const;
+        PlaneConfiguration* getConfig() const;
     private: 
-        WeaponConfiguration weaponConfig;
-        RebuildableConfiguration rebuildConfig;
-        PlaneConfiguration config;
+        WeaponConfiguration* weaponConfig;
+        RebuildableConfiguration* rebuildConfig;
+        PlaneConfiguration* config;
 };
 
 #endif //_FIGHTERCONFIGURATION_H

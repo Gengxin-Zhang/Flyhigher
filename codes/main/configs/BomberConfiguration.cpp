@@ -11,29 +11,20 @@
  * BomberConfiguration implementation
  */
 
-
-/**
- * @param weaponConfig
- * @param config
- */
-void BomberConfiguration::BomberConfiguration(WeaponConfiguration weaponConfig, PlaneConfiguration config) {
-
+BomberConfiguration::BomberConfiguration(WeaponConfiguration* const weaponConfig, PlaneConfiguration* const config) {
+    this->weaponConfig = weaponConfig;
+    this->config = config;
 }
 
-void BomberConfiguration::~BomberConfiguration() {
-
+BomberConfiguration::~BomberConfiguration() {
+    delete [] weaponConfig;
+    delete [] config;
 }
 
-/**
- * @return WeaponConfiguration
- */
-WeaponConfiguration BomberConfiguration::getWeaponConfig() {
-    return null;
+WeaponConfiguration* BomberConfiguration::getWeaponConfig() const{
+    return weaponConfig;
 }
 
-/**
- * @return PlaneConfiguration
- */
-PlaneConfiguration BomberConfiguration::getConfig() {
-    return null;
+PlaneConfiguration* BomberConfiguration::getConfig() const{
+    return config;
 }

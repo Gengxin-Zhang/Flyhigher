@@ -16,7 +16,7 @@ class Weapon {
          * 构造函数
          * @param config 配置项
          */
-        Weapon(const WeaponConfiguration& config);
+        Weapon(WeaponConfiguration* const config);
         
         /**
          * 析构函数

@@ -24,7 +24,7 @@ class Fighter: public LivingEntity {
          * @param x x坐标
          * @param y y坐标
          */
-        Fighter(Player* const player, const FighterConfiguration& config,
+        Fighter(Player* const player, FighterConfiguration* const config,
          Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
             
         /**
@@ -79,17 +79,29 @@ class Fighter: public LivingEntity {
          * 开始采集的时间
          */
         long getStartTime() const;
+
+        /**
+         * 重建需要的ticks
+         */
+        int getRebuildTicks() const;
+
+        /**
+         * 重建需要的资源
+         */
+        int getRebuildPower() const;
     private:
         //正在采集的实体
         ResourceEntity* collectingEntity;
         //武器
-        Weapon weapon;
-        //战斗机配置项
-        FighterConfiguration config;
+        Weapon* weapon;
         //是否处于采集状态
         bool collecting;
         //开始采集的时间
         long startTime;
+        //重造需要的ticks
+        int rebuildTicks;
+        //重造需要的资源
+        int rebuildPower;
 };
 
 #endif //_FIGHTER_H

@@ -16,9 +16,13 @@ class Bomber: public LivingEntity {
     public: 
         /**
          * 构造函数
+         * @param player 所属玩家方
          * @param config 轰炸机配置项
+         * @param parentEntity 父实体
+         * @param x x坐标
+         * @param y y坐标
          */
-        Bomber(Player* const player, const BomberConfiguration& config,
+        Bomber(Player* const player, BomberConfiguration* const config,
          Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
             
         /**
@@ -44,9 +48,7 @@ class Bomber: public LivingEntity {
         bool shoot(const double direction) const;
     private: 
         //武器
-        Weapon weapon;
-        //轰炸机配置项
-        BomberConfiguration config;
+        Weapon* weapon;
 };
 
 #endif //_BOMBER_H

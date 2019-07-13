@@ -13,16 +13,15 @@
  * 母舰类
  */
 
-Carrier::Carrier(Player* const player, const CarrierConfiguration& config, Entity* const parentEntity, const double x, const double y):
- LivingEntity(player, config.getCarrierRadius(), config.getMaxHealth(), Vector2D(0, config.getSpeed()), parentEntity, x, y) {
-    this->config = config;
-    //TODO: 通过配置项调用父类构造函数
-    //TODO: 通过配置项构造mainWeapon
-    //TODO: 通过配置项构造godWeapon
+Carrier::Carrier(Player* const player, CarrierConfiguration* const config, Entity* const parentEntity, const double x, const double y):
+ LivingEntity(player, config->getConfig(), parentEntity, x, y) {
+    mainWeapon = new Weapon(config->getWeaponConfig());
+    godWeapon = new Nuke(config->getNukeConfig());
 }
 
 Carrier::~Carrier() {
-
+    delete [] mainWeapon;
+    delete [] godWeapon;
 }
 
 vector<Entity*> Carrier::see() const{
@@ -34,9 +33,9 @@ bool Carrier::isInSight(const Entity& ano) const{
 }
 
 bool Carrier::shoot(const double direction) const{
-    return mainWeapon.shoot(direction);
+    return mainWeapon->shoot(direction);
 }
 
 bool Carrier::shootGodWeapon(const double direction) const{
-    return godWeapon.shoot(direction);
+    return godWeapon->shoot(direction);
 }

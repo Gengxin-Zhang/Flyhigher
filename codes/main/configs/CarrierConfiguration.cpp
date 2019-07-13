@@ -11,37 +11,27 @@
  * CarrierConfiguration implementation
  */
 
-
-/**
- * @param weaponConfig
- * @param nukeConfig
- * @param config
- */
-void CarrierConfiguration::CarrierConfiguration(WeaponConfiguration weaponConfig, NukeConfiguration nukeConfig, PlaneConfiguration config) {
-
+CarrierConfiguration::CarrierConfiguration(WeaponConfiguration* const weaponConfig,
+ NukeConfiguration* const nukeConfig, PlaneConfiguration* const config) {
+     this->weaponConfig = weaponConfig;
+     this->nukeConfig = nukeConfig;
+     this->config = config;
 }
 
-void CarrierConfiguration::~CarrierConfiguration() {
-
+CarrierConfiguration::~CarrierConfiguration() {
+    delete [] weaponConfig;
+    delete [] nukeConfig;
+    delete [] config;
 }
 
-/**
- * @return WeaponConfiguration
- */
-WeaponConfiguration CarrierConfiguration::getWeaponConfig() {
-    return null;
+WeaponConfiguration* CarrierConfiguration::getWeaponConfig() const{
+    return weaponConfig;
 }
 
-/**
- * @return NukeConfiguration
- */
-NukeConfiguration CarrierConfiguration::getNukeConfig() {
-    return null;
+NukeConfiguration* CarrierConfiguration::getNukeConfig() const{
+    return nukeConfig;
 }
 
-/**
- * @return PlaneConfiguration
- */
-PlaneConfiguration CarrierConfiguration::getConfig() {
-    return null;
+PlaneConfiguration* CarrierConfiguration::getConfig() const{
+    return config;
 }

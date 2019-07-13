@@ -11,25 +11,27 @@
  * FighterConfiguration implementation
  */
 
-FighterConfiguration::FighterConfiguration(const WeaponConfiguration& weaponConfig,
- const RebuildableConfiguration& rebuildConfig, const PlaneConfiguration& config) {
+FighterConfiguration::FighterConfiguration(WeaponConfiguration* const weaponConfig,
+ RebuildableConfiguration* const rebuildConfig, PlaneConfiguration* const config) {
     this->weaponConfig = weaponConfig;
     this->rebuildConfig = rebuildConfig;
     this->config = config;
 }
 
 FighterConfiguration::~FighterConfiguration() {
-
+    delete [] weaponConfig;
+    delete [] rebuildConfig;
+    delete [] config;
 }
 
-const WeaponConfiguration& FighterConfiguration::getWeaponConfig() const{
+WeaponConfiguration* FighterConfiguration::getWeaponConfig() const{
     return weaponConfig;
 }
 
-const RebuildableConfiguration& FighterConfiguration::getRebuildConfig() const{
+RebuildableConfiguration* FighterConfiguration::getRebuildConfig() const{
     return rebuildConfig;
 }
 
-const PlaneConfiguration& FighterConfiguration::getConfig() const{
+PlaneConfiguration* FighterConfiguration::getConfig() const{
     return config;
 }

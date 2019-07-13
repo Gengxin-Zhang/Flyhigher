@@ -21,7 +21,7 @@ class ResourceEntity: public Entity {
          * @param x x坐标
          * @param y y坐标
          */
-        ResourceEntity(const double radius, const int power, Entity* const parentEntity, const double x, const double y);
+        ResourceEntity(const double radius, const int power, Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
             
         /**
          * 获取资源量

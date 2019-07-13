@@ -39,12 +39,12 @@ bool Nuke::shoot(const double direction) const{
     //TODO: 想想怎么做
 }
 
-Nuke::Nuke(const NukeConfiguration& config) {
-    aoeDamage = config.getAoeDamage();
-    aoeDamageRadius = config.getAoeDamageRadius();
-    damageDecrease = config.getDamageDecrease();
-    radius = config.getRadius();
-    speed = config.getSpeed();
+Nuke::Nuke(NukeConfiguration* const config) {
+    aoeDamage = config->getAoeDamage();
+    aoeDamageRadius = config->getAoeDamageRadius();
+    damageDecrease = config->getDamageDecrease();
+    radius = config->getRadius();
+    speed = config->getSpeed();
 }
 
 Nuke::~Nuke() {

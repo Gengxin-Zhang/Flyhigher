@@ -53,11 +53,11 @@ class Color{
          * 析构函数
          */  
         ~Color();
-private: 
-    int alpha;
-    int r;
-    int g;
-    int b;
+    private: 
+        int alpha;
+        int r;
+        int g;
+        int b;
 };
 
 #endif //_COLOR_H

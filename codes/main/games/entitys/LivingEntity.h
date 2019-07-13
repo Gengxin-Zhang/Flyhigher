@@ -10,6 +10,7 @@
 
 #include "MovableEntity.h"
 #include "../conceptions/Player.h"
+#include "../../configs/PlaneConfiguration.h"
 #include <vector>
 using std::vector;
 
@@ -19,13 +20,12 @@ class LivingEntity: public MovableEntity {
         /**
          * 构造函数
          * @param player 所属玩家方
-         * @param radius 碰撞半径
-         * @param maxHealth 最大生命值
+         * @param config 飞机实体配置项
          * @param parentEntity 父实体
          * @param x x坐标
          * @param y y坐标
          */
-        LivingEntity(Player* const player, const double radius, const int maxHealth, const Vector2D speed = Vector2D(),
+        LivingEntity(Player* const player, PlaneConfiguration* const config,
         Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
 
         /**
@@ -61,6 +61,24 @@ class LivingEntity: public MovableEntity {
          * 消亡
          */
         virtual void die();
+        
+        /**
+         * 获取所属玩家方
+         * @return 玩家
+         */
+        Player* getPlayer() const;
+
+        /**
+         * 获取治疗速率
+         * @return 治疗速率
+         */
+        int getHealRate() const;
+
+        /**
+         * 获取治疗消耗的资源
+         * @return 资源
+         */
+        int getHealPower() const;
             
         /**
          * 析构函数
@@ -89,6 +107,10 @@ class LivingEntity: public MovableEntity {
         int nowHealth;
         //最大生命值
         int maxHealth;
+        //治疗速率
+        int healRate;
+        //治疗消耗的资源
+        int healPower;
         //所属玩家方
         Player* player;
 };

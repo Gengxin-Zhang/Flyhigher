@@ -10,15 +10,21 @@
 
 #include "LivingEntity.h"
 #include "../../configs/CarrierConfiguration.h"
+#include "../conceptions/Nuke.h"
+#include "../conceptions/Weapon.h"
 
 
 class Carrier: public LivingEntity {
     public:
         /**
          * 构造函数
+         * @param player 所属玩家方
          * @param config 母舰配置项
+         * @param parentEntity 父实体
+         * @param x x坐标
+         * @param y y坐标
          */
-        Carrier(Player* const player, const CarrierConfiguration& config,
+        Carrier(Player* const player, CarrierConfiguration* const config,
          Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
             
         /**
@@ -50,11 +56,9 @@ class Carrier: public LivingEntity {
         bool shootGodWeapon(const  double direction) const;
     private:
         //主武器
-        Weapon mainWeapon;
+        Weapon* mainWeapon;
         //必杀武器，只能使用一次
-        Weapon godWeapon;
-        //母舰配置项
-        CarrierConfiguration config;
+        Nuke* godWeapon;
 };
 
 #endif //_CARRIER_H
