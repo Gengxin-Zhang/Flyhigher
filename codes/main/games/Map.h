@@ -12,6 +12,8 @@
 #include "../../tools/Point2D.h"
 #include "./entitys/Entity.h"
 
+class Engine;
+
 class Map {
     public:
         /**

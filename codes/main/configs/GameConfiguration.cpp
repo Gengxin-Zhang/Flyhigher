@@ -6,6 +6,9 @@
 
 
 #include "GameConfiguration.h"
+#include <exception>
+#include <string>
+using std::invalid_argument, std::to_string;
 
 /**
  * GameConfiguration implementation
@@ -29,13 +32,13 @@ int GameConfiguration::getPlayerNumber() const{
 
 PlayerConfiguration* GameConfiguration::getPlayersConfig(const int index) const{
     if(index < 0 || index >= playerNumber){
-        throw invalid_argument("index should not be " + index);
+        throw invalid_argument("index should not be " + to_string(index));
     }
     return playersConfig[index];
 }
 
 GameConfiguration::GameConfiguration(MapConfiguration* const mapConfig, JudgerConfiguration* const judgerConfig,
- LoopConfiguration* const loopConfig, const int playerNumber, const PlayerConfiguration* const * playersConfig) {
+ LoopConfiguration* const loopConfig, const int playerNumber, PlayerConfiguration** playersConfig) {
      this->mapConfig = mapConfig;
      this->judgerConfig = judgerConfig;
      this->loopConfig = loopConfig;
@@ -44,5 +47,10 @@ GameConfiguration::GameConfiguration(MapConfiguration* const mapConfig, JudgerCo
 }
 
 GameConfiguration::~GameConfiguration() {
-
+    delete [] mapConfig;
+    delete [] judgerConfig;
+    delete [] loopConfig;
+    for(int i=0; i<playerNumber; ++i){
+        delete [] playersConfig[i];
+    }
 }

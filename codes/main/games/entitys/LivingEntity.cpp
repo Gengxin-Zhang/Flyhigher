@@ -6,6 +6,7 @@
 
 
 #include "LivingEntity.h"
+#include "../Player.h"
 
 /**
  * LivingEntity implementation
@@ -47,7 +48,6 @@ void LivingEntity::init() {
 
 void LivingEntity::die() {
     //TODO: 实体库中删除此实体
-    delete this;
 }
 
 Player* LivingEntity::getPlayer() const{

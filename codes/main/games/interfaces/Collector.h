@@ -8,7 +8,7 @@
 #ifndef _COLLECTOR_H
 #define _COLLECTOR_H
 
-#include "ResourceEntity.h"
+#include "../entitys/ResourceEntity.h"
 
 class Collector {
 public: 

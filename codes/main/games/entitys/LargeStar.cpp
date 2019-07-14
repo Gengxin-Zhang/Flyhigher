@@ -13,8 +13,8 @@
  * 大型资源行星
  */
 
-LargeStar::LargeStar(const LargeStarConfiguration& config) {
-    this->config = config;
+LargeStar::LargeStar(LargeStarConfiguration* const config):
+    ResourceEntity (config->getRadius(), config->getPower()){
     //TODO: 通过配置项调用父类构造函数
 }
 

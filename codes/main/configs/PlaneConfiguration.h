@@ -32,7 +32,7 @@ class PlaneConfiguration {
          * 返回移动速度的标量
          * @return 战斗机的移动速度
          */
-        int getSpeed() const;
+        double getSpeed() const;
 
         /**
          * 返回飞机的碰撞半径
@@ -48,7 +48,7 @@ class PlaneConfiguration {
          * @param healRate 治疗速度
          * @param healPower 治疗消耗资源
          */
-        PlaneConfiguration(const int maxHealth, const int speed, const double radius, const int healRate, const int healPower);
+        PlaneConfiguration(const int maxHealth, const double speed, const double radius, const int healRate, const int healPower);
         
         /**
          * 析构函数
@@ -56,7 +56,7 @@ class PlaneConfiguration {
         ~PlaneConfiguration();
     private: 
         int maxHealth;
-        int speed;
+        double speed;
         double radius;
         int healRate;
         int healPower;

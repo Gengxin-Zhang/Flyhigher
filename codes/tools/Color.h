@@ -33,6 +33,11 @@ class Color{
          * @return 红色值
          */ 
         int getB() const;
+
+        /**
+         * 默认构造函数(0,0,0,0)
+         */
+        Color();
             
         /**
          * 构造函数

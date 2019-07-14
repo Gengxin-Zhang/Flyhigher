@@ -9,6 +9,7 @@
 #define _LARGESTAR_H
 
 #include "ResourceEntity.h"
+#include "../../configs/LargeStarConfiguration.h"
 
 
 class LargeStar: public ResourceEntity {
@@ -17,15 +18,12 @@ class LargeStar: public ResourceEntity {
          * 构造函数
          * @param config
          */
-        LargeStar(const LargeStarConfiguration& config);
+        LargeStar(LargeStarConfiguration* const config);
             
         /**
          * 析构函数
          */
         ~LargeStar();
-    private:
-        //大型资源行星配置项
-        LargeStarConfiguration config;
 };
 
 #endif //_LARGESTAR_H

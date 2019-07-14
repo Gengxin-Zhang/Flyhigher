@@ -9,7 +9,10 @@
 #define _PLAYERCONFIGURATION_H
 
 #include <string>
-#include "../../../tools/Color.h"
+#include "../../tools/Color.h"
+#include "CarrierConfiguration.h"
+#include "BomberConfiguration.h"
+#include "FighterConfiguration.h"
 using std::string;
 
 class PlayerConfiguration {
@@ -19,7 +22,9 @@ class PlayerConfiguration {
          * @param name 名字
          * @param color 颜色
          */
-        PlayerConfiguration(const string name, const Color color);
+        PlayerConfiguration(const string name, const Color color,
+         CarrierConfiguration* const carrierConfig, BomberConfiguration* const bomberConfig,
+         FighterConfiguration* const fighterConfig);
 
         /**
          * 析构函数
@@ -37,9 +42,30 @@ class PlayerConfiguration {
          * @return 颜色
          */
         Color getColor() const;
+
+        /**
+         * 获取母舰配置项
+         * @return 母舰配置项
+         */
+        CarrierConfiguration* getCarrierConfig() const;
+
+        /**
+         * 获取轰炸机配置项
+         * @return 轰炸机配置项
+         */
+        BomberConfiguration* getBomberConfig() const;
+
+        /**
+         * 获取战斗机配置项
+         * @return 战斗机配置项
+         */
+        FighterConfiguration* getFighterConfig() const;
     private: 
-        String name;
+        string name;
         Color color;
+        CarrierConfiguration* carrierConfig;
+        BomberConfiguration* bomberConfig;
+        FighterConfiguration* fighterConfig;
 };
 
 #endif //_PLAYERCONFIGURATION_H

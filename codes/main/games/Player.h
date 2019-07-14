@@ -7,14 +7,15 @@
 
 #ifndef _PLAYER_H
 #define _PLAYER_H
-
 #include <string>
-#include "./entitys/Bomber.h"
-#include "./entitys/Carrier.h"
-#include "./entitys/Fighter.h"
 #include "../../tools/Color.h"
-#include "../../configs/PlayerConfiguration.h"
+#include "../configs/PlayerConfiguration.h"
 using std::string;
+
+class Bomber;
+class Carrier;
+class Fighter;
+class Engine;
 
 class Player {
     public:  

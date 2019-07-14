@@ -15,7 +15,7 @@
 using std::string, std::invalid_argument;
 
 class Engine {
-    public: 
+    public:
         /**
          * 析构函数
          */
@@ -32,6 +32,12 @@ class Engine {
          * @param logger 记录器
          */
         void registerLogger(Logger* const logger);
+
+        /**
+         * 返回Logger
+         * @return logger 记录器
+         */
+        Logger* getLogger() const;
 
         /**
          * 获取单例模式的Engine的实例

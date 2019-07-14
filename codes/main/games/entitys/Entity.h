@@ -8,7 +8,7 @@
 #ifndef _ENTITY_H
 #define _ENTITY_H
 
-#include "../../tools/vector2D.h"
+#include "../../../tools/Vector2D.h"
 #include <string>
 using std::string;
 

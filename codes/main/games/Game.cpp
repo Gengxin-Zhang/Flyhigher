@@ -6,14 +6,18 @@
 
 
 #include "Game.h"
+#include "../../tools/Logger.h"
+#include "../systems/Engine.h"
 #include <exception>
-using std::illegal_argument;
+using std::invalid_argument;
 
 /**
  * Game implementation
  */
 
 Game::Game(GameConfiguration* const config) {
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->infomation("准备一场游戏");
     judger = new Judger(config->getJudgerConfig());
     judger->init();
     map = new Map(config->getMapConfig());
@@ -32,6 +36,9 @@ Game::~Game() {
 }
 
 void Game::run() {
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->infomation("开始一场游戏");
+    loop->run();
     return;
 }
 
@@ -47,9 +54,9 @@ Loop* Game::getLoop() const{
     return loop;
 }
 
-layer* Game::getPlayer(const string name) const{
+Player* Game::getPlayer(const string name) {
     //TODO: name不存在的报错
-    players[name];
+    return players[name];
 }
 
 int Game::getPlayerNumber() const{

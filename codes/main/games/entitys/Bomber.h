@@ -9,7 +9,9 @@
 #define _BOMBER_H
 
 #include "LivingEntity.h"
+#include "../Player.h"
 #include "../../configs/BomberConfiguration.h"
+#include "../conceptions/Weapon.h"
 
 
 class Bomber: public LivingEntity {
@@ -33,19 +35,19 @@ class Bomber: public LivingEntity {
         /**
          * 获得视野内的对象
          */
-        vector<Entity*> see() const;
+        virtual vector<Entity*> see() const;
             
         /**
          * 实体是否位于视野中
          * @param ano 实体
          */
-        bool isInSight(const Entity& ano) const;
+        virtual bool isInSight(const Entity& ano) const;
             
         /**
          * 射击
          * @param direction 方向，以y轴正半轴为0，逆时针为正，弧度制
          */
-        bool shoot(const double direction) const;
+        virtual bool shoot(const double direction) const;
     private: 
         //武器
         Weapon* weapon;

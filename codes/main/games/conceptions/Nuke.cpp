@@ -12,7 +12,7 @@
  */
 
 bool Nuke::hasShoot() const{
-    return shoot;
+    return shooted;
 }
 
 int Nuke::getAoeDamage() const{

@@ -6,31 +6,58 @@
 
 
 #include "Player.h"
+#include "./entitys/Carrier.h"
+#include "./entitys/Bomber.h"
+#include "./entitys/Fighter.h"
+#include "../../tools/Logger.h"
+#include "../systems/Engine.h"
+#include <string>
+#include <exception>
+using std::to_string, std::invalid_argument;
 
 /**
  * Player implementation
  */
 
 Player::Player(PlayerConfiguration* const config) {
+    Logger* logger = Engine::getInstance()->getLogger();
     name = config->getName();
+    logger->debug("构造玩家对象：" + name);
     color = config->getColor();
+    carrier = new Carrier(this, config->getCarrierConfig());
+    for(int i=0; i<3; ++i){
+        bombers[i] = new Bomber(this, config->getBomberConfig());
+    }
+    for(int i=0; i<5; ++i){
+        fighters[i] = new Fighter(this, config->getFighterConfig());
+    }
 }
 
 Player::~Player() {
-
+    delete [] carrier;
+    for(int i=0; i<3; ++i){
+        delete [] bombers[i];
+    }
+    for(int i=0; i<5; ++i){
+        delete [] fighters[i];
+    }
+}
 }
 
 void Player::init() {
-    
-    return;
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->debug("初始化玩家：" + name);
+    power = 0;
 }
 
 void Player::win() {
-    return;
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->info("玩家" + name + "胜利");
 }
 
 void Player::lose() {
-    return;
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->info("玩家" + name + "失败");
 }
 
 Carrier* Player::getCarrier() const{
@@ -39,12 +66,20 @@ Carrier* Player::getCarrier() const{
 
 Bomber* Player::getBomber(const int index) const{
     if(index >= 0 && index < 3) return bombers[index];
-    else ;//TODO: 给个合理的提示，可以是debug的
+    else{
+        Logger* logger = Engine::getInstance()->getLogger();
+        logger->sereve("获取轰炸机出错，位置:", index);
+        throw invalid_argument("index should not be "+ to_string(index));
+    }
 }
 
 Fighter* Player::getFighter(const int index) const{
     if(index >= 0 && index < 5) return fighters[index];
-    else ;//TODO: 给个合理的提示，可以是debug的
+    else {
+        Logger* logger = Engine::getInstance()->getLogger();
+        logger->sereve("获取战斗机出错，位置:", index);
+        throw invalid_argument("index should not be "+ to_string(index));
+    }
 }
 
 string Player::getName() const{
@@ -56,10 +91,16 @@ Color Player::getColor() const{
 }
 
 void Player::addPower(const int power) {
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->debug("玩家" + name + "当前资源：", this->power);
+    logger->debug("玩家" + name + "获得资源：", power);
     this->power += power;
 }
 
 bool Player::subPower(int power) {
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->debug("玩家" + name + "当前资源：", this->power);
+    logger->debug("玩家" + name + "消耗资源", power);
     if((this->power - power) < 0) return false;
     this->power -= power;
     return true;

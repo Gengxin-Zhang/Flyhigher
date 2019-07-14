@@ -34,8 +34,9 @@ class Vector2D {
          * 根据向量长度和方向角构造向量
          * @param module 向量长度
          * @param angle 相对于y轴正半轴的方向角，逆时针为正，弧度制
+         * @param has 随便给，因为避免构造函数冲突
          */
-        Vector2D(const double module, const double angle);
+        Vector2D(const double module, const double angle, bool has);
 
         /**
          * 根据向量长度和方向向量构造向量

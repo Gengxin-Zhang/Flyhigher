@@ -28,7 +28,7 @@ Vector2D::Vector2D(const Vector2D& ano) {
     this->x = ano.x;
     this->y = ano.y;
 }
-Vector2D::Vector2D(const double module, const double angle){
+Vector2D::Vector2D(const double module, const double angle, bool has){
     double normal_angle = angle - M_PI/2;
     x = module * cos(normal_angle);
     y = module * sin(normal_angle);

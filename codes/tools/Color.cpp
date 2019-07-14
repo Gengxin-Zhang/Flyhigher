@@ -58,6 +58,13 @@ Color::Color(int alpha, int r, int g, int b) {
     }
 }
 
+Color::Color(){
+    alpha = 0;
+    r = 0;
+    g = 0;
+    b = 0;
+}
+
 Color::Color(const Color& color) {
     alpha = color.alpha;
     r = color.r;

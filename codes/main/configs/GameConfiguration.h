@@ -11,6 +11,9 @@
 #include "MapConfiguration.h"
 #include "JudgerConfiguration.h"
 #include "LoopConfiguration.h"
+#include "PlayerConfiguration.h"
+
+class Engine;
 
 class GameConfiguration {
     public: 
@@ -53,7 +56,7 @@ class GameConfiguration {
          * @param playersConfig 玩家配置项组
          */
         GameConfiguration(MapConfiguration* const mapConfig, JudgerConfiguration* const judgerConfig,
-         LoopConfiguration* const loopConfig, const int playerNumber, const PlayerConfiguration* const * playersConfig);
+         LoopConfiguration* const loopConfig, const int playerNumber, PlayerConfiguration** playersConfig);
         
         /**
          * 析构函数
@@ -64,7 +67,7 @@ private:
     JudgerConfiguration* judgerConfig;
     LoopConfiguration* loopConfig;
     int playerNumber;
-    const PlayerConfiguration* const * playersConfig;
+    PlayerConfiguration** playersConfig;
 };
 
 #endif //_GAMECONFIGURATION_H

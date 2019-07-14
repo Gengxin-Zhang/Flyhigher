@@ -10,9 +10,10 @@
 
 #include <set>
 #include "../configs/LoopConfiguration.h"
-#include "../entitys/ResourceEntity.h"
-#include "../entitys/LivingEntity.h"
-#include "../entitys/Bullet.h"
+#include "./entitys/ResourceEntity.h"
+#include "./entitys/LivingEntity.h"
+#include "./entitys/Bullet.h"
+#include "Player.h"
 using std::set;
 
 class Loop {

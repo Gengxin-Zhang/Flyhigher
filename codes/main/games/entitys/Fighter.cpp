@@ -15,10 +15,11 @@
 Fighter::Fighter(Player* const player, FighterConfiguration* const config,
  Entity* const parentEntity, const double x, const double y) 
  :LivingEntity(player, config->getConfig(), parentEntity, x, y) {
-    this->isCollecting = false;
-    RebuildableConfiguration* rConfig = config->getRebuildConfig();
+    this->collecting = false;
     this->weapon = new Weapon(config->getWeaponConfig());
-    //TODO: 通过配置项构造weapon
+    RebuildableConfiguration* rConfig = config->getRebuildConfig();
+    rebuildPower = rConfig->getPower();
+    rebuildTicks = rConfig->getTick();
 }
 
 Fighter::~Fighter() {
@@ -77,4 +78,8 @@ int Fighter::getRebuildTicks() const{
 
 int Fighter::getRebuildPower() const{
     return rebuildPower;
+}
+
+void Fighter::rebuild(){
+    //TODO: beginRebuildTick = nowTick;
 }

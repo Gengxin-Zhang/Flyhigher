@@ -9,9 +9,12 @@
 #define _CARRIER_H
 
 #include "LivingEntity.h"
+#include "../Player.h"
 #include "../../configs/CarrierConfiguration.h"
 #include "../conceptions/Nuke.h"
 #include "../conceptions/Weapon.h"
+#include <vector>
+using std::vector;
 
 
 class Carrier: public LivingEntity {
@@ -35,13 +38,13 @@ class Carrier: public LivingEntity {
         /**
          * 视野内的实体
          */
-        vector<Entity*> see() const;
+        virtual vector<Entity*> see() const;
             
         /**
          * 判断实体是否在视野内
          * @param ano 实体
          */
-        bool isInSight(const Entity& ano) const;
+        virtual bool isInSight(const Entity& ano) const;
             
         /**
          * 射击

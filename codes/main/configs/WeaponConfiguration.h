@@ -41,7 +41,7 @@ class WeaponConfiguration {
          * @param speed 子弹速度
          * @param delay 射击冷却时间
          */
-        WeaponConfiguration(const double radius, const double damage, const int speed, const int delay);
+        WeaponConfiguration(const double radius, const int damage, const int speed, const int delay);
         
         /**
          * 析构函数

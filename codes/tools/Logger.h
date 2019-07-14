@@ -19,7 +19,7 @@ class Logger {
          * 根据记录文件的路径构建Logger对象
          * @param file 路径
          */
-        Logger(string file);
+        Logger(const string file);
 
         /**
          * 析构函数
@@ -29,63 +29,64 @@ class Logger {
         /**
          * @param num
          */
-        void debug(int num);
+        void debug(const string str, const int num);
             
         /**
          * @param str
          */
-        void debug(string str);
+        void debug(const string str);
             
         /**
          * @param flag
          */
-        void debug(bool flag);
+        void debug(const string str, const bool flag);
             
         /**
          * @param num
          */
-        void infomation(int num);
+        void infomation(const string str, const int num);
             
         /**
          * @param str
          */
-        void infomation(string str);
+        void infomation(const string str);
             
         /**
          * @param flag
          */
-        void infomation(bool flag);
+        void infomation(const string str, const bool flag);
             
         /**
          * @param num
          */
-        void warning(int num);
+        void warning(const string str, const int num);
             
         /**
          * @param str
          */
-        void warning(string str);
+        void warning(const string str);
             
         /**
          * @param flag
          */
-        void warning(bool flag);
+        void warning(const string str, const bool flag);
             
         /**
          * @param num
          */
-        void severe(int num);
+        void severe(const string str, const int num);
             
         /**
          * @param str
          */
-        void severe(string str);
+        void severe(const string str);
             
         /**
          * @param flag
          */
-        void severe(bool flag);
+        void severe(const string str, const bool flag);
     private: 
+        void out_time();
         ofstream out;
 };
 

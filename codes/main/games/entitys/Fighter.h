@@ -12,9 +12,10 @@
 #include "ResourceEntity.h"
 #include "../../configs/FighterConfiguration.h"
 #include "../conceptions/Weapon.h"
+#include "../interfaces/Rebuildable.h"
 
 
-class Fighter: public LivingEntity {
+class Fighter: public LivingEntity, Rebuildable{
     public:
         /**
          * 构造函数
@@ -40,13 +41,13 @@ class Fighter: public LivingEntity {
         /**
          * 获取视野内的实体
          */
-        vector<Entity*> see() const;
+        virtual vector<Entity*> see() const;
             
         /**
          * 判断实体是否位于视野内
          * @param ano 实体
          */
-        bool isInSight(const Entity& ano) const;
+        virtual bool isInSight(const Entity& ano) const;
             
         /**
          * 射击
@@ -89,6 +90,11 @@ class Fighter: public LivingEntity {
          * 重建需要的资源
          */
         int getRebuildPower() const;
+
+        /**
+         * 重建
+         */
+        virtual void rebuild();
     private:
         //正在采集的实体
         ResourceEntity* collectingEntity;
@@ -102,6 +108,7 @@ class Fighter: public LivingEntity {
         int rebuildTicks;
         //重造需要的资源
         int rebuildPower;
+        long beginRebuildTick;
 };
 
 #endif //_FIGHTER_H

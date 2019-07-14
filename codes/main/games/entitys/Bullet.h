@@ -10,7 +10,7 @@
 
 #include "MovableEntity.h"
 #include "LivingEntity.h"
-#include "../conceptions/Damageable.h"
+#include "../interfaces/Damageable.h"
 
 
 class Bullet: public MovableEntity, public Damageable {
@@ -36,7 +36,7 @@ class Bullet: public MovableEntity, public Damageable {
          * 对一个实体造成伤害
          * @param entity 实体
          */
-        void damageTo(LivingEntity& entity) const;
+        virtual void damageTo(LivingEntity& entity) const;
             
         /**
          * 析构函数

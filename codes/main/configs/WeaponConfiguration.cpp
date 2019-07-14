@@ -27,7 +27,7 @@ int WeaponConfiguration::getDelay() const{
     return delay;
 }
 
-WeaponConfiguration::WeaponConfiguration(const double radius, const double damage, const int speed, const int delay) {
+WeaponConfiguration::WeaponConfiguration(const double radius, const int damage, const int speed, const int delay) {
     this->radius = radius;
     this->damage =damage;
     this->speed =speed;

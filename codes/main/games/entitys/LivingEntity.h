@@ -9,11 +9,11 @@
 #define _LIVINGENTITY_H
 
 #include "MovableEntity.h"
-#include "../Player.h"
 #include "../../configs/PlaneConfiguration.h"
 #include <vector>
 using std::vector;
 
+class Player;
 
 class LivingEntity: public MovableEntity {
     public: 
@@ -83,25 +83,25 @@ class LivingEntity: public MovableEntity {
         /**
          * 析构函数
          */
-        ~LivingEntity();
+        virtual ~LivingEntity();
             
         /**
          * 视野内的所有实体
          */
-        virtual vector<Entity*> see() = 0;
+        virtual vector<Entity*> see() const = 0;
             
         /**
          * 判断实体是否在视野内
          * @param ano 实体
          */
-        virtual bool isInSight(const Entity& ano) = 0;
+        virtual bool isInSight(const Entity& ano) const = 0;
             
         /**
          * 射击
          * @param direction 射击方向
          * @return 是否成功触发射击，若处于CD等情况会触发失败
          */
-        virtual bool shoot(const double direction) = 0;
+        virtual bool shoot(const double direction) const = 0;
     private: 
         //当前状态的生命值
         int nowHealth;

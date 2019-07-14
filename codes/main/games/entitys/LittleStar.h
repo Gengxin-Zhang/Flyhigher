@@ -9,6 +9,7 @@
 #define _LITTLESTAR_H
 
 #include "ResourceEntity.h"
+#include "../../configs/LittleStarConfiguration.h"
 
 
 class LittleStar: public ResourceEntity {
@@ -17,15 +18,12 @@ class LittleStar: public ResourceEntity {
          * 构造函数
          * @param config 配置项
          */
-        LittleStar(const LittleStarConfiguration& config);
+        LittleStar(LittleStarConfiguration* const config);
             
         /**
          * 析构函数
          */
         ~LittleStar();
-    private: 
-        //小型资源行星配置项
-        LittleStarConfiguration config;
 };
 
 

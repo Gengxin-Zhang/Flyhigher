@@ -17,7 +17,7 @@
 #include <cstring>
 #include <map>
 using std::string;
-
+class Engine;
 
 class Game {
     public: 
@@ -60,7 +60,7 @@ class Game {
          * @param name 玩家名称
          * @return 玩家实例
          */
-        Player* getPlayer(const string name) const;
+        Player* getPlayer(const string name);
 
         /**
          * 获取当前玩家数

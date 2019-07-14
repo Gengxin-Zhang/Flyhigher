@@ -6,136 +6,149 @@
 
 
 #include "Logger.h"
+#include "../main/systems/Engine.h"
+#include <iostream>
+#include <ctime>
+using std::cout, std::endl, std::time, std::localtime;
 
 /**
  * Logger implementation
  */
+//the following are UBUNTU/LINUX ONLY terminal color codes.
+#define RESET   "\033[0m"
+#define BLACK   "\033[30m"      /* Black */
+#define RED     "\033[31m"      /* Red */
+#define GREEN   "\033[32m"      /* Green */
+#define YELLOW  "\033[33m"      /* Yellow */
+#define BLUE    "\033[34m"      /* Blue */
+#define MAGENTA "\033[35m"      /* Magenta */
+#define CYAN    "\033[36m"      /* Cyan */
+#define WHITE   "\033[37m"      /* White */
+#define BOLDBLACK   "\033[1m\033[30m"      /* Bold Black */
+#define BOLDRED     "\033[1m\033[31m"      /* Bold Red */
+#define BOLDGREEN   "\033[1m\033[32m"      /* Bold Green */
+#define BOLDYELLOW  "\033[1m\033[33m"      /* Bold Yellow */
+#define BOLDBLUE    "\033[1m\033[34m"      /* Bold Blue */
+#define BOLDMAGENTA "\033[1m\033[35m"      /* Bold Magenta */
+#define BOLDCYAN    "\033[1m\033[36m"      /* Bold Cyan */
+#define BOLDWHITE   "\033[1m\033[37m"      /* Bold White */
 
+Logger::Logger(const string file) {
+    out = ofstream(file);
+}
 
-/**
- * @param file
- */
-void Logger::Logger(File file) {
+Logger::~Logger() {
 
 }
 
-/**
- * @param file
- */
-void Logger::Logger(String file) {
-
+void Logger::out_time() {
+    char str[20];
+    time_t now = time(0);
+    tm *ltm = localtime(&now);
+    strftime(str, 26, "%Y-%m-%d %H:%M:%S", ltm);
+    out<<str;
+    cout<<str;
 }
 
-void Logger::~Logger() {
-
+void Logger::debug(const string str, const int num) {
+    if(Engine::isDebugMode()){
+        out<<"[debug][";
+        cout<<RED<<"[debug][";
+        out_time();
+        out<<"]"<<str<<num<<endl;
+        cout<<"]"<<str<<num<<endl;
+    }
 }
 
-/**
- * @param num
- * @return void
- */
-void Logger::debug(int num) {
-    return;
+void Logger::debug(const string str) {
+    if(Engine::isDebugMode()){
+        out<<"[debug][";
+        cout<<RED<<"[debug][";
+        out_time();
+        out<<"]"<<str<<endl;
+        cout<<"]"<<str<<endl;
+    }
 }
 
-/**
- * @param str
- * @return void
- */
-void Logger::debug(String str) {
-    return;
+void Logger::debug(const string str, const bool flag) {
+    if(Engine::isDebugMode()){
+        out<<"[debug][";
+        cout<<RED<<"[debug][";
+        out_time();
+        out<<"]"<<str<<flag<<endl;
+        cout<<"]"<<str<<flag<<endl;
+    }
 }
 
-/**
- * @param flag
- * @return void
- */
-void Logger::debug(bool flag) {
-    return;
+void Logger::infomation(const string str, const int num) {
+    out<<"[info][";
+    cout<<WHITE<<"[info][";
+    out_time();
+    out<<"]"<<str<<num<<endl;
+    cout<<"]"<<str<<num<<endl;
 }
 
-/**
- * @param num
- * @return void
- */
-void Logger::infomation(int num) {
-    return;
+void Logger::infomation(const string str) {
+    out<<"[info][";
+    cout<<WHITE<<"[info][";
+    out_time();
+    out<<"]"<<str<<endl;
+    cout<<"]"<<str<<endl;
 }
 
-/**
- * @param str
- * @return void
- */
-void Logger::infomation(String str) {
-    return;
+void Logger::infomation(const string str, const bool flag) {
+    out<<"[info][";
+    cout<<WHITE<<"[info][";
+    out_time();
+    out<<"]"<<str<<flag<<endl;
+    cout<<"]"<<str<<flag<<endl;
 }
 
-/**
- * @param flag
- * @return void
- */
-void Logger::infomation(bool flag) {
-    return;
+void Logger::warning(const string str, const int num) {
+    out<<"[warn][";
+    cout<<YELLOW<<"[warn][";
+    out_time();
+    out<<"]"<<str<<num<<endl;
+    cout<<"]"<<str<<num<<endl;
 }
 
-/**
- * @param num
- * @return void
- */
-void Logger::warning(int num) {
-    return;
+void Logger::warning(const string str) {
+    out<<"[warn][";
+    cout<<YELLOW<<"[warn][";
+    out_time();
+    out<<"]"<<str<<endl;
+    cout<<"]"<<str<<endl;
 }
 
-/**
- * @param str
- * @return void
- */
-void Logger::warning(String str) {
-    return;
+void Logger::warning(const string str, const bool flag) {
+    out<<"[warn][";
+    cout<<YELLOW<<"[warn][";
+    out_time();
+    out<<"]"<<str<<flag<<endl;
+    cout<<"]"<<str<<flag<<endl;
 }
 
-/**
- * @param flag
- * @return void
- */
-void Logger::warning(bool flag) {
-    return;
+void Logger::severe(const string str, const int num) {
+    out<<"[severe][";
+    cout<<BOLDRED<<"[severe][";
+    out_time();
+    out<<"]"<<str<<num<<endl;
+    cout<<"]"<<str<<num<<endl;
 }
 
-/**
- * @param num
- * @return void
- */
-void Logger::severe(int num) {
-    return;
+void Logger::severe(const string str) {
+    out<<"[severe][";
+    cout<<BOLDRED<<"[severe][";
+    out_time();
+    out<<"]"<<str<<endl;
+    cout<<"]"<<str<<endl;
 }
 
-/**
- * @param str
- * @return void
- */
-void Logger::severe(String str) {
-    return;
+void Logger::severe(const string str, const bool flag) {
+    out<<"[severe][";
+    cout<<BOLDRED<<"[severe][";
+    out_time();
+    out<<"]"<<str<<flag<<endl;
+    cout<<"]"<<str<<flag<<endl;
 }
 
-/**
- * @param flag
- * @return void
- */
-void Logger::severe(bool flag) {
-    return;
-}
-
-/**
- * @return File
- */
-File Logger::getFile() {
-    return null;
-}
-
-/**
- * @return String
- */
-String Logger::getAbsolutionPath() {
-    return "";
-}

@@ -6,14 +6,19 @@
 
 
 #include "Map.h"
+#include "../../tools/Logger.h"
+#include "../systems/Engine.h"
 #include <exception>
-using std::invalid_argument;
+#include <string>
+using std::invalid_argument, std::to_string;
 
 /**
  * Map implementation
  */
 
 Map::Map(MapConfiguration* const config){
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->debug("构造地图对象");
     height = config->getHeight();
     width = config->getWidth();
     maxPlayersAllowed = config->getMaxPlayer();
@@ -50,7 +55,9 @@ int Map::getMaxPlayersAllowed() const{
 
 Point2D Map::getBrithPoint(const int index) const{
     if(index < 0 || index >= maxPlayersAllowed){
-        throw invalid_argument("index should not be " + index);
+        Logger* logger = Engine::getInstance()->getLogger();
+        logger->severe("获取不存在的地图出生点，值：", index);
+        throw invalid_argument("index should not be " + to_string(index));
     }
     return birthPoints[index];
 }

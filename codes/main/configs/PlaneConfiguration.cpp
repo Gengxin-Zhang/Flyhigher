@@ -16,7 +16,7 @@ int PlaneConfiguration::getMaxHealth() const{
     return maxHealth;
 }
 
-int PlaneConfiguration::getSpeed() const{
+double PlaneConfiguration::getSpeed() const{
     return speed;
 }
 
@@ -32,7 +32,7 @@ int PlaneConfiguration::getHealPower() const{
     return healPower;
 }
 
-PlaneConfiguration::PlaneConfiguration(const int maxHealth, const int speed, const double radius,
+PlaneConfiguration::PlaneConfiguration(const int maxHealth, const double speed, const double radius,
  const int healRate, const int healPower) {
     this->maxHealth = maxHealth;
     this->speed = speed;
