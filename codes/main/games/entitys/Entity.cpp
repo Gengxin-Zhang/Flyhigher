@@ -17,14 +17,14 @@ using std::abs, std::sqrt, std::acos, std::to_string;
  */
 
 
-Entity::Entity(const double radius, Entity* const parentEntity, const double x, const double y) {
+Entity::Entity(const double radius, shared_ptr<Entity> const parentEntity, const double x, const double y) {
     this->radius = radius;
     this->parentEntity = parentEntity;
     this->x = x;
     this->y = y;
 }
 
-Entity* Entity::getParentEntity() const{
+shared_ptr<Entity> Entity::getParentEntity() const{
     return parentEntity;
 }
 

@@ -64,6 +64,11 @@ class Engine {
          * @return 游戏
          */
         Game* getNowGame() const;
+
+        /**
+         * 关闭引擎
+         */
+        void shutdown() const;
     private:
         /**
          * 构造函数
@@ -76,6 +81,7 @@ class Engine {
          */
         bool onDebugMode() const;
 
+
         Logger* logger;
         string workDir;
         Configuration* totalConfig;
@@ -85,6 +91,7 @@ class Engine {
         bool debugMode;
         Game* nowGame;
         thread* nowGameThread;
+        bool hasNowGame;
 };
 
 #endif //_ENGINE_H

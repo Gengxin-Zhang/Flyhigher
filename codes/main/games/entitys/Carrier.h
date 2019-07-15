@@ -27,8 +27,8 @@ class Carrier: public LivingEntity {
          * @param x x坐标
          * @param y y坐标
          */
-        Carrier(Player* const player, CarrierConfiguration* const config,
-         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
+        Carrier(shared_ptr<Player> const player, CarrierConfiguration* const config,
+         shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 析构函数
@@ -38,7 +38,7 @@ class Carrier: public LivingEntity {
         /**
          * 视野内的实体
          */
-        virtual vector<Entity*> see() const;
+        virtual vector<shared_ptr<Entity>> see() const;
             
         /**
          * 判断实体是否在视野内

@@ -25,7 +25,7 @@ class Bullet: public MovableEntity, public Damageable {
          * @param y y坐标
          */
         Bullet(const double radius, const Vector2D speed, const int damage,
-         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
+         shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 获取击中实体造成的伤害值

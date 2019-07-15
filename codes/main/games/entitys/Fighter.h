@@ -26,8 +26,8 @@ class Fighter: public LivingEntity, public Rebuildable, public Collector{
          * @param x x坐标
          * @param y y坐标
          */
-        Fighter(Player* const player, FighterConfiguration* const config,
-         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
+        Fighter(shared_ptr<Player> const player, FighterConfiguration* const config,
+         shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 析构函数
@@ -42,7 +42,7 @@ class Fighter: public LivingEntity, public Rebuildable, public Collector{
         /**
          * 获取视野内的实体
          */
-        virtual vector<Entity*> see() const;
+        virtual vector<shared_ptr<Entity>> see() const;
             
         /**
          * 判断实体是否位于视野内

@@ -14,7 +14,7 @@ using std::to_string;
  */
 
 Bullet::Bullet(const double radius, const Vector2D speed, const int damage,
- Entity* const parentEntity, const double x, const double y): MovableEntity(radius, speed, parentEntity, x, y) {
+ shared_ptr<Entity> const parentEntity, const double x, const double y): MovableEntity(radius, speed, parentEntity, x, y) {
      this->damage = damage;
 }
 

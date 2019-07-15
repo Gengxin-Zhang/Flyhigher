@@ -12,8 +12,8 @@
  */
 
 
-Fighter::Fighter(Player* const player, FighterConfiguration* const config,
- Entity* const parentEntity, const double x, const double y) 
+Fighter::Fighter(shared_ptr<Player> const player, FighterConfiguration* const config,
+ shared_ptr<Entity> const parentEntity, const double x, const double y)
  :LivingEntity(player, config->getConfig(), parentEntity, x, y) {
     this->collecting = false;
     this->weapon = new Weapon(config->getWeaponConfig());
@@ -30,7 +30,7 @@ void Fighter::die() {
     if(collecting) stopCollecting();
 }
 
-vector<Entity*> Fighter::see() const{
+vector<shared_ptr<Entity>> Fighter::see() const{
     //TODO: 思考怎么实现ing
 }
 

@@ -47,7 +47,7 @@ class Loop {
          * 玩家胜利结束游戏
          * @param winner 胜利的玩家
          */
-        void endWithWinner(Player* const winner);
+        void endWithWinner(shared_ptr<Player> const winner);
 
         /**
          * 时间用尽结束游戏
@@ -64,45 +64,45 @@ class Loop {
          * 添加资源实体
          * @param entity 资源实体
          */
-        void addResourceEntity(ResourceEntity* const entity);
+        void addResourceEntity(shared_ptr<ResourceEntity> const entity);
 
         /**
          * 添加子弹实体
          * @param entity 子弹
          */
-        void addBullet(Bullet* const entity);
+        void addBullet(shared_ptr<Bullet> const entity);
 
         /**
          * 添加生命实体
          * @param entity 生命实体
          */
-        void addLivingEntity(LivingEntity* const entity);
+        void addLivingEntity(shared_ptr<LivingEntity> const entity);
 
         /**
          * 删除资源实体
          * @param entity 资源实体
          * @return 删除是否成功
          */
-        bool removeResourceEntity(ResourceEntity* const entity);
+        bool removeResourceEntity(shared_ptr<ResourceEntity> const entity);
 
         /**
          * 删除子弹实体
          * @param entity 子弹
          * @return 删除是否成功
          */
-        bool removeBullet(Bullet* const entity);
+        bool removeBullet(shared_ptr<Bullet> const entity);
 
         /**
          * 删除生命实体
          * @param entity 生命实体
          * @return 删除是否成功
          */
-        bool removeLivingEntity(LivingEntity* const entity);
+        bool removeLivingEntity(shared_ptr<LivingEntity> const entity);
 
     private: 
-        set<ResourceEntity*> allResourceEntity;
-        set<Bullet*> allBullet;
-        set<LivingEntity*> allLivingEntity;
+        set<shared_ptr<ResourceEntity>> allResourceEntity;
+        set<shared_ptr<Bullet>> allBullet;
+        set<shared_ptr<LivingEntity>> allLivingEntity;
         long nowTick;
         steady_clock::time_point nowTickStartTime;
         long maxTickAllowed;

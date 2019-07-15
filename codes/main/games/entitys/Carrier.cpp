@@ -13,18 +13,18 @@
  * 母舰类
  */
 
-Carrier::Carrier(Player* const player, CarrierConfiguration* const config, Entity* const parentEntity, const double x, const double y):
+Carrier::Carrier(shared_ptr<Player> const player, CarrierConfiguration* const config, shared_ptr<Entity> const parentEntity, const double x, const double y):
  LivingEntity(player, config->getConfig(), parentEntity, x, y) {
     mainWeapon = new Weapon(config->getWeaponConfig());
     godWeapon = new Nuke(config->getNukeConfig());
 }
 
 Carrier::~Carrier() {
-    delete [] mainWeapon;
-    delete [] godWeapon;
+    delete mainWeapon;
+    delete godWeapon;
 }
 
-vector<Entity*> Carrier::see() const{
+vector<shared_ptr<Entity>> Carrier::see() const{
     //TODO: 思考怎么实现ing
 }
 

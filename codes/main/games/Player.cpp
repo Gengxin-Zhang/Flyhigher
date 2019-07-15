@@ -22,39 +22,28 @@ using std::to_string, std::invalid_argument;
  * Player implementation
  */
 
-Player::Player(PlayerConfiguration* const config, const Point2D startPoint) {
+Player::Player(PlayerConfiguration* const config, const Point2D startPoint): enable_shared_from_this<Player>(){
     name = config->getName();
     log->debug("构造玩家对象：" + name);
     color = config->getColor();
     power = 0;
     this->startPoint = startPoint;
-    carrier = new Carrier(this, config->getCarrierConfig());
-    for(int i=0; i<3; ++i){
-        bombers[i] = new Bomber(this, config->getBomberConfig());
-    }
-    for(int i=0; i<5; ++i){
-        fighters[i] = new Fighter(this, config->getFighterConfig());
-    }
+    this->config = config;
 }
 
 Player::~Player() {
-    if(carrier) delete carrier;
-    for(int i=0; i<3; ++i){
-        if(bombers[i]) delete bombers[i];
-    }
-    for(int i=0; i<5; ++i){
-        if(fighters[i]) delete fighters[i];
-    }
 }
 
 void Player::init() {
     log->debug("初始化玩家：" + name);
+    carrier = shared_ptr<Carrier>(new Carrier(shared_from_this(), config->getCarrierConfig()));
     carrier->setPoint(startPoint);
     carrier->init();
     loop->addLivingEntity(carrier);
     log->debug("添加母舰到玩家对象：" + name);
     Vector2D v1 = Vector2D(0, 100);
     for(int i=0; i<3; ++i){
+        bombers[i] = shared_ptr<Bomber>(new Bomber(shared_from_this(), config->getBomberConfig()));
         bombers[i]->setPoint(v1.toPoint2D(startPoint));
         bombers[i]->init();
         loop->addLivingEntity(bombers[i]);
@@ -63,6 +52,7 @@ void Player::init() {
     log->debug("添加轰炸机到玩家对象：" + name);
     Vector2D v2 = Vector2D(0, -100);
     for(int i=0; i<5; ++i){
+        fighters[i] = shared_ptr<Fighter>(new Fighter(shared_from_this(), config->getFighterConfig()));
         fighters[i]->setPoint(v2.toPoint2D(startPoint));
         fighters[i]->init();
         loop->addLivingEntity(fighters[i]);
@@ -79,11 +69,11 @@ void Player::lose() {
     log->infomation("玩家" + name + "失败");
 }
 
-Carrier* Player::getCarrier() const{
+shared_ptr<Carrier> Player::getCarrier() const{
     return carrier;
 }
 
-Bomber* Player::getBomber(const int index) const{
+shared_ptr<Bomber> Player::getBomber(const int index) const{
     if(index >= 0 && index < 3) return bombers[index];
     else{
         log->severe("获取轰炸机出错，位置:", index);
@@ -91,7 +81,7 @@ Bomber* Player::getBomber(const int index) const{
     }
 }
 
-Fighter* Player::getFighter(const int index) const{
+shared_ptr<Fighter> Player::getFighter(const int index) const{
     if(index >= 0 && index < 5) return fighters[index];
     else {
         log->severe("获取战斗机出错，位置:", index);

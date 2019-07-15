@@ -28,9 +28,9 @@ Loop::Loop(LoopConfiguration* const config) {
     log->debug("构造主循环对象");
     maxTickAllowed = config->getMaxTickAllowed();
     timePerTick = config->getTimePerTick();
-    allBullet = set<Bullet*>();
-    allLivingEntity = set<LivingEntity*>();
-    allResourceEntity = set<ResourceEntity*>();
+    allBullet = set<shared_ptr<Bullet>>();
+    allLivingEntity = set<shared_ptr<LivingEntity>>();
+    allResourceEntity = set<shared_ptr<ResourceEntity>>();
 }
 
 Loop::~Loop() {
@@ -47,17 +47,17 @@ void Loop::run() {
         nowTickStartTime = steady_clock::now();
         //TODO: doSomething
         //运动
-        for(set<LivingEntity*>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
+        for(set<shared_ptr<LivingEntity>>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
             (*le)->turnDirection(u(e));
             (*le)->goNextTick();
         }
-        for(set<Bullet*>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
+        for(set<shared_ptr<Bullet>>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
             (*it)->goNextTick();
         }
         //碰撞检测：任何实体和资源实体都不会相撞
         //碰撞检测：活实体撞活实体，必定至少有一个gg，另一个掉这么多血
-        for(set<LivingEntity*>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
-            for(set<LivingEntity*>::iterator le2=le; le2!=allLivingEntity.end(); ++le2){
+        for(set<shared_ptr<LivingEntity>>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
+            for(set<shared_ptr<LivingEntity>>::iterator le2=le; le2!=allLivingEntity.end(); ++le2){
                 if(le == le2){
                     continue;
                 }
@@ -88,8 +88,8 @@ void Loop::run() {
             cont:;
         }
         //碰撞检测：子弹碰子弹，子弹消失
-        for(set<Bullet*>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
-            for(set<Bullet*>::iterator it2=it; it2!=allBullet.end(); ++it2){
+        for(set<shared_ptr<Bullet>>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
+            for(set<shared_ptr<Bullet>>::iterator it2=it; it2!=allBullet.end(); ++it2){
                 if(it == it2)continue;
                 if((*it)->isOverlapped(**it) || (*it)->contains(**it) || (*it)->isContained(**it)){
                     log->debug((*it)->toString() + "碰撞" + (*it2)->toString());
@@ -101,14 +101,13 @@ void Loop::run() {
             }
         }
         //碰撞检测：子弹碰活实体，子弹消失，活实体受伤害
-        for(set<Bullet*>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
-            for(set<LivingEntity*>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
+        for(set<shared_ptr<Bullet>>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
+            for(set<shared_ptr<LivingEntity>>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
                 if((*le)->isOverlapped(**it) || (*le)->contains(**it) || (*le)->isContained(**it)){
                     log->debug((*le)->toString() + "碰撞" + (*it)->toString());
                     if((*it)->damageTo(**le)){
                         le = allLivingEntity.erase(le);
                     }
-                    delete [] *it;
                     it = allBullet.erase(it);
                     --it;
                     goto contt;
@@ -117,7 +116,7 @@ void Loop::run() {
             contt:;
         }
         //边界检测：出界的实体强制设定在界内最近点
-        for(set<LivingEntity*>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
+        for(set<shared_ptr<LivingEntity>>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
             if(!mapp->isEntityInMap(**le)){
                 if((*le)->getX()<0){
                     (*le)->setX(0);
@@ -132,9 +131,8 @@ void Loop::run() {
             }
         }
         //边界检测：出界的子弹删除
-        for(set<Bullet*>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
+        for(set<shared_ptr<Bullet>>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
             if(!mapp->isEntityInMap(**it)){
-                delete [] *it;
                 it = allBullet.erase(it);
                 --it;
             }
@@ -142,11 +140,11 @@ void Loop::run() {
         //坐标处理
         char graph[50][100];
         memset(graph, 0, 5000);
-        for(set<ResourceEntity*>::iterator it=allResourceEntity.begin(); it!=allResourceEntity.end(); ++it){
+        for(set<shared_ptr<ResourceEntity>>::iterator it=allResourceEntity.begin(); it!=allResourceEntity.end(); ++it){
             log->debug("resourceEntity loc["+ to_string((*it)->getX()) + "," + to_string((*it)->getY()) + "]");
             graph[50-int((*it)->getY())/10][int((*it)->getX())/10] = 1;
         }
-        for(set<LivingEntity*>::iterator it=allLivingEntity.begin(); it!=allLivingEntity.end(); ++it){
+        for(set<shared_ptr<LivingEntity>>::iterator it=allLivingEntity.begin(); it!=allLivingEntity.end(); ++it){
             log->debug("livingEntity loc["+ to_string((*it)->getX()) + "," + to_string((*it)->getY()) + "]  health=" + to_string((*it)->getNowHealth()));
             if((*it)->getClassName() == "Carrier"){
                 graph[50-int((*it)->getY())/10][int((*it)->getX())/5] = 'C';
@@ -170,7 +168,7 @@ void Loop::run() {
                 log->debug("??????????");
             }
         }
-        for(set<Bullet*>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
+        for(set<shared_ptr<Bullet>>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
             log->debug("bullet loc["+ to_string((*it)->getX()) + "," + to_string((*it)->getY()) + "]");
             graph[50-int((*it)->getY())/10][int((*it)->getX())/10] = 1;
         }
@@ -217,7 +215,7 @@ void Loop::init() {
 
 }
 
-void Loop::endWithWinner(Player* const winner) {
+void Loop::endWithWinner(shared_ptr<Player> const winner) {
     log->infomation("游戏结束！");
     log->debug("存在玩家胜利的游戏结束");
     winner->win();
@@ -232,24 +230,24 @@ long Loop::getMaxTickAllowed() const {
     return maxTickAllowed;
 }
 
-void Loop::addResourceEntity(ResourceEntity* const entity){
+void Loop::addResourceEntity(shared_ptr<ResourceEntity> const entity){
     log->debug("添加资源实体");
     allResourceEntity.insert(entity);
 }
 
-void Loop::addBullet(Bullet* const entity){
+void Loop::addBullet(shared_ptr<Bullet> const entity){
     log->debug("添加子弹实体");
     allBullet.insert(entity);
 }
 
-void Loop::addLivingEntity(LivingEntity* const entity){
+void Loop::addLivingEntity(shared_ptr<LivingEntity> const entity){
     log->debug("添加活实体");
     allLivingEntity.insert(entity);
 }
 
-bool Loop::removeResourceEntity(ResourceEntity* const entity){
+bool Loop::removeResourceEntity(shared_ptr<ResourceEntity> const entity){
     log->debug("删除资源实体");
-    set<ResourceEntity*>::iterator it = allResourceEntity.find(entity);
+    set<shared_ptr<ResourceEntity>>::iterator it = allResourceEntity.find(entity);
     if(it == allResourceEntity.end()){
         return false;
     }
@@ -257,9 +255,9 @@ bool Loop::removeResourceEntity(ResourceEntity* const entity){
     return true;
 }
 
-bool Loop::removeBullet(Bullet* const entity){
+bool Loop::removeBullet(shared_ptr<Bullet> const entity){
     log->debug("删除子弹实体");
-    set<Bullet*>::iterator it = allBullet.find(entity);
+    set<shared_ptr<Bullet>>::iterator it = allBullet.find(entity);
     if(it == allBullet.end()){
         return false;
     }
@@ -267,9 +265,9 @@ bool Loop::removeBullet(Bullet* const entity){
     return true;
 }
 
-bool Loop::removeLivingEntity(LivingEntity* const entity){
+bool Loop::removeLivingEntity(shared_ptr<LivingEntity> const entity){
     log->debug("删除活实体");
-    set<LivingEntity*>::iterator it = allLivingEntity.find(entity);
+    set<shared_ptr<LivingEntity>>::iterator it = allLivingEntity.find(entity);
     if(it == allLivingEntity.end()){
         return false;
     }

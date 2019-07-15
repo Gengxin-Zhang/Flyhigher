@@ -15,8 +15,8 @@ using std::to_string;
  */
 
 
-LivingEntity::LivingEntity(Player* const player, PlaneConfiguration* const config,
- Entity* const parentEntity, const double x, const double y)
+LivingEntity::LivingEntity(shared_ptr<Player> const player, PlaneConfiguration* const config,
+ shared_ptr<Entity> const parentEntity, const double x, const double y)
  :MovableEntity(config->getRadius(), Vector2D(0, config->getSpeed()), parentEntity, x, y) {
      this->player = player;
      maxHealth = config->getMaxHealth();
@@ -55,7 +55,7 @@ void LivingEntity::die() {
     delete this;
 }
 
-Player* LivingEntity::getPlayer() const{
+shared_ptr<Player> LivingEntity::getPlayer() const{
     return player;
 }
 

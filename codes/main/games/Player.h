@@ -13,12 +13,13 @@
 #include "./entitys/Carrier.h"
 #include "./entitys/Bomber.h"
 #include "./entitys/Fighter.h"
-using std::string;
+#include <memory>
+using std::string, std::shared_ptr, std::enable_shared_from_this;
 
 class Engine;
 class Logger;
 
-class Player {
+class Player: public enable_shared_from_this<Player> {
     public:  
         /**
          * 构造函数
@@ -50,21 +51,21 @@ class Player {
          * 返回其母舰指针
          * @return 母舰
          */
-        Carrier* getCarrier() const;
+        shared_ptr<Carrier> getCarrier() const;
             
         /**
          * 返回其第index个轰炸机的指针
          * @param index 索引值
          * @return 轰炸机
          */
-        Bomber* getBomber(const int index) const;
+        shared_ptr<Bomber> getBomber(const int index) const;
             
         /**
          * 返回其第index个战斗机的指针
          * @param index 索引值
          * @return 战斗机
          */
-        Fighter* getFighter(const int index) const;
+        shared_ptr<Fighter> getFighter(const int index) const;
 
         /**
          * 获取玩家名
@@ -93,11 +94,12 @@ class Player {
     private: 
         string name;
         Color color;
-        Carrier* carrier;
-        Bomber* bombers[3];
-        Fighter* fighters[5];
+        shared_ptr<Carrier> carrier;
+        shared_ptr<Bomber> bombers[3];
+        shared_ptr<Fighter> fighters[5];
         int power;
         Point2D startPoint;
+        PlayerConfiguration* config;
 };
 
 #endif //_PLAYER_H

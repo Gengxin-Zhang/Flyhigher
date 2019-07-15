@@ -22,7 +22,7 @@ class ResourceEntity: public Entity {
          * @param y y坐标
          */
         ResourceEntity(const double radius, const int power,
-         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
+         shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 获取资源量

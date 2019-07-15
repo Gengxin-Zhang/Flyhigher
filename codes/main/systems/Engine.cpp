@@ -31,6 +31,7 @@ bool Engine::isDebugMode(){
 
 Engine::Engine() {
     hasStarted = false;
+    hasNowGame = false;
     debugMode = true;
 }
 
@@ -100,6 +101,10 @@ void* threadStartGame(Game* game){
 }
 
 void Engine::startGame(GameConfiguration * const config){
+    if(hasNowGame){
+
+    }
+    hasNowGame = true;
     logger->debug("创建启动线程");
     this->nowGame = new Game(config);
     this->nowGameThread = new thread(threadStartGame, nowGame);
@@ -109,4 +114,8 @@ void Engine::startGame(GameConfiguration * const config){
 
 Game* Engine::getNowGame() const{
     return nowGame;
+}
+
+void Engine::shutdown() const{
+    delete this;
 }

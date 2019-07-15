@@ -10,7 +10,8 @@
 
 #include "../../../tools/Vector2D.h"
 #include <string>
-using std::string;
+#include <memory>
+using std::string, std::shared_ptr;
 
 class Entity {
     public: 
@@ -21,12 +22,12 @@ class Entity {
          * @param x x坐标
          * @param y y坐标
          */
-        Entity(const double radius, Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
+        Entity(const double radius, shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 获取父类对象
          */
-        Entity* getParentEntity() const;
+        shared_ptr<Entity> getParentEntity() const;
             
         /**
          * 获取x坐标
@@ -125,7 +126,7 @@ class Entity {
         /**
          * 析构函数
          */
-        ~Entity();
+        virtual ~Entity();
 
         /**
          * 获取类型名称
@@ -134,7 +135,7 @@ class Entity {
         virtual string getClassName() const;
     private: 
         //父实体
-        Entity* parentEntity;
+        shared_ptr<Entity> parentEntity;
         //x坐标
         double x;
         //y坐标

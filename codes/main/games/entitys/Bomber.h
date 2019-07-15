@@ -24,8 +24,8 @@ class Bomber: public LivingEntity {
          * @param x x坐标
          * @param y y坐标
          */
-        Bomber(Player* const player, BomberConfiguration* const config,
-         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
+        Bomber(shared_ptr<Player> const player, BomberConfiguration* const config,
+         shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 析构函数
@@ -35,7 +35,7 @@ class Bomber: public LivingEntity {
         /**
          * 获得视野内的对象
          */
-        virtual vector<Entity*> see() const;
+        virtual vector<shared_ptr<Entity>> see() const;
             
         /**
          * 实体是否位于视野中

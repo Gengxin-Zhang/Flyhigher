@@ -16,7 +16,8 @@
 #include <string>
 #include <cstring>
 #include <map>
-using std::string;
+#include <memory>
+using std::string, std::shared_ptr;
 
 class Engine;
 class Logger;
@@ -43,26 +44,26 @@ class Game {
          * 获取地图实例
          * @return 地图
          */
-        Map* getMap() const;
+        shared_ptr<Map> getMap() const;
 
         /**
          * 获取裁判实例
          * @return 裁判
          */
-        Judger* getJudger() const;
+        shared_ptr<Judger> getJudger() const;
 
         /**
          * 获取主循环实例
          * @return 主循环
          */
-        Loop* getLoop() const;
+        shared_ptr<Loop> getLoop() const;
 
         /**
          * 获取玩家实例
          * @param name 玩家名称
          * @return 玩家实例
          */
-        Player* getPlayer(const string name);
+        shared_ptr<Player> getPlayer(const string name);
 
         /**
          * 获取当前玩家数
@@ -72,10 +73,10 @@ class Game {
     private:
         
         int player_num;
-        Loop* loop;
-        Map* map;
-        Judger* judger;
-        std::map<string, Player*> players;
+        shared_ptr<Loop> loop;
+        shared_ptr<Map> map;
+        shared_ptr<Judger> judger;
+        std::map<string, shared_ptr<Player>> players;
 };
 
 #endif //_GAME_H

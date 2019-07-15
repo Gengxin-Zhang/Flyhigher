@@ -13,7 +13,7 @@ using std::to_string;
  */
 
 ResourceEntity::ResourceEntity(const double radius, const int power,
- Entity* const parentEntity, const double x, const double y) : Entity(radius, parentEntity, x, y) {
+ shared_ptr<Entity> const parentEntity, const double x, const double y) : Entity(radius, parentEntity, x, y) {
 
 }
 

@@ -25,8 +25,8 @@ class LivingEntity: public MovableEntity {
          * @param x x坐标
          * @param y y坐标
          */
-        LivingEntity(Player* const player, PlaneConfiguration* const config,
-        Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
+        LivingEntity(shared_ptr<Player> const player, PlaneConfiguration* const config,
+        shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
 
         /**
          * 获取最大生命值
@@ -67,7 +67,7 @@ class LivingEntity: public MovableEntity {
          * 获取所属玩家方
          * @return 玩家
          */
-        Player* getPlayer() const;
+        shared_ptr<Player> getPlayer() const;
 
         /**
          * 获取治疗速率
@@ -89,7 +89,7 @@ class LivingEntity: public MovableEntity {
         /**
          * 视野内的所有实体
          */
-        virtual vector<Entity*> see() const = 0;
+        virtual vector<shared_ptr<Entity>> see() const = 0;
             
         /**
          * 判断实体是否在视野内
@@ -125,7 +125,7 @@ class LivingEntity: public MovableEntity {
         //治疗消耗的资源
         int healPower;
         //所属玩家方
-        Player* player;
+        shared_ptr<Player> player;
 };
 
 #endif //_LIVINGENTITY_H

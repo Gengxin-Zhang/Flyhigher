@@ -22,7 +22,7 @@ class MovableEntity: public Entity {
          * @param y y坐标
          */
         MovableEntity(const double radius, const Vector2D speed = Vector2D(),
-         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
+         shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 获取速度向量

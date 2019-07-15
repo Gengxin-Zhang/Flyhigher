@@ -13,7 +13,7 @@
  */
 
 MovableEntity::MovableEntity(const double radius, const Vector2D speed,
- Entity* const parentEntity, const double x, const double y): Entity(radius, parentEntity, x, y) {
+ shared_ptr<Entity> const parentEntity, const double x, const double y): Entity(radius, parentEntity, x, y) {
         this->speed = Vector2D(speed);
         this->moving = false;
 }

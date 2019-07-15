@@ -12,16 +12,16 @@
  */
 
 
-Bomber::Bomber(Player* const player, BomberConfiguration* const config, Entity* const parentEntity, const double x, const double y):
+Bomber::Bomber(shared_ptr<Player> const player, BomberConfiguration* const config, shared_ptr<Entity> const parentEntity, const double x, const double y):
  LivingEntity(player, config->getConfig(), parentEntity, x, y)  {
      weapon = new Weapon(config->getWeaponConfig());
 }
 
 Bomber::~Bomber() {
-    delete [] weapon;
+    delete weapon;
 }
 
-vector<Entity*> Bomber::see() const{
+vector<shared_ptr<Entity>> Bomber::see() const{
     //TODO: 思考怎么实现ing
 }
 
