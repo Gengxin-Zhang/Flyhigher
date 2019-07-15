@@ -21,3 +21,11 @@ LittleStar::LittleStar(LittleStarConfiguration* const config):
 LittleStar::~LittleStar() {
 
 }
+
+string LittleStar::getClassName() const{
+    return "LittleStar";
+}
+
+string LittleStar::toString() const{
+    return ResourceEntity::toString() +"  [LittleStar] ()";
+}

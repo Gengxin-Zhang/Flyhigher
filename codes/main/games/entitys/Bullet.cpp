@@ -6,6 +6,8 @@
 
 
 #include "Bullet.h"
+#include <string>
+using std::to_string;
 
 /**
  * Bullet implementation
@@ -20,10 +22,22 @@ int Bullet::getDamage() const{
     return damage;
 }
 
-void Bullet::damageTo(LivingEntity& entity) const{
-    entity.damage(damage);
+bool Bullet::damageTo(LivingEntity& entity) const{
+    return entity.damage(damage);
 }
 
 Bullet::~Bullet() {
 
+}
+
+Damageable::~Damageable(){
+
+}
+
+string Bullet::getClassName() const{
+    return "Bullet";
+}
+
+string Bullet::toString() const{
+    return MovableEntity::toString() + "[Bullet] (damage="+ to_string(damage) +")";
 }

@@ -43,7 +43,7 @@ Logger::~Logger() {
 
 void Logger::out_time() {
     char str[20];
-    time_t now = time(0);
+    time_t now = time(nullptr);
     tm *ltm = localtime(&now);
     strftime(str, 26, "%Y-%m-%d %H:%M:%S", ltm);
     out<<str;
@@ -55,8 +55,8 @@ void Logger::debug(const string str, const long num) {
         out<<"[debug][";
         cout<<RED<<"[debug][";
         out_time();
-        out<<"]"<<str<<num<<endl;
-        cout<<"]"<<str<<num<<endl;
+        out<<"]"<<str<<": "<<num<<endl;
+        cout<<"]"<<str<<": "<<num<<endl;
     }
 }
 
@@ -65,8 +65,8 @@ void Logger::debug(const string str, const int num) {
         out<<"[debug][";
         cout<<RED<<"[debug][";
         out_time();
-        out<<"]"<<str<<num<<endl;
-        cout<<"]"<<str<<num<<endl;
+        out<<"]"<<str<<": "<<num<<endl;
+        cout<<"]"<<str<<": "<<num<<endl;
     }
 }
 
@@ -85,8 +85,8 @@ void Logger::debug(const string str, const bool flag) {
         out<<"[debug][";
         cout<<RED<<"[debug][";
         out_time();
-        out<<"]"<<str<<flag<<endl;
-        cout<<"]"<<str<<flag<<endl;
+        out<<"]"<<str<<": "<<(flag?"true":" false")<<endl;
+        cout<<"]"<<str<<": "<<(flag?"true":" false")<<endl;
     }
 }
 
@@ -94,16 +94,16 @@ void Logger::infomation(const string str, const long num) {
     out<<"[info][";
     cout<<WHITE<<"[info][";
     out_time();
-    out<<"]"<<str<<num<<endl;
-    cout<<"]"<<str<<num<<endl;
+    out<<"]"<<str<<": "<<num<<endl;
+    cout<<"]"<<str<<": "<<num<<endl;
 }
 
 void Logger::infomation(const string str, const int num) {
     out<<"[info][";
     cout<<WHITE<<"[info][";
     out_time();
-    out<<"]"<<str<<num<<endl;
-    cout<<"]"<<str<<num<<endl;
+    out<<"]"<<str<<": "<<num<<endl;
+    cout<<"]"<<str<<": "<<num<<endl;
 }
 
 void Logger::infomation(const string str) {
@@ -118,16 +118,16 @@ void Logger::infomation(const string str, const bool flag) {
     out<<"[info][";
     cout<<WHITE<<"[info][";
     out_time();
-    out<<"]"<<str<<flag<<endl;
-    cout<<"]"<<str<<flag<<endl;
+    out<<"]"<<str<<": "<<(flag?"true":" false")<<endl;
+    cout<<"]"<<str<<": "<<(flag?"true":" false")<<endl;
 }
 
 void Logger::warning(const string str, const long num) {
     out<<"[warn][";
     cout<<YELLOW<<"[warn][";
     out_time();
-    out<<"]"<<str<<num<<endl;
-    cout<<"]"<<str<<num<<endl;
+    out<<"]"<<str<<": "<<num<<endl;
+    cout<<"]"<<str<<": "<<num<<endl;
 }
 
 void Logger::warning(const string str) {
@@ -142,24 +142,24 @@ void Logger::warning(const string str, const bool flag) {
     out<<"[warn][";
     cout<<YELLOW<<"[warn][";
     out_time();
-    out<<"]"<<str<<flag<<endl;
-    cout<<"]"<<str<<flag<<endl;
+    out<<"]"<<str<<": "<<(flag?"true":" false")<<endl;
+    cout<<"]"<<str<<": "<<(flag?"true":" false")<<endl;
 }
 
 void Logger::severe(const string str, const long num) {
     out<<"[severe][";
     cout<<BOLDRED<<"[severe][";
     out_time();
-    out<<"]"<<str<<num<<endl;
-    cout<<"]"<<str<<num<<endl;
+    out<<"]"<<str<<": "<<num<<endl;
+    cout<<"]"<<str<<": "<<num<<endl;
 }
 
 void Logger::severe(const string str, const int num) {
     out<<"[severe][";
     cout<<BOLDRED<<"[severe][";
     out_time();
-    out<<"]"<<str<<num<<endl;
-    cout<<"]"<<str<<num<<endl;
+    out<<"]"<<str<<": "<<num<<endl;
+    cout<<"]"<<str<<": "<<num<<endl;
 }
 
 void Logger::severe(const string str) {
@@ -174,7 +174,11 @@ void Logger::severe(const string str, const bool flag) {
     out<<"[severe][";
     cout<<BOLDRED<<"[severe][";
     out_time();
-    out<<"]"<<str<<flag<<endl;
-    cout<<"]"<<str<<flag<<endl;
+    out<<"]"<<str<<": "<<(flag?"true":" false")<<endl;
+    cout<<"]"<<str<<": "<<(flag?"true":" false")<<endl;
+}
+
+ofstream& Logger::getOut() {
+    return out;
 }
 

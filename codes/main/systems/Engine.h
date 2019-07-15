@@ -49,6 +49,7 @@ class Engine {
 
         /**
          * 当前是否debug模式
+         * @return debug模式
          */
         static bool isDebugMode();
 
@@ -57,6 +58,12 @@ class Engine {
          * @param config 游戏配置项
          */
         void startGame(GameConfiguration* const config);
+
+        /**
+         * 获取当前进行的游戏
+         * @return 游戏
+         */
+        Game* getNowGame() const;
     private:
         /**
          * 构造函数

@@ -7,7 +7,7 @@
 
 #include "Vector2D.h"
 #include <cmath>
-using std::sqrt, std::sin, std::cos;
+using std::sqrt, std::sin, std::cos, std::to_string;
 
 /**
  * Vector2D implementation
@@ -40,7 +40,7 @@ Vector2D::Vector2D(const double module, const Vector2D& direction){
     y = module * normal_direction.getY();
 }
 
-Vector2D::Vector2D(const Point2D& start, const Point2D& end){
+Vector2D::Vector2D(const Point2D start, const Point2D end){
     x = end.getX() - start.getX();
     y = end.getY() - start.getY();
 }
@@ -91,4 +91,16 @@ double Vector2D::getCosineWith(const Vector2D& ano) const{
 
 Vector2D Vector2D::rotate(const double rad) const{
     return Vector2D(sin(rad)*y + cos(rad)*x, cos(rad)*y - sin(rad)*x);
+}
+
+Point2D Vector2D::toPoint2D(const Point2D basePoint) const{
+    return Point2D(basePoint.getX()+x, basePoint.getY()+y);
+}
+
+string Vector2D::toString() const{
+    return "[Vector2D] (" + to_string(x) + ", " + to_string(y) + ")";
+}
+
+string Vector2D::getClassName() const{
+    return "Vector2D";
 }

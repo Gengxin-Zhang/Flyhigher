@@ -21,7 +21,8 @@ class ResourceEntity: public Entity {
          * @param x x坐标
          * @param y y坐标
          */
-        ResourceEntity(const double radius, const int power, Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
+        ResourceEntity(const double radius, const int power,
+         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 获取资源量
@@ -43,6 +44,18 @@ class ResourceEntity: public Entity {
          * 是否正在被采集
          */
         bool isBeingCollected() const;
+
+        /**
+         * 获取类型名称
+         * @return 类型名称
+         */
+        virtual string getClassName() const;
+
+        /**
+         * 将实体以字符串显示
+         * @return 字符串
+         */
+        virtual string toString() const;
     private: 
         //这个资源实体具有的资源量
         int power;

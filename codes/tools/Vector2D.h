@@ -50,7 +50,7 @@ class Vector2D {
          * @param start 起始点
          * @param end 终末点
          */
-        Vector2D(const Point2D& start, const Point2D& end);
+        Vector2D(const Point2D start, const Point2D end);
             
         /**
          * 获取x坐标
@@ -112,6 +112,25 @@ class Vector2D {
          * @param rad 旋转的弧度，逆时针为正
          */
         Vector2D rotate(const double rad) const;
+
+        /**
+         * 由基点沿着向量移动获得新的点
+         * @param basePoint 基点
+         * @return 结果点
+         */
+        Point2D toPoint2D(const Point2D basePoint) const;
+
+        /**
+         * 获取类型名称
+         * @return 类型名
+         */
+        virtual string getClassName() const;
+
+        /**
+         * 字符串表达
+         * @return 字符串
+         */
+        virtual string toString() const;
     private: 
         //x坐标
         double x;

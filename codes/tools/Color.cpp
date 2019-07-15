@@ -6,6 +6,7 @@
 
 
 #include "Color.h"
+using std::to_string;
 
 /**
  * Color implementation
@@ -74,4 +75,13 @@ Color::Color(const Color& color) {
 
 Color::~Color() {
 
+}
+
+string Color::toString() const{
+    return "[Color] (a=" + to_string(alpha) +
+            ", r=" + to_string(r) +  ", g=" + to_string(g) +  ", b=" + to_string(b) + ")";
+}
+
+string Color::getClassName() const{
+    return "Color";
 }

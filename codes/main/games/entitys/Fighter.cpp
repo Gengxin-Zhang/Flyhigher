@@ -28,7 +28,6 @@ Fighter::~Fighter() {
 
 void Fighter::die() {
     if(collecting) stopCollecting();
-    LivingEntity::die();
 }
 
 vector<Entity*> Fighter::see() const{
@@ -47,7 +46,7 @@ bool Fighter::isCollecting() const{
     return collecting;
 }
 
-void Fighter::collect(ResourceEntity& entity) {
+void Fighter::collect(ResourceEntity entity) {
     collectingEntity = &entity;
     collectingEntity->setBeingCollected(true);
     collecting = true;
@@ -58,14 +57,14 @@ void Fighter::collect(ResourceEntity& entity) {
 void Fighter::collectCompletely() {
     //TODO: 我方资源值+=采集的资源值
     delete collectingEntity;
-    collectingEntity = (ResourceEntity*)0;
+    collectingEntity = nullptr;
     collecting = false;
 }
 
 void Fighter::stopCollecting() {
     collecting = false;
     collectingEntity->setBeingCollected(false);
-    collectingEntity = (ResourceEntity*)0;
+    collectingEntity = nullptr;
 }
 
 long Fighter::getStartTime() const{
@@ -82,4 +81,20 @@ int Fighter::getRebuildPower() const{
 
 void Fighter::rebuild(){
     //TODO: beginRebuildTick = nowTick;
+}
+
+Rebuildable::~Rebuildable(){
+
+}
+
+Collector::~Collector(){
+
+}
+
+string Fighter::getClassName() const{
+    return "Fighter";
+}
+
+string Fighter::toString() const{
+    return LivingEntity::toString() +"[Fighter] ()";
 }

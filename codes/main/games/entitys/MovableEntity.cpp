@@ -43,3 +43,11 @@ void MovableEntity::setMoving(const bool moving) {
 MovableEntity::~MovableEntity() {
 
 }
+
+string MovableEntity::getClassName() const{
+    return "MovableEntity";
+}
+
+string MovableEntity::toString() const{
+    return Entity::toString() + "[MovableEntity] (speed=" + speed.toString() + ")";
+}

@@ -21,7 +21,7 @@ class Entity {
          * @param x x坐标
          * @param y y坐标
          */
-        Entity(const double radius, Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
+        Entity(const double radius, Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 获取父类对象
@@ -58,6 +58,7 @@ class Entity {
         /**
          * 是否与另一个实体外切
          * @param ano 另一个实体
+         * @return 是否外切
          */
         bool isTangency(const Entity& ano) const;
         
@@ -110,14 +111,27 @@ class Entity {
         Vector2D toVector2D(const Entity& ano) const;
             
         /**
-         * 将父实体、x坐标、y坐标、碰撞半径转换成字符串显示
+         * 将实体以字符串显示
+         * @return 字符串
          */
-        string toString() const;
+        virtual string toString() const;
+
+        /**
+         * 设置实体的位置
+         * @param p 位置的点坐标表示
+         */
+        void setPoint(const Point2D p);
         
         /**
          * 析构函数
          */
         ~Entity();
+
+        /**
+         * 获取类型名称
+         * @return 类型名称
+         */
+        virtual string getClassName() const;
     private: 
         //父实体
         Entity* parentEntity;

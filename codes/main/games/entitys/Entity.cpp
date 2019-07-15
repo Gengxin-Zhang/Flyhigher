@@ -87,12 +87,19 @@ Vector2D Entity::toVector2D(const Entity& ano) const{
 }
 
 string Entity::toString() const{
-    string str = "";
-    if(parentEntity) str += "[" + parentEntity->toString() + "]\n";
-    str += "x:" + to_string(x) + " y:" + to_string(y) + " radius:" + to_string(radius) + "\n";
-    return str;
+    return "[Entity] (x=" + to_string(x) +
+            ", y=" + to_string(y) + ", radius=" + to_string(radius) + ")";
+}
+
+void Entity::setPoint(const Point2D p){
+    x = p.getX();
+    y = p.getY();
 }
 
 Entity::~Entity() {
 
+}
+
+string Entity::getClassName() const{
+    return "Entity";
 }

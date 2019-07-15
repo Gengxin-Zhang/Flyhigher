@@ -9,10 +9,11 @@
 #define _PLAYERCONFIGURATION_H
 
 #include <string>
-#include "../../tools/Color.h"
 #include "CarrierConfiguration.h"
 #include "BomberConfiguration.h"
 #include "FighterConfiguration.h"
+#include "../../tools/Color.h"
+
 using std::string;
 
 class PlayerConfiguration {

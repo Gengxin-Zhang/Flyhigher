@@ -26,7 +26,7 @@ class LivingEntity: public MovableEntity {
          * @param y y坐标
          */
         LivingEntity(Player* const player, PlaneConfiguration* const config,
-        Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
+        Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
 
         /**
          * 获取最大生命值
@@ -49,8 +49,9 @@ class LivingEntity: public MovableEntity {
         /**
          * 受到一定伤害，原则上是正数
          * @param damage 伤害
+         * @return 是否死亡
          */
-        void damage(const int damage);
+        bool damage(const int damage);
             
         /**
          * 出生
@@ -102,6 +103,18 @@ class LivingEntity: public MovableEntity {
          * @return 是否成功触发射击，若处于CD等情况会触发失败
          */
         virtual bool shoot(const double direction) const = 0;
+
+        /**
+         * 将实体以字符串显示
+         * @return 字符串
+         */
+        virtual string toString() const;
+
+        /**
+         * 获取类型名称
+         * @return 类型名称
+         */
+        virtual string getClassName() const;
     private: 
         //当前状态的生命值
         int nowHealth;

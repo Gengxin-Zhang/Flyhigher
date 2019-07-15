@@ -25,7 +25,7 @@ class Bullet: public MovableEntity, public Damageable {
          * @param y y坐标
          */
         Bullet(const double radius, const Vector2D speed, const int damage,
-         Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
+         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 获取击中实体造成的伤害值
@@ -36,7 +36,19 @@ class Bullet: public MovableEntity, public Damageable {
          * 对一个实体造成伤害
          * @param entity 实体
          */
-        virtual void damageTo(LivingEntity& entity) const;
+        virtual bool damageTo(LivingEntity& entity) const;
+
+        /**
+         * 获取类型名称
+         * @return 类型名称
+         */
+        virtual string getClassName() const;
+
+        /**
+         * 将实体以字符串显示
+         * @return 字符串
+         */
+        virtual string toString() const;
             
         /**
          * 析构函数

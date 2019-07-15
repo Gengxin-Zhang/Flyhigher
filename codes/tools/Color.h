@@ -8,6 +8,9 @@
 #ifndef _COLOR_H
 #define _COLOR_H
 
+#include <string>
+using std::string;
+
 class Color{
     public: 
         /**
@@ -58,6 +61,18 @@ class Color{
          * 析构函数
          */  
         ~Color();
+
+        /**
+         * 获取类型名称
+         * @return 类型名
+         */
+        virtual string getClassName() const;
+
+        /**
+         * 字符串表达
+         * @return 字符串
+         */
+        virtual string toString() const;
     private: 
         int alpha;
         int r;

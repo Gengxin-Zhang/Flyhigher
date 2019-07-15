@@ -28,7 +28,7 @@ class Carrier: public LivingEntity {
          * @param y y坐标
          */
         Carrier(Player* const player, CarrierConfiguration* const config,
-         Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
+         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 析构函数
@@ -50,13 +50,25 @@ class Carrier: public LivingEntity {
          * 射击
          * @param direction 方向，以y轴正半轴为0，逆时针为正，弧度制
          */
-        bool shoot(const double direction) const;
+        virtual bool shoot(const double direction) const;
             
         /**
          * 发射必杀武器
          * @param direction 方向，以y轴正半轴为0，逆时针为正，弧度制
          */
         bool shootGodWeapon(const  double direction) const;
+
+        /**
+         * 将实体以字符串显示
+         * @return 字符串
+         */
+        virtual string toString() const;
+
+        /**
+         * 获取类型名称
+         * @return 类型名称
+         */
+        virtual string getClassName() const;
     private:
         //主武器
         Weapon* mainWeapon;

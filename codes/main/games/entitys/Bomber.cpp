@@ -32,3 +32,11 @@ bool Bomber::isInSight(const Entity& ano) const{
 bool Bomber::shoot(const double direction) const{
     return weapon->shoot(direction);
 }
+
+string Bomber::getClassName() const{
+    return "Bomber";
+}
+
+string Bomber::toString() const{
+    return LivingEntity::toString() +"[Bomber] ()";
+}

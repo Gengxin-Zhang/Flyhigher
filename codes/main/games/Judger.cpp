@@ -8,17 +8,16 @@
 #include "Judger.h"
 #include "../../tools/Logger.h"
 #include "../systems/Engine.h"
+#define log Engine::getInstance()->getLogger()
 
 /**
  * Judger implementation
  */
 
 Judger::Judger(JudgerConfiguration* const config){
-    Logger* logger = Engine::getInstance()->getLogger();
-    logger->debug("构造裁判对象");
+    log->debug("构造裁判对象");
 }
 
 void Judger::init(){
-    Logger* logger = Engine::getInstance()->getLogger();
-    logger->debug("裁判初始化");
+    log->debug("裁判初始化");
 }

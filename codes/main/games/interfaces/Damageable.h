@@ -15,8 +15,14 @@ class Damageable {
         /**
          * 对一个实体造成伤害
          * @param victim
+         * @return 实体是否死亡
          */
-        virtual void damageTo(LivingEntity& victim) const = 0;
-    };
+        virtual bool damageTo(LivingEntity& victim) const = 0;
+
+        /**
+         * 虚析构函数
+         */
+        virtual ~Damageable();
+};
 
 #endif //_DAMAGEABLE_H

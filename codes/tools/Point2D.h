@@ -8,6 +8,9 @@
 #ifndef _POINT2D_H
 #define _POINT2D_H
 
+#include <string>
+using std::string;
+
 class Point2D {
     public: 
         /**
@@ -49,14 +52,28 @@ class Point2D {
         /**
          * 向x方向移动一个距离
          * @param x 距离
+         * @return 新的点对象
          */
-        void moveX(const double x);
+        Point2D moveX(const double x) const;
             
         /**
          * 向y方向移动一个距离
          * @param y 距离
+         * @return 新的点对象
          */
-        void moveY(const double y);
+        Point2D moveY(const double y) const;
+
+        /**
+         * 获取类型名称
+         * @return 类型名
+         */
+        virtual string getClassName() const;
+
+        /**
+         * 字符串表达
+         * @return 字符串
+         */
+        virtual string toString() const;
     private: 
         double x;
         double y;

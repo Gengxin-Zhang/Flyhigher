@@ -39,3 +39,11 @@ bool Carrier::shoot(const double direction) const{
 bool Carrier::shootGodWeapon(const double direction) const{
     return godWeapon->shoot(direction);
 }
+
+string Carrier::getClassName() const{
+    return "Carrier";
+}
+
+string Carrier::toString() const{
+    return LivingEntity::toString() +"[Carrier] ()";
+}

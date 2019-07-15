@@ -22,7 +22,7 @@ class MovableEntity: public Entity {
          * @param y y坐标
          */
         MovableEntity(const double radius, const Vector2D speed = Vector2D(),
-         Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
+         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 获取速度向量
@@ -51,6 +51,18 @@ class MovableEntity: public Entity {
          * @param moving 移动状态
          */
         void setMoving(const bool moving);
+
+        /**
+         * 获取类型名称
+         * @return 类型名称
+         */
+        virtual string getClassName() const;
+
+        /**
+         * 将实体以字符串显示
+         * @return 字符串
+         */
+        virtual string toString() const;
             
         /**
          * 析构函数

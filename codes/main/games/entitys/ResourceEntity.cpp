@@ -6,6 +6,7 @@
 
 
 #include "ResourceEntity.h"
+using std::to_string;
 
 /**
  * ResourceEntity implementation
@@ -31,4 +32,12 @@ void ResourceEntity::setBeingCollected(const bool being) {
 
 bool ResourceEntity::isBeingCollected() const{
     return beingCollected;
+}
+
+string ResourceEntity::getClassName() const{
+    return "ResourceEntity";
+}
+
+string ResourceEntity::toString() const{
+    return Entity::toString() + "[ResourceEntity] (power=" + to_string(power) + ")";
 }

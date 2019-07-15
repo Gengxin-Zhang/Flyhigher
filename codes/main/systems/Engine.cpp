@@ -15,7 +15,7 @@
 
 bool Engine::hasInit = false;
 
-Engine* Engine::engine = (Engine*) 0;
+Engine* Engine::engine =  nullptr;
 
 Engine* Engine::getInstance(){
     if(!hasInit){
@@ -52,7 +52,7 @@ void Engine::startEngine(const bool debugMode) {
     logger->infomation("成功启动！");
     logger->debug("debug模式：开启");
     //-------------Test-----------------
-    Point2D ps[2] = {Point2D(100, 100), Point2D(400, 400)};
+    Point2D ps[2] = {Point2D(150, 150), Point2D(350, 350)};
     PlayerConfiguration* pc1[2] = {new PlayerConfiguration("XHH", Color(100,100,100,100),
                                    new CarrierConfiguration(
                                        new WeaponConfiguration(10, 60, 5, 100),
@@ -96,6 +96,7 @@ Logger* Engine::getLogger() const{
 
 void* threadStartGame(Game* game){
     game->run();
+    return nullptr;
 }
 
 void Engine::startGame(GameConfiguration * const config){
@@ -104,4 +105,8 @@ void Engine::startGame(GameConfiguration * const config){
     this->nowGameThread = new thread(threadStartGame, nowGame);
     logger->debug("启动线程开始执行");
     this->nowGameThread->detach();
+}
+
+Game* Engine::getNowGame() const{
+    return nowGame;
 }

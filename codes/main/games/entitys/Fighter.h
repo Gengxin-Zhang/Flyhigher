@@ -9,14 +9,14 @@
 #define _FIGHTER_H
 
 #include "LivingEntity.h"
-#include "ResourceEntity.h"
 #include "../../configs/FighterConfiguration.h"
 #include "../conceptions/Weapon.h"
+#include "../interfaces/Collector.h"
 #include "../interfaces/Rebuildable.h"
 
 class Player;
 
-class Fighter: public LivingEntity, Rebuildable{
+class Fighter: public LivingEntity, public Rebuildable, public Collector{
     public:
         /**
          * 构造函数
@@ -27,7 +27,7 @@ class Fighter: public LivingEntity, Rebuildable{
          * @param y y坐标
          */
         Fighter(Player* const player, FighterConfiguration* const config,
-         Entity* const parentEntity = (Entity*)0, const double x = 0, const double y = 0);
+         Entity* const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
          * 析构函数
@@ -37,7 +37,7 @@ class Fighter: public LivingEntity, Rebuildable{
         /**
          * 死去
          */
-        void die();
+        virtual void die();
             
         /**
          * 获取视野内的实体
@@ -54,28 +54,33 @@ class Fighter: public LivingEntity, Rebuildable{
          * 射击
          * @param direction 方向，以y轴正半轴为0，逆时针为正，弧度制
          */
-        bool shoot(const double direction) const;
+        virtual bool shoot(const double direction) const;
             
         /**
          * 是否处于采集状态
          */
-        bool isCollecting() const;
+        virtual bool isCollecting() const;
             
         /**
          * 采集资源实体
          * @param entity 资源实体
          */
-        void collect(ResourceEntity& entity);
+        virtual void collect(ResourceEntity entity);
 
         /**
          * 采集实体完毕
          */  
-        void collectCompletely();
+         virtual void collectCompletely();
 
         /**
          * 采集操作中止
          */
-        void stopCollecting();
+         virtual void stopCollecting();
+
+        /**
+         * 重建
+         */
+        virtual void rebuild();
 
         /**
          * 开始采集的时间
@@ -93,9 +98,16 @@ class Fighter: public LivingEntity, Rebuildable{
         int getRebuildPower() const;
 
         /**
-         * 重建
+         * 获取类型名称
+         * @return 类型名称
          */
-        virtual void rebuild();
+        virtual string getClassName() const;
+
+        /**
+         * 将实体以字符串显示
+         * @return 字符串
+         */
+        virtual string toString() const;
     private:
         //正在采集的实体
         ResourceEntity* collectingEntity;

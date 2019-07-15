@@ -24,7 +24,7 @@ class Player {
          * 构造函数
          * @param config 配置项
          */
-        Player(PlayerConfiguration* const config);
+        Player(PlayerConfiguration* const config, const Point2D startPoint);
 
         /**
          * 析构函数
@@ -97,6 +97,7 @@ class Player {
         Bomber* bombers[3];
         Fighter* fighters[5];
         int power;
+        Point2D startPoint;
 };
 
 #endif //_PLAYER_H

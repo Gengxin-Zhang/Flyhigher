@@ -21,3 +21,11 @@ LargeStar::LargeStar(LargeStarConfiguration* const config):
 LargeStar::~LargeStar() {
 
 }
+
+string LargeStar::getClassName() const{
+    return "LargeStar";
+}
+
+string LargeStar::toString() const{
+    return ResourceEntity::toString() +"[LargeStar] ()";
+}

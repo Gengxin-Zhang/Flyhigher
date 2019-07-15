@@ -11,26 +11,33 @@
 #include "../entitys/ResourceEntity.h"
 
 class Collector {
-public: 
-    
-/**
- * 是否正在采集
- * @param
- */
-virtual void isCollecting(bool ) = 0;
-    
-/**
- * 采集一个资源实体
- * @param entity
- */
-virtual void collect(ResourceEntity entity) = 0;
-    
-/**
- * 采集完毕
- */
-virtual void collectCompletely() = 0;
-    
-void stopCollecting();
+    public:
+        /**
+         * 是否正在采集
+         * @return 是否正在采集
+         */
+        virtual bool isCollecting() const = 0;
+
+        /**
+         * 采集一个资源实体
+         * @param entity 实体
+         */
+        virtual void collect(ResourceEntity entity) = 0;
+
+        /**
+         * 采集完毕
+         */
+        virtual void collectCompletely() = 0;
+
+        /**
+         * 中止采集
+         */
+        virtual void stopCollecting() = 0;
+
+        /**
+         * 虚析构函数
+         */
+        virtual ~Collector();
 };
 
 #endif //_COLLECTOR_H

@@ -7,6 +7,8 @@
 
 #include "LivingEntity.h"
 #include "../Player.h"
+#include <string>
+using std::to_string;
 
 /**
  * LivingEntity implementation
@@ -36,18 +38,21 @@ void LivingEntity::heal(const int health) {
     if(nowHealth > maxHealth) nowHealth = maxHealth;
 }
 
-void LivingEntity::damage(const int damage) {
+bool LivingEntity::damage(const int damage) {
     nowHealth -= damage;
-    if(nowHealth < 0) die();
+    if(nowHealth <= 0){
+        die();
+        return true;
+    }
+    return false;
 }
 
 void LivingEntity::init() {
     nowHealth = maxHealth;
-    //TODO: 实体库中添加此实体
 }
 
 void LivingEntity::die() {
-    //TODO: 实体库中删除此实体
+    delete this;
 }
 
 Player* LivingEntity::getPlayer() const{
@@ -64,4 +69,14 @@ int LivingEntity::getHealPower() const{
 
 LivingEntity::~LivingEntity() {
 
+}
+
+string LivingEntity::getClassName() const{
+    return "LivingEntity";
+}
+
+string LivingEntity::toString() const{
+    return MovableEntity::toString() + "[LivingEntity] (player=" +
+            player->getName() + ", nowHealth=" + to_string(nowHealth) + ", maxHealth=" + to_string(maxHealth) +
+            ", healRate=" + to_string(healRate) + ", healPower=" + to_string(healPower) + ")";
 }

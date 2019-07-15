@@ -9,6 +9,7 @@
 #include "../../tools/Logger.h"
 #include "../systems/Engine.h"
 #include <exception>
+#define log Engine::getInstance()->getLogger()
 using std::invalid_argument;
 
 /**
@@ -16,19 +17,16 @@ using std::invalid_argument;
  */
 
 Game::Game(GameConfiguration* const config) {
-    Logger* logger = Engine::getInstance()->getLogger();
-    logger->infomation("准备一场游戏");
+    log->infomation("准备一场游戏");
     judger = new Judger(config->getJudgerConfig());
-    judger->init();
     map = new Map(config->getMapConfig());
+    loop = new Loop(config->getLoopConfig());
     player_num = config->getPlayerNumber();
     for(int i=0; i<player_num; ++i){
-        Player* player = new Player(config->getPlayersConfig(i));
+        Player* player = new Player(config->getPlayersConfig(i), map->getBrithPoint(i));
         players[player->getName()] = player;
-        player->init();
+
     }
-    loop = new Loop(config->getLoopConfig());
-    loop->init();
 }
 
 Game::~Game() {
@@ -36,8 +34,12 @@ Game::~Game() {
 }
 
 void Game::run() {
-    Logger* logger = Engine::getInstance()->getLogger();
-    logger->infomation("开始一场游戏");
+    judger->init();
+    for(std::map<string,Player*>::iterator it = players.begin(); it != players.end(); ++it){
+        it->second->init();
+    }
+    log->infomation("开始一场游戏");
+    loop->init();
     loop->run();
     return;
 }
@@ -55,7 +57,6 @@ Loop* Game::getLoop() const{
 }
 
 Player* Game::getPlayer(const string name) {
-    //TODO: name不存在的报错
     return players[name];
 }
 
