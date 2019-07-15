@@ -10,6 +10,9 @@
 
 #include "../configs/JudgerConfiguration.h"
 
+class Engine;
+class Logger;
+
 class Judger {
     public:
         Judger(JudgerConfiguration * const config);

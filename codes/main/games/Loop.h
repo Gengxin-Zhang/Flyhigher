@@ -14,7 +14,11 @@
 #include "./entitys/LivingEntity.h"
 #include "./entitys/Bullet.h"
 #include "Player.h"
-using std::set;
+#include <chrono>
+using std::set, std::chrono::steady_clock, std::chrono::milliseconds;
+
+class Engine;
+class Logger;
 
 class Loop {
     public: 
@@ -100,8 +104,9 @@ class Loop {
         set<Bullet*> allBullet;
         set<LivingEntity*> allLivingEntity;
         long nowTick;
-        long nowTickStartTime;
+        steady_clock::time_point nowTickStartTime;
         long maxTickAllowed;
+        milliseconds timePerTick;
 };
 
 #endif //_LOOP_H

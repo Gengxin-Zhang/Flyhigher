@@ -9,10 +9,10 @@
 #define _BOMBER_H
 
 #include "LivingEntity.h"
-#include "../Player.h"
 #include "../../configs/BomberConfiguration.h"
 #include "../conceptions/Weapon.h"
 
+class Player;
 
 class Bomber: public LivingEntity {
     public: 

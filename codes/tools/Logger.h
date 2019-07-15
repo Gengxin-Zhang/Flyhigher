@@ -29,8 +29,13 @@ class Logger {
         /**
          * @param num
          */
-        void debug(const string str, const int num);
+        void debug(const string str, const long num);
             
+        /**
+         * @param num
+         */
+        void debug(const string str, const int num);
+
         /**
          * @param str
          */
@@ -41,6 +46,11 @@ class Logger {
          */
         void debug(const string str, const bool flag);
             
+        /**
+         * @param num
+         */
+        void infomation(const string str, const long num);
+
         /**
          * @param num
          */
@@ -59,8 +69,13 @@ class Logger {
         /**
          * @param num
          */
-        void warning(const string str, const int num);
+        void warning(const string str, const long num);
             
+        /**
+         * @param num
+         */
+        void warning(const string str, const int num);
+
         /**
          * @param str
          */
@@ -71,6 +86,11 @@ class Logger {
          */
         void warning(const string str, const bool flag);
             
+        /**
+         * @param num
+         */
+        void severe(const string str, const long num);
+
         /**
          * @param num
          */

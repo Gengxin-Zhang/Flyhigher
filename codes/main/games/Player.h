@@ -10,12 +10,13 @@
 #include <string>
 #include "../../tools/Color.h"
 #include "../configs/PlayerConfiguration.h"
+#include "./entitys/Carrier.h"
+#include "./entitys/Bomber.h"
+#include "./entitys/Fighter.h"
 using std::string;
 
-class Bomber;
-class Carrier;
-class Fighter;
 class Engine;
+class Logger;
 
 class Player {
     public:  

@@ -14,6 +14,7 @@
 #include "../conceptions/Weapon.h"
 #include "../interfaces/Rebuildable.h"
 
+class Player;
 
 class Fighter: public LivingEntity, Rebuildable{
     public:

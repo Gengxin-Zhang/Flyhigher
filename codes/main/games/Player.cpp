@@ -42,7 +42,6 @@ Player::~Player() {
         delete [] fighters[i];
     }
 }
-}
 
 void Player::init() {
     Logger* logger = Engine::getInstance()->getLogger();
@@ -52,12 +51,12 @@ void Player::init() {
 
 void Player::win() {
     Logger* logger = Engine::getInstance()->getLogger();
-    logger->info("玩家" + name + "胜利");
+    logger->infomation("玩家" + name + "胜利");
 }
 
 void Player::lose() {
     Logger* logger = Engine::getInstance()->getLogger();
-    logger->info("玩家" + name + "失败");
+    logger->infomation("玩家" + name + "失败");
 }
 
 Carrier* Player::getCarrier() const{
@@ -68,7 +67,7 @@ Bomber* Player::getBomber(const int index) const{
     if(index >= 0 && index < 3) return bombers[index];
     else{
         Logger* logger = Engine::getInstance()->getLogger();
-        logger->sereve("获取轰炸机出错，位置:", index);
+        logger->severe("获取轰炸机出错，位置:", index);
         throw invalid_argument("index should not be "+ to_string(index));
     }
 }
@@ -77,7 +76,7 @@ Fighter* Player::getFighter(const int index) const{
     if(index >= 0 && index < 5) return fighters[index];
     else {
         Logger* logger = Engine::getInstance()->getLogger();
-        logger->sereve("获取战斗机出错，位置:", index);
+        logger->severe("获取战斗机出错，位置:", index);
         throw invalid_argument("index should not be "+ to_string(index));
     }
 }

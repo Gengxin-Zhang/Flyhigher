@@ -9,13 +9,13 @@
 #define _CARRIER_H
 
 #include "LivingEntity.h"
-#include "../Player.h"
 #include "../../configs/CarrierConfiguration.h"
 #include "../conceptions/Nuke.h"
 #include "../conceptions/Weapon.h"
 #include <vector>
 using std::vector;
 
+class Player;
 
 class Carrier: public LivingEntity {
     public:

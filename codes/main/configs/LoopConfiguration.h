@@ -8,18 +8,26 @@
 #ifndef _LOOPCONFIGURATION_H
 #define _LOOPCONFIGURATION_H
 
+#include <chrono>
+using std::chrono::milliseconds;
+
 class LoopConfiguration {
     public:
         /**
          * 获取系统允许的最大ticks
          */
         long getMaxTickAllowed() const;
+
+        /**
+         * 获取每tick的小间隔时间
+         */
+        milliseconds getTimePerTick() const;
         
         /**
          * 构造函数
          * @param maxTickAllowed 系统允许的最大ticks
          */
-        LoopConfiguration(const long maxTickAllowed);
+        LoopConfiguration(const long maxTickAllowed, const milliseconds timePerTick);
         
         /**
          * 析构函数
@@ -27,6 +35,7 @@ class LoopConfiguration {
         ~LoopConfiguration();
     private: 
         long maxTickAllowed;
+        milliseconds timePerTick;
 };
 
 #endif //_LOOPCONFIGURATION_H

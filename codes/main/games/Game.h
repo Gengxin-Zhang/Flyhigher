@@ -17,7 +17,9 @@
 #include <cstring>
 #include <map>
 using std::string;
+
 class Engine;
+class Logger;
 
 class Game {
     public: 

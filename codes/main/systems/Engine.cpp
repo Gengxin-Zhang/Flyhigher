@@ -35,7 +35,12 @@ Engine::Engine() {
 }
 
 Engine::~Engine() {
-
+    logger->debug("引擎中止");
+    if(nowGameThread){
+        logger->debug("调用线程析构");
+        nowGameThread->~thread();
+    }
+    delete [] nowGame;
 }
 
 void Engine::startEngine(const bool debugMode) {
@@ -46,6 +51,7 @@ void Engine::startEngine(const bool debugMode) {
     this->registerLogger(new Logger("./out.txt"));
     logger->infomation("成功启动！");
     logger->debug("debug模式：开启");
+    //-------------Test-----------------
     Point2D ps[2] = {Point2D(100, 100), Point2D(400, 400)};
     PlayerConfiguration* pc1[2] = {new PlayerConfiguration("XHH", Color(100,100,100,100),
                                    new CarrierConfiguration(
@@ -71,10 +77,9 @@ void Engine::startEngine(const bool debugMode) {
                                            new WeaponConfiguration(2, 20, 20, 10),
                                            new RebuildableConfiguration(100, 200),
                                            new PlaneConfiguration(200, 10, 5, 5, 5)))};
-    Game* game = new Game(new GameConfiguration(new MapConfiguration(500, 500, 2, ps),
-                                                new JudgerConfiguration(),
-                                                new LoopConfiguration(200), 2, pc1));
-    game->run();
+            startGame(new GameConfiguration(new MapConfiguration(500, 500, 2, ps),
+                                                    new JudgerConfiguration(),
+                                                    new LoopConfiguration(200, milliseconds(50)), 2, pc1));
 }
 
 void Engine::registerLogger(Logger* const logger) {
@@ -87,4 +92,16 @@ bool Engine::onDebugMode() const{
 
 Logger* Engine::getLogger() const{
     return logger;
+}
+
+void* threadStartGame(Game* game){
+    game->run();
+}
+
+void Engine::startGame(GameConfiguration * const config){
+    logger->debug("创建启动线程");
+    this->nowGame = new Game(config);
+    this->nowGameThread = new thread(threadStartGame, nowGame);
+    logger->debug("启动线程开始执行");
+    this->nowGameThread->detach();
 }

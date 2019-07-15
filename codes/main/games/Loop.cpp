@@ -6,15 +6,22 @@
 
 
 #include "Loop.h"
+#include "../../tools/Logger.h"
+#include "../systems/Engine.h"
 #include <ctime>
-using std::time;
+#include <thread>
+using std::time, std::chrono::duration, std::chrono::duration_cast;
+using std::this_thread::sleep_for;
 
 /**
  * Loop implementation
  */
 
 Loop::Loop(LoopConfiguration* const config) {
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->debug("构造主循环对象");
     maxTickAllowed = config->getMaxTickAllowed();
+    timePerTick = config->getTimePerTick();
 }
 
 Loop::~Loop() {
@@ -22,20 +29,41 @@ Loop::~Loop() {
 }
 
 void Loop::run() {
-    return;
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->debug("主循环开始");
+    while(nowTick <= maxTickAllowed) {
+        ++nowTick;
+        logger->debug("现在tick：", nowTick);
+        nowTickStartTime = steady_clock::now();
+        //TODO: doSomething
+        duration<double> time_span = duration_cast<duration<double>>(steady_clock::now() - nowTickStartTime);
+        milliseconds deltatime = duration_cast<milliseconds>(time_span);
+        if(deltatime < timePerTick){
+           sleep_for(timePerTick - deltatime);
+        }
+
+    }
+    endWithTimeOut();
 }
 
 void Loop::init() {
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->debug("主循环初始化");
     nowTick = 0;
-    nowTickStartTime = time(0);
 }
 
 void Loop::endWithWinner(Player* const winner) {
-    return;
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->infomation("游戏结束！");
+    logger->debug("存在玩家胜利的游戏结束");
+    winner->win();
 }
 
 void Loop::endWithTimeOut() {
-    return;
+    Logger* logger = Engine::getInstance()->getLogger();
+    logger->infomation("游戏结束！");
+    logger->debug("时间用尽的游戏结束");
+    //TODO: 没实现
 }
 
 long Loop::getMaxTickAllowed() const {

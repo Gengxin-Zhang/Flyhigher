@@ -12,7 +12,9 @@
 #include <exception>
 #include "../../tools/Logger.h"
 #include "../configs/Configuration.h"
-using std::string, std::invalid_argument;
+#include "../games/Game.h"
+#include <thread>
+using std::string, std::invalid_argument, std::thread;
 
 class Engine {
     public:
@@ -49,6 +51,12 @@ class Engine {
          * 当前是否debug模式
          */
         static bool isDebugMode();
+
+        /**
+         * 开始一场游戏
+         * @param config 游戏配置项
+         */
+        void startGame(GameConfiguration* const config);
     private:
         /**
          * 构造函数
@@ -68,6 +76,8 @@ class Engine {
         static bool hasInit;
         bool hasStarted;
         bool debugMode;
+        Game* nowGame;
+        thread* nowGameThread;
 };
 
 #endif //_ENGINE_H
