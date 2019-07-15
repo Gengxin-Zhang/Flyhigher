@@ -26,7 +26,7 @@ Map::Map(MapConfiguration* const config){
 }
 
 Map::~Map(){
-
+    log->debug("析构map");
 }
 
 double Map::getHeight() const{

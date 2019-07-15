@@ -38,12 +38,12 @@ Player::Player(PlayerConfiguration* const config, const Point2D startPoint) {
 }
 
 Player::~Player() {
-    delete [] carrier;
+    if(carrier) delete carrier;
     for(int i=0; i<3; ++i){
-        delete [] bombers[i];
+        if(bombers[i]) delete bombers[i];
     }
     for(int i=0; i<5; ++i){
-        delete [] fighters[i];
+        if(fighters[i]) delete fighters[i];
     }
 }
 

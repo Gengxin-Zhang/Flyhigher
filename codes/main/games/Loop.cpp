@@ -13,6 +13,7 @@
 #include <string>
 #include <cmath>
 #include <map>
+#include<random>
 #define log Engine::getInstance()->getLogger()
 #define mapp Engine::getInstance()->getNowGame()->getMap()
 using std::time, std::chrono::duration, std::chrono::duration_cast;
@@ -24,8 +25,7 @@ using std::min, std::map, std::make_pair;
  */
 
 Loop::Loop(LoopConfiguration* const config) {
-    Logger* logger = Engine::getInstance()->getLogger();
-    logger->debug("构造主循环对象");
+    log->debug("构造主循环对象");
     maxTickAllowed = config->getMaxTickAllowed();
     timePerTick = config->getTimePerTick();
     allBullet = set<Bullet*>();
@@ -34,21 +34,33 @@ Loop::Loop(LoopConfiguration* const config) {
 }
 
 Loop::~Loop() {
-
+    log->debug("析构loop");
 }
 
 void Loop::run() {
     log->debug("主循环开始");
+    std::default_random_engine e(time(0));
+    std::uniform_real_distribution<double> u(-M_PI,M_PI);
     while(nowTick < maxTickAllowed) {
         ++nowTick;
         log->debug("现在tick：", nowTick);
         nowTickStartTime = steady_clock::now();
         //TODO: doSomething
+        //运动
+        for(set<LivingEntity*>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
+            (*le)->turnDirection(u(e));
+            (*le)->goNextTick();
+        }
+        for(set<Bullet*>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
+            (*it)->goNextTick();
+        }
         //碰撞检测：任何实体和资源实体都不会相撞
         //碰撞检测：活实体撞活实体，必定至少有一个gg，另一个掉这么多血
         for(set<LivingEntity*>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
             for(set<LivingEntity*>::iterator le2=le; le2!=allLivingEntity.end(); ++le2){
-                if(le == le2)continue;
+                if(le == le2){
+                    continue;
+                }
                 if((*le)->isOverlapped(**le2) || (*le)->contains(**le2) || (*le)->isContained(**le2)){
                     log->debug((*le)->toString() + "碰撞" + (*le2)->toString());
                     int lowHealth = min((*le)->getNowHealth(), (*le2)->getNowHealth());
@@ -104,13 +116,6 @@ void Loop::run() {
             }
             contt:;
         }
-        //运动
-        for(set<LivingEntity*>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
-            (*le)->goNextTick();
-        }
-        for(set<Bullet*>::iterator it=allBullet.begin(); it!=allBullet.end(); ++it){
-            (*it)->goNextTick();
-        }
         //边界检测：出界的实体强制设定在界内最近点
         for(set<LivingEntity*>::iterator le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
             if(!mapp->isEntityInMap(**le)){
@@ -135,18 +140,33 @@ void Loop::run() {
             }
         }
         //坐标处理
-        char graph[50][50];
-        memset(graph, 0, 2500);
+        char graph[50][100];
+        memset(graph, 0, 5000);
         for(set<ResourceEntity*>::iterator it=allResourceEntity.begin(); it!=allResourceEntity.end(); ++it){
             log->debug("resourceEntity loc["+ to_string((*it)->getX()) + "," + to_string((*it)->getY()) + "]");
             graph[50-int((*it)->getY())/10][int((*it)->getX())/10] = 1;
         }
         for(set<LivingEntity*>::iterator it=allLivingEntity.begin(); it!=allLivingEntity.end(); ++it){
-            log->debug("livingEntity loc["+ to_string((*it)->getX()) + "," + to_string((*it)->getY()) + "]");
-            if((*it)->getClassName() == "Carrier") graph[50-int((*it)->getY())/10][int((*it)->getX())/10] = 'C';
-            else if((*it)->getClassName() == "Bomber") graph[50-int((*it)->getY())/10][int((*it)->getX())/10] = 'B';
-            else if((*it)->getClassName() == "Fighter") graph[50-int((*it)->getY())/10][int((*it)->getX())/10] = 'F';
-            else {
+            log->debug("livingEntity loc["+ to_string((*it)->getX()) + "," + to_string((*it)->getY()) + "]  health=" + to_string((*it)->getNowHealth()));
+            if((*it)->getClassName() == "Carrier"){
+                graph[50-int((*it)->getY())/10][int((*it)->getX())/5] = 'C';
+                graph[50-int((*it)->getY())/10 - int((*it)->getRadius()/10)][int((*it)->getX())/5] = '-';
+                graph[50-int((*it)->getY())/10 + int((*it)->getRadius()/10)][int((*it)->getX())/5] = '-';
+                graph[50-int((*it)->getY())/10][int((*it)->getX())/5 - int((*it)->getRadius()/5)] = '|';
+                graph[50-int((*it)->getY())/10][int((*it)->getX())/5 + int((*it)->getRadius()/5)] = '|';
+            } else if((*it)->getClassName() == "Bomber"){
+                graph[50-int((*it)->getY())/10][int((*it)->getX())/5] = 'B';
+                graph[50-int((*it)->getY())/10 - int((*it)->getRadius()/10)][int((*it)->getX())/5] = '-';
+                graph[50-int((*it)->getY())/10 + int((*it)->getRadius()/10)][int((*it)->getX())/5] = '-';
+                graph[50-int((*it)->getY())/10][int((*it)->getX())/5 - int((*it)->getRadius()/5)] = '|';
+                graph[50-int((*it)->getY())/10][int((*it)->getX())/5 + int((*it)->getRadius()/5)] = '|';
+            } else if((*it)->getClassName() == "Fighter"){
+                graph[50-int((*it)->getY())/10][int((*it)->getX())/5] = 'F';
+                graph[50-int((*it)->getY())/10 - int((*it)->getRadius()/10)][int((*it)->getX())/5] = '-';
+                graph[50-int((*it)->getY())/10 + int((*it)->getRadius()/10)][int((*it)->getX())/5] = '-';
+                graph[50-int((*it)->getY())/10][int((*it)->getX())/5 - int((*it)->getRadius()/5)] = '|';
+                graph[50-int((*it)->getY())/10][int((*it)->getX())/5 + int((*it)->getRadius()/5)] = '|';
+            } else {
                 log->debug("??????????");
             }
         }
@@ -154,7 +174,7 @@ void Loop::run() {
             log->debug("bullet loc["+ to_string((*it)->getX()) + "," + to_string((*it)->getY()) + "]");
             graph[50-int((*it)->getY())/10][int((*it)->getX())/10] = 1;
         }
-        for(int i=0;i<52;++i){
+        for(int i=0;i<102;++i){
             std::cout<<'-';
             log->getOut()<<'-';
         }
@@ -163,7 +183,7 @@ void Loop::run() {
         for(int i=0;i<50;++i){
             std::cout<<'|';
             log->getOut()<<'|';
-            for(int j=0;j<50;++j){
+            for(int j=0;j<100;++j){
                 if(!graph[i][j]){
                     log->getOut()<<'x';
                     std::cout<<'x';
@@ -175,7 +195,7 @@ void Loop::run() {
             std::cout<<'|'<<std::endl;
             log->getOut()<<'|'<<std::endl;
         }
-        for(int i=0;i<52;++i){
+        for(int i=0;i<102;++i){
             std::cout<<'-';
             log->getOut()<<'-';
         }
@@ -206,7 +226,6 @@ void Loop::endWithWinner(Player* const winner) {
 void Loop::endWithTimeOut() {
     log->infomation("游戏结束！");
     log->debug("时间用尽的游戏结束");
-    //TODO: 没实现
 }
 
 long Loop::getMaxTickAllowed() const {

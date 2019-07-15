@@ -17,6 +17,7 @@ class Judger {
     public:
         Judger(JudgerConfiguration * const config);
         void init();
+    private:
 };
 
 #endif //_JUDGER_H

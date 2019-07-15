@@ -30,7 +30,16 @@ Game::Game(GameConfiguration* const config) {
 }
 
 Game::~Game() {
-
+    if(judger) delete judger;
+    log->debug("析构judger");
+    if(map) delete map;
+    log->debug("析构map");
+    if(loop) delete loop;
+    log->debug("析构loop");
+    for(std::map<string, Player*>::iterator it=players.begin(); it!=players.end(); ++it){
+        if(it->second) delete [] it->second;
+        log->debug("析构" + it->first);
+    }
 }
 
 void Game::run() {
@@ -41,7 +50,8 @@ void Game::run() {
     log->infomation("开始一场游戏");
     loop->init();
     loop->run();
-    return;
+    log->debug("结束loop");
+    delete this;
 }
 
 Map* Game::getMap() const{
