@@ -8,7 +8,9 @@
 #include "Fighter.h"
 #include "../Player.h"
 #include <vector>
+#include "../../systems/Engine.h"
 using std::make_shared;
+#define loop Engine::getInstance()->getNowGame()->getLoop()
 
 /**
  * Fighter implementation
@@ -19,10 +21,10 @@ Fighter::Fighter(shared_ptr<Player> const player, shared_ptr<FighterConfiguratio
  shared_ptr<Entity> const parentEntity, const double x, const double y)
  :LivingEntity(player, config->getConfig(), parentEntity, x, y) {
     this->collecting = false;
-    this->weapon = shared_ptr<Weapon>(new Weapon(config->getWeaponConfig()));
     shared_ptr<RebuildableConfiguration> rConfig = config->getRebuildConfig();
     rebuildPower = rConfig->getPower();
     rebuildTicks = rConfig->getTick();
+    this->config = config;
 }
 
 Fighter::~Fighter() {
@@ -30,6 +32,13 @@ Fighter::~Fighter() {
 
 void Fighter::die() {
     if(collecting) stopCollecting();
+}
+
+void Fighter::init(){
+    LivingEntity::init();
+    startTime = 0;
+    endTime = 0;
+    weapon = shared_ptr<Weapon>(new Weapon(config->getWeaponConfig(), shared_from_this()));
 }
 
 vector<shared_ptr<Entity>> Fighter::see() const{
@@ -47,28 +56,36 @@ bool Fighter::shoot(const double direction) const{
 bool Fighter::isCollecting() const{
     return collecting;
 }
-
-void Fighter::collect(ResourceEntity& entity) {
-    collectingEntity = make_shared<ResourceEntity>(entity);
+bool Fighter::collect(shared_ptr<ResourceEntity> const entity) {
+    if(collecting) return false;
+    if(!isOverlapped(*entity) && !isContained(*entity) && !contains(*entity)) return false;
+    if(isMoving()) return false;
+    collectingEntity = entity;
     collectingEntity->setBeingCollected(true);
     collecting = true;
-    //startTime = ;
-    //TODO: 添加主时序的当前tick
+    startTime = loop->getNowTick();
+    endTime = startTime + collectingEntity->getCollectTick();
+    return true;
 }
 
 void Fighter::collectCompletely() {
-    //TODO: 我方资源值+=采集的资源值
     shared_ptr<Player> ptr = getPlayer();
     ptr->addPower(collectingEntity->getPower());
-    collectingEntity.reset();
-    collectingEntity = nullptr;
+    loop->removeResourceEntity(collectingEntity->getUID());
     collecting = false;
 }
 
+bool Fighter::collectFinished() const{
+    return loop->getNowTick() >= endTime;
+}
+
 void Fighter::stopCollecting() {
+    if(!collecting) return;
     collecting = false;
     collectingEntity->setBeingCollected(false);
     collectingEntity = nullptr;
+    startTime = 0;
+    endTime = 0;
 }
 
 long Fighter::getStartTime() const{
@@ -81,14 +98,6 @@ int Fighter::getRebuildTicks() const{
 
 int Fighter::getRebuildPower() const{
     return rebuildPower;
-}
-
-void Fighter::rebuild(){
-    //TODO: beginRebuildTick = nowTick;
-}
-
-Rebuildable::~Rebuildable(){
-
 }
 
 Collector::~Collector(){

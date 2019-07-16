@@ -18,10 +18,15 @@ Bomber::Bomber(shared_ptr<Player> const player,
                shared_ptr<BomberConfiguration> const config,
                shared_ptr<Entity> const parentEntity, const double x, const double y):
                LivingEntity(player, config->getConfig(), parentEntity, x, y)  {
-     weapon = shared_ptr<Weapon>(new Weapon(config->getWeaponConfig()));
+     this->config = config;
 }
 
 Bomber::~Bomber() {
+}
+
+void Bomber::init(){
+    LivingEntity::init();
+    weapon = shared_ptr<Weapon>(new Weapon(config->getWeaponConfig(), shared_from_this()));
 }
 
 vector<shared_ptr<Entity>> Bomber::see() const{

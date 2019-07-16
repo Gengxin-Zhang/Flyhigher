@@ -16,12 +16,14 @@ using std::abs, std::sqrt, std::acos, std::to_string;
  * 实体类
  */
 
+int Entity::total_id = 0;
 
 Entity::Entity(const double radius, shared_ptr<Entity> const parentEntity, const double x, const double y) {
     this->radius = radius;
     this->parentEntity = parentEntity;
     this->x = x;
     this->y = y;
+    this->uid = total_id++;
 }
 
 shared_ptr<Entity> Entity::getParentEntity() const{
@@ -87,7 +89,7 @@ Vector2D Entity::toVector2D(const Entity& ano) const{
 }
 
 string Entity::toString() const{
-    return "[Entity] (x=" + to_string(x) +
+    return "[Entity-" + to_string(uid) + "] (x=" + to_string(x) +
             ", y=" + to_string(y) + ", radius=" + to_string(radius) + ")";
 }
 
@@ -103,3 +105,8 @@ Entity::~Entity() {
 string Entity::getClassName() const{
     return "Entity";
 }
+
+int Entity::getUID() const{
+    return uid;
+}
+

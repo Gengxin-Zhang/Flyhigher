@@ -75,7 +75,7 @@ void Engine::startEngine(const bool debugMode) {
                                        shared_ptr<PlaneConfiguration>(new PlaneConfiguration(200, 10, 5, 5, 5))))))};
             startGame(shared_ptr<GameConfiguration>(new GameConfiguration(
                                                     shared_ptr<MapConfiguration>(new MapConfiguration(500, 500, 2, ps)),
-                                                    shared_ptr<JudgerConfiguration>(new JudgerConfiguration()),
+                                                    shared_ptr<JudgerConfiguration>(new JudgerConfiguration(500)),
                                                     shared_ptr<LoopConfiguration>(new LoopConfiguration(200, milliseconds(50))), 2, pc1)));
 }
 

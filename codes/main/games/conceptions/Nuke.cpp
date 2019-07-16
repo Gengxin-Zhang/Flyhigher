@@ -35,16 +35,17 @@ int Nuke::getSpeed() const{
     return speed;
 }
 
-bool Nuke::shoot(const double direction) const{
+bool Nuke::shoot(const double direction){
     //TODO: 想想怎么做
 }
 
-Nuke::Nuke(shared_ptr<NukeConfiguration> const config) {
+Nuke::Nuke(shared_ptr<NukeConfiguration> const config, shared_ptr<Entity> const parentEntity) {
     aoeDamage = config->getAoeDamage();
     aoeDamageRadius = config->getAoeDamageRadius();
     damageDecrease = config->getDamageDecrease();
     radius = config->getRadius();
     speed = config->getSpeed();
+    this->parentEntity = parentEntity;
 }
 
 Nuke::~Nuke() {

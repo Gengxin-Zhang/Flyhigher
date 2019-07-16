@@ -12,13 +12,15 @@
 #include <memory>
 using std::shared_ptr;
 
+class Entity;
+
 class Weapon {
     public: 
         /**
          * 构造函数
          * @param config 配置项
          */
-        Weapon(shared_ptr<WeaponConfiguration> const config);
+        Weapon(shared_ptr<WeaponConfiguration> const config, shared_ptr<Entity> const parentEntity);
         
         /**
          * 析构函数
@@ -30,7 +32,7 @@ class Weapon {
          * @param direction 方向弧度角
          * @return 是否成功发射
          */
-        bool shoot(const double direction) const;
+        bool shoot(const double direction);
         
         /**
          * 获取子弹碰撞半径
@@ -42,7 +44,7 @@ class Weapon {
          * 获取子弹伤害
          * @return 子弹伤害
          */
-        double getDamage() const;
+        int getDamage() const;
         
         /**
          * 获取子弹速度标量
@@ -63,10 +65,11 @@ class Weapon {
         long getLastShoot() const;
     private: 
         double radius;
-        double damage;
+        int damage;
         int speed;
         int delay;
         long lastShoot;
+        shared_ptr<Entity> parentEntity;
 };
 
 #endif //_WEAPON_H

@@ -12,6 +12,7 @@
 #include "../../configs/CarrierConfiguration.h"
 #include "../conceptions/Nuke.h"
 #include "../conceptions/Weapon.h"
+using std::enable_shared_from_this;
 
 class Player;
 
@@ -67,11 +68,17 @@ class Carrier: public LivingEntity {
          * @return 类型名称
          */
         virtual string getClassName() const;
+
+        /**
+         * 初始化行为
+         */
+        virtual void init();
     private:
         //主武器
         shared_ptr<Weapon> mainWeapon;
         //必杀武器，只能使用一次
         shared_ptr<Nuke> godWeapon;
+        shared_ptr<CarrierConfiguration> config;
 };
 
 #endif //_CARRIER_H

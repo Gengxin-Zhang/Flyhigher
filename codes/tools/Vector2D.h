@@ -131,6 +131,8 @@ class Vector2D {
          * @return 字符串
          */
         virtual string toString() const;
+
+        virtual ~Vector2D();
     private: 
         //x坐标
         double x;

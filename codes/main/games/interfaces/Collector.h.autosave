@@ -21,8 +21,9 @@ class Collector {
         /**
          * 采集一个资源实体
          * @param entity 实体
+         * @return 是否触发成功
          */
-        virtual void collect(shared_ptr<ResourceEntity> const entity) = 0;
+        virtual bool collect(shared_ptr<ResourceEntity> const entity) = 0;
 
         /**
          * 采集完毕

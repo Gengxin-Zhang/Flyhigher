@@ -10,3 +10,15 @@
 /**
  * JudgerConfiguration implementation
  */
+
+JudgerConfiguration::JudgerConfiguration(const int maxTimeout){
+    this->maxTimeout = maxTimeout;
+}
+
+JudgerConfiguration::~JudgerConfiguration(){
+
+}
+
+int JudgerConfiguration::getMaxTimeout() const{
+    return maxTimeout;
+}

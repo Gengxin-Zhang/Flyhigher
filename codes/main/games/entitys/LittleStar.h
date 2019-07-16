@@ -18,7 +18,7 @@ class LittleStar: public ResourceEntity {
          * 构造函数
          * @param config 配置项
          */
-        LittleStar(shared_ptr<LittleStarConfiguration> const config);
+        LittleStar(shared_ptr<LittleStarConfiguration> const config, double x, double y);
 
         /**
          * 获取类型名称

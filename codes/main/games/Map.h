@@ -11,9 +11,6 @@
 #include "../configs/MapConfiguration.h"
 #include "./entitys/Entity.h"
 
-class Engine;
-class Logger;
-
 class Map {
     public:
         /**

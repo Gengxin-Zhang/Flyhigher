@@ -13,8 +13,6 @@
 #include "GameConfiguration.h"
 using std::string;
 
-class Engine;
-
 class Configuration {
     public:
         ~Configuration();

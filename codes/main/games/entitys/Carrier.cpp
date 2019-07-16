@@ -19,8 +19,14 @@ Carrier::Carrier(shared_ptr<Player> const player,
                  shared_ptr<CarrierConfiguration> const config,
                  shared_ptr<Entity> const parentEntity, const double x, const double y):
                  LivingEntity(player, config->getConfig(), parentEntity, x, y) {
-    mainWeapon =  shared_ptr<Weapon>(new Weapon(config->getWeaponConfig()));
-    godWeapon = shared_ptr<Nuke>(new Nuke(config->getNukeConfig()));
+    this->config = config;
+
+}
+
+void Carrier::init(){
+    LivingEntity::init();
+    mainWeapon =  shared_ptr<Weapon>(new Weapon(config->getWeaponConfig(), shared_from_this()));
+    godWeapon = shared_ptr<Nuke>(new Nuke(config->getNukeConfig(), shared_from_this()));
 }
 
 Carrier::~Carrier() {

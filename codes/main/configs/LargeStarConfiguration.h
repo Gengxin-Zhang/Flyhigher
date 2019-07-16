@@ -3,7 +3,7 @@
 
 class LargeStarConfiguration {
     public:
-        LargeStarConfiguration(const int power, const double radius);
+        LargeStarConfiguration(const int power, const double radius, const int collectTick);
 
         ~LargeStarConfiguration();
 
@@ -11,9 +11,11 @@ class LargeStarConfiguration {
 
         double getRadius() const;
 
+        int getCollectTick() const;
     private:
         int power;
         double radius;
+        int collectTick;
 };
 
 #endif // LARGESTARCONFIGURATION_H

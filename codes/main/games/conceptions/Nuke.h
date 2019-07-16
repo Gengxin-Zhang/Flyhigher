@@ -12,6 +12,8 @@
 #include <memory>
 using std::shared_ptr;
 
+class Entity;
+
 class Nuke {
     public:
         /**
@@ -55,13 +57,13 @@ class Nuke {
          * @param direction 方位角
          * @return 是否成功开火
          */
-        bool shoot(const double direction) const;
+        bool shoot(const double direction);
             
         /**
          * 构造函数
          * @param config 配置项
          */
-        Nuke(shared_ptr<NukeConfiguration> const config);
+        Nuke(shared_ptr<NukeConfiguration> const config, shared_ptr<Entity> const parentEntity);
 
         /**
          * 析构函数
@@ -74,6 +76,7 @@ class Nuke {
         int damageDecrease;
         double radius;
         int speed;
+        shared_ptr<Entity> parentEntity;
 };
 
 #endif //_NUKE_H

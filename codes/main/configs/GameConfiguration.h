@@ -13,8 +13,6 @@
 #include "LoopConfiguration.h"
 #include "PlayerConfiguration.h"
 
-class Engine;
-
 class GameConfiguration {
     public: 
         /**

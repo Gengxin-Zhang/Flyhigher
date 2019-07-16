@@ -18,7 +18,7 @@ class LargeStar: public ResourceEntity {
          * 构造函数
          * @param config
          */
-        LargeStar(shared_ptr<LargeStarConfiguration> const config);
+        LargeStar(shared_ptr<LargeStarConfiguration> const config, double x, double y);
 
         /**
          * 获取类型名称

@@ -21,7 +21,7 @@ class ResourceEntity: public Entity {
          * @param x x坐标
          * @param y y坐标
          */
-        ResourceEntity(const double radius, const int power,
+        ResourceEntity(const double radius, const int power, const int collectTick,
          shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
@@ -56,11 +56,18 @@ class ResourceEntity: public Entity {
          * @return 字符串
          */
         virtual string toString() const;
-    private: 
+
+        /**
+         * 获取采集此资源需要的时间
+         * @return tick
+         */
+        int getCollectTick() const;
+    private:
         //这个资源实体具有的资源量
         int power;
         //是否正在被采集
         bool beingCollected;
+        int collectTick;
 };
 
 #endif //_RESOURCEENTITY_H

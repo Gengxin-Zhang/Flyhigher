@@ -15,7 +15,6 @@
 #include <map>
 
 class Engine;
-class Logger;
 
 class Game {
     public: 

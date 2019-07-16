@@ -10,11 +10,11 @@
 
 #include "MovableEntity.h"
 #include "../../configs/PlaneConfiguration.h"
-using std::vector;
+using std::vector, std::enable_shared_from_this;
 
 class Player;
 
-class LivingEntity: public MovableEntity {
+class LivingEntity: public MovableEntity, public enable_shared_from_this<LivingEntity>{
     public: 
         /**
          * 构造函数
@@ -114,6 +114,12 @@ class LivingEntity: public MovableEntity {
          * @return 类型名称
          */
         virtual string getClassName() const;
+
+        /**
+         * 实体是否已死
+         * @return 是否处于死亡状态
+         */
+        bool isDeath() const;
     private: 
         //当前状态的生命值
         int nowHealth;
@@ -125,6 +131,7 @@ class LivingEntity: public MovableEntity {
         int healPower;
         //所属玩家方
         shared_ptr<Player> player;
+        bool death;
 };
 
 #endif //_LIVINGENTITY_H

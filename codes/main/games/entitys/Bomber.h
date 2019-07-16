@@ -11,6 +11,7 @@
 #include "LivingEntity.h"
 #include "../../configs/BomberConfiguration.h"
 #include "../conceptions/Weapon.h"
+using std::enable_shared_from_this;
 
 class Player;
 
@@ -60,9 +61,15 @@ class Bomber: public LivingEntity {
          * @return 字符串
          */
         virtual string toString() const;
+
+        /**
+         * 初始化行为
+         */
+        virtual void init();
     private: 
         //武器
         shared_ptr<Weapon> weapon;
+        shared_ptr<BomberConfiguration> config;
 };
 
 #endif //_BOMBER_H

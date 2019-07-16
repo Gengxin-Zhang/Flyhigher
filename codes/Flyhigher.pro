@@ -77,8 +77,7 @@ SOURCES += main/systems/Engine.cpp
 
 
 HEADERS += main/games/interfaces/Collector.h \
-            main/games/interfaces/Damageable.h \
-            main/games/interfaces/Rebuildable.h
+            main/games/interfaces/Damageable.h
 
 
 HEADERS += main/games/conceptions/Nuke.h \
@@ -127,3 +126,5 @@ else:unix: LIBS += -L$$PWD/../OpenSource/yaml-cpp/build/ -lyaml-cpp.0.6.2
 
 INCLUDEPATH += $$PWD/../OpenSource/yaml-cpp/include
 DEPENDPATH += $$PWD/../OpenSource/yaml-cpp/build
+
+INCLUDEPATH += $$PWD/../OpenSource/rapidjson/include

@@ -13,8 +13,8 @@
  * 小型资源行星
  */
 
-LittleStar::LittleStar(shared_ptr<LittleStarConfiguration> const config):
-    ResourceEntity (config->getRadius(), config->getPower()){
+LittleStar::LittleStar(shared_ptr<LittleStarConfiguration> const config, double x, double y):
+    ResourceEntity (config->getRadius(), config->getPower(), config->getCollectTick(), nullptr, x, y){
     //TODO: 通过配置项调用父类构造函数
 }
 

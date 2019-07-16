@@ -6,6 +6,10 @@
 
 
 #include "Weapon.h"
+#include "../../systems/Engine.h"
+
+#define loop Engine::getInstance()->getNowGame()->getLoop()
+#define log Engine::getInstance()->getLogger()
 
 /**
  * Weapon implementation
@@ -13,25 +17,27 @@
  * 武器类
  */
 
-Weapon::Weapon(shared_ptr<WeaponConfiguration> const config) {
+Weapon::Weapon(shared_ptr<WeaponConfiguration> const config, shared_ptr<Entity> const parentEntity) {
     radius = config->getRadius();
     damage = config->getDamage();
     speed = config->getSpeed();
     delay = config->getDelay();
     lastShoot = 0; 
+    this->parentEntity = parentEntity;
 }
 
 Weapon::~Weapon() {
 
 }
 
-bool Weapon::shoot(const double direction) const{
-    //TODO: 当前tick - lastShoot < delay
-    if (lastShoot < delay){
+bool Weapon::shoot(const double direction){
+    if (loop->getNowTick() - lastShoot < delay){
         return false;
     }
-    //TODO: lastShoot设置为当前tick
-    //TODO: 射击
+    lastShoot  = loop->getNowTick();
+    shared_ptr<Bullet> bullet(new Bullet(radius, Vector2D(speed, direction, true),
+                                         damage, parentEntity, parentEntity->getX(), parentEntity->getY()));
+    loop->addBullet(bullet);
     return true;
 }
 
@@ -39,7 +45,7 @@ double Weapon::getRadius() const{
     return radius;
 }
 
-double Weapon::getDamage() const{
+int Weapon::getDamage() const{
     return damage;
 }
 

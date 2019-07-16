@@ -13,8 +13,8 @@
  * 大型资源行星
  */
 
-LargeStar::LargeStar(shared_ptr<LargeStarConfiguration> const config):
-    ResourceEntity (config->getRadius(), config->getPower()){
+LargeStar::LargeStar(shared_ptr<LargeStarConfiguration> const config, double x, double y):
+    ResourceEntity (config->getRadius(), config->getPower() ,config->getCollectTick(), nullptr, x, y){
     //TODO: 通过配置项调用父类构造函数
 }
 

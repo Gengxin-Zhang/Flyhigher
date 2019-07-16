@@ -73,7 +73,7 @@ void Logger::debug(const string str, const int num) {
 void Logger::debug(const string str) {
     if(Engine::isDebugMode()){
         out<<"[debug][";
-        cout<<RED<<"[debug][";
+        cout<<CYAN<<"[debug][";
         out_time();
         out<<"]"<<str<<endl;
         cout<<"]"<<str<<endl;
@@ -92,7 +92,7 @@ void Logger::debug(const string str, const bool flag) {
 
 void Logger::infomation(const string str, const long num) {
     out<<"[info][";
-    cout<<WHITE<<"[info][";
+    cout<<RESET<<"[info][";
     out_time();
     out<<"]"<<str<<": "<<num<<endl;
     cout<<"]"<<str<<": "<<num<<endl;
@@ -100,7 +100,7 @@ void Logger::infomation(const string str, const long num) {
 
 void Logger::infomation(const string str, const int num) {
     out<<"[info][";
-    cout<<WHITE<<"[info][";
+    cout<<RESET<<"[info][";
     out_time();
     out<<"]"<<str<<": "<<num<<endl;
     cout<<"]"<<str<<": "<<num<<endl;
@@ -108,7 +108,7 @@ void Logger::infomation(const string str, const int num) {
 
 void Logger::infomation(const string str) {
     out<<"[info][";
-    cout<<WHITE<<"[info][";
+    cout<<RESET<<"[info][";
     out_time();
     out<<"]"<<str<<endl;
     cout<<"]"<<str<<endl;
@@ -116,7 +116,7 @@ void Logger::infomation(const string str) {
 
 void Logger::infomation(const string str, const bool flag) {
     out<<"[info][";
-    cout<<WHITE<<"[info][";
+    cout<<RESET<<"[info][";
     out_time();
     out<<"]"<<str<<": "<<(flag?"true":" false")<<endl;
     cout<<"]"<<str<<": "<<(flag?"true":" false")<<endl;

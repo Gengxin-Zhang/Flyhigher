@@ -33,6 +33,9 @@ Player::~Player() {
 }
 
 void Player::init() {
+    isBuilding = false;
+    buildStartTick = 0;
+    buildEndTick = 0;
     log->debug("初始化玩家：" + name);
     carrier = shared_ptr<Carrier>(new Carrier(shared_from_this(), config->getCarrierConfig()));
     carrier->setPoint(startPoint);
@@ -71,20 +74,18 @@ shared_ptr<Carrier> Player::getCarrier() const{
     return carrier;
 }
 
-shared_ptr<Bomber> Player::getBomber(const int index) const{
-    if(index >= 0 && index < 3) return bombers[index];
-    else{
-        log->severe("获取轰炸机出错，位置:", index);
-        throw invalid_argument("index should not be "+ to_string(index));
+shared_ptr<Bomber> Player::getBomber(const int uid){
+    if(bombers.find(uid) == bombers.end()){
+        return nullptr;
     }
+    return bombers[uid];
 }
 
-shared_ptr<Fighter> Player::getFighter(const int index) const{
-    if(index >= 0 && index < 5) return fighters[index];
-    else {
-        log->severe("获取战斗机出错，位置:", index);
-        throw invalid_argument("index should not be "+ to_string(index));
+shared_ptr<Fighter> Player::getFighter(const int uid){
+    if(fighters.find(uid) == fighters.end()){
+        return nullptr;
     }
+    return fighters[uid];
 }
 
 string Player::getName() const{
@@ -107,4 +108,37 @@ bool Player::subPower(int power) {
     if((this->power - power) < 0) return false;
     this->power -= power;
     return true;
+}
+
+bool Player::build(){
+    if(isBuilding) return false;
+    buildStartTick = loop->getNowTick();
+    for(int i=0; i<5; ++i){
+        if(fighters[i]->isDeath()){
+            if(power < fighters[i]->getRebuildPower()){
+                return false;
+            }
+            isBuilding = true;
+            buildStartTick = loop->getNowTick();
+            buildEndTick = buildStartTick + fighters[i]->getRebuildTicks();
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Player::isBuildFinished() const {
+    return loop->getNowTick() >= buildEndTick;
+}
+
+void Player::buildComplately(){
+    isBuilding = false;
+    buildStartTick = 0;
+    for(int i=0; i<5; ++i){
+        if(fighters[i]->isDeath()){
+            fighters[i]->init();
+            loop->addLivingEntity(fighters[i]);
+            return;
+        }
+    }
 }

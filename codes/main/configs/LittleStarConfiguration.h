@@ -2,7 +2,7 @@
 #define LITTLESTARCONFIGURATION_H
 class LittleStarConfiguration {
     public:
-        LittleStarConfiguration(const int power, const double radius);
+        LittleStarConfiguration(const int power, const double radius, const int collectTick);
 
         ~LittleStarConfiguration();
 
@@ -10,9 +10,11 @@ class LittleStarConfiguration {
 
         double getRadius() const;
 
+        int getCollectTick() const;
     private:
         int power;
         double radius;
+        int collectTick;
 };
 
 #endif // LITTLESTARCONFIGURATION_H

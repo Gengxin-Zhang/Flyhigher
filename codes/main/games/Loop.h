@@ -12,11 +12,8 @@
 #include "Player.h"
 #include "./entitys/Bullet.h"
 #include <chrono>
-#include <set>
-using std::set, std::chrono::steady_clock, std::chrono::milliseconds;
-
-class Engine;
-class Logger;
+#include <map>
+using std::chrono::steady_clock, std::chrono::milliseconds;
 
 class Loop {
     public: 
@@ -81,26 +78,61 @@ class Loop {
          * @param entity 资源实体
          * @return 删除是否成功
          */
-        bool removeResourceEntity(shared_ptr<ResourceEntity> const entity);
+        bool removeResourceEntity(const int uid);
 
         /**
          * 删除子弹实体
          * @param entity 子弹
          * @return 删除是否成功
          */
-        bool removeBullet(shared_ptr<Bullet> const entity);
+        bool removeBullet(const int uid);
 
         /**
          * 删除生命实体
          * @param entity 生命实体
          * @return 删除是否成功
          */
-        bool removeLivingEntity(shared_ptr<LivingEntity> const entity);
+        bool removeLivingEntity(const int uid);
 
-    private: 
-        set<shared_ptr<ResourceEntity>> allResourceEntity;
-        set<shared_ptr<Bullet>> allBullet;
-        set<shared_ptr<LivingEntity>> allLivingEntity;
+        /**
+         * 查找资源实体
+         * @param uid 实体id
+         * @return 实体指针，找不到返回null
+         */
+        shared_ptr<ResourceEntity> findResourceEntity(const int uid);
+
+        /**
+         * 查找子弹实体
+         * @param uid 实体id
+         * @return 实体指针，找不到返回null
+         */
+        shared_ptr<Bullet>  findBullet(const int uid);
+
+        /**
+         * 查找生命实体
+         * @param uid 实体id
+         * @return 实体指针，找不到返回null
+         */
+        shared_ptr<LivingEntity> findLivingEntity(const int uid);
+
+        /**
+         * 查找实体
+         * @param uid 实体id
+         * @return 实体指针，找不到返回null
+         */
+        shared_ptr<Entity> findEntity(const int uid);
+
+        /**
+         * 获取当前tick
+         * @return 当前的tick
+         */
+        long getNowTick() const;
+
+    private:
+        std::map<int,shared_ptr<Entity>> allEntity;
+        std::map<int,shared_ptr<ResourceEntity>> allResourceEntity;
+        std::map<int,shared_ptr<Bullet>> allBullet;
+        std::map<int,shared_ptr<LivingEntity>> allLivingEntity;
         long nowTick;
         steady_clock::time_point nowTickStartTime;
         long maxTickAllowed;

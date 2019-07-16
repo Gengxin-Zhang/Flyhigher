@@ -133,7 +133,17 @@ class Entity {
          * @return 类型名称
          */
         virtual string getClassName() const;
+
+        /**
+         * 获取UID（实体唯一ID）
+         * @return UID
+         */
+        int getUID() const;
+
+
     private: 
+        int uid;
+        static int total_id;
         //父实体
         shared_ptr<Entity> parentEntity;
         //x坐标

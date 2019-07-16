@@ -9,9 +9,10 @@
 /**
  * LargeStarConfiguration implementation
  */
-LargeStarConfiguration::LargeStarConfiguration(const int power, const double radius){
+LargeStarConfiguration::LargeStarConfiguration(const int power, const double radius, const int collectTick){
     this->power = power;
     this->radius =radius;
+    this->collectTick = collectTick;
 }
 
 LargeStarConfiguration::~LargeStarConfiguration(){
@@ -26,3 +27,6 @@ double LargeStarConfiguration::getRadius() const{
     return radius;
 }
 
+int LargeStarConfiguration::getCollectTick() const{
+    return collectTick;
+}

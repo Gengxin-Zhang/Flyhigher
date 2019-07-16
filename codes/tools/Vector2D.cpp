@@ -104,3 +104,7 @@ string Vector2D::toString() const{
 string Vector2D::getClassName() const{
     return "Vector2D";
 }
+
+Vector2D::~Vector2D(){
+
+}

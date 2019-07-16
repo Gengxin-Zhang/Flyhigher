@@ -48,10 +48,12 @@ bool LivingEntity::damage(const int damage) {
 
 void LivingEntity::init() {
     nowHealth = maxHealth;
+    death = false;
 }
 
 void LivingEntity::die() {
-    delete this;
+    nowHealth = 0;
+    death = true;
 }
 
 shared_ptr<Player> LivingEntity::getPlayer() const{
@@ -78,4 +80,8 @@ string LivingEntity::toString() const{
     return MovableEntity::toString() + "[LivingEntity] (player=" +
             player->getName() + ", nowHealth=" + to_string(nowHealth) + ", maxHealth=" + to_string(maxHealth) +
             ", healRate=" + to_string(healRate) + ", healPower=" + to_string(healPower) + ")";
+}
+
+bool LivingEntity::isDeath() const{
+    return death;
 }
