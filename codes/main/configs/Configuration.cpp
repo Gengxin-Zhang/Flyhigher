@@ -13,7 +13,7 @@
 
 bool Configuration::isInit = false;
 
-Configuration* Configuration::config = (Configuration*) 0;
+shared_ptr<Configuration> Configuration::config = nullptr;
 
 Configuration::Configuration(const string file) {
     this->file = file;
@@ -21,12 +21,11 @@ Configuration::Configuration(const string file) {
 }
 
 Configuration::~Configuration() {
-    delete [] gameConfig;
 }
 
-Configuration* Configuration::getInstance() {
+shared_ptr<Configuration> Configuration::getInstance() {
     if(!isInit){
-        config = new Configuration("./config.yml");
+        config = shared_ptr<Configuration>(new Configuration("./config.yml"));
         isInit = true;
     }
     return config;
@@ -40,6 +39,6 @@ void Configuration::load() {
 
 }
 
-GameConfiguration* Configuration::getGameConfiguration() const{
+shared_ptr<GameConfiguration> Configuration::getGameConfiguration() const{
     return gameConfig;
 }

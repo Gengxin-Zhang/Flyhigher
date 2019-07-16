@@ -14,7 +14,7 @@ using std::to_string;
 
 ResourceEntity::ResourceEntity(const double radius, const int power,
  shared_ptr<Entity> const parentEntity, const double x, const double y) : Entity(radius, parentEntity, x, y) {
-
+    this->power = power;
 }
 
 int ResourceEntity::getPower() const{

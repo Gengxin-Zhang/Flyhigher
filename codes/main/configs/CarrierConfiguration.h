@@ -11,6 +11,8 @@
 #include "NukeConfiguration.h"
 #include "PlaneConfiguration.h"
 #include "WeaponConfiguration.h"
+#include <memory>
+using std::shared_ptr;
 
 class CarrierConfiguration {
     public:
@@ -20,8 +22,8 @@ class CarrierConfiguration {
          * @param nukeConfig 必杀武器配置项
          * @param config 主配置项 
          */
-        CarrierConfiguration(WeaponConfiguration* const weaponConfig,
-         NukeConfiguration* const nukeConfig, PlaneConfiguration* const config);
+        CarrierConfiguration(shared_ptr<WeaponConfiguration> const weaponConfig,
+         shared_ptr<NukeConfiguration> const nukeConfig, shared_ptr<PlaneConfiguration> const config);
         
         /**
          * 析构函数
@@ -32,23 +34,23 @@ class CarrierConfiguration {
          * 主武器配置项
          * @return 主武器配置项
          */
-        WeaponConfiguration* getWeaponConfig() const;
+        shared_ptr<WeaponConfiguration> getWeaponConfig() const;
         
         /**
          * 必杀武器配置项
          * @return 必杀武器配置项
          */
-        NukeConfiguration* getNukeConfig() const;
+        shared_ptr<NukeConfiguration> getNukeConfig() const;
         
         /**
          * 主配置项
          * @return 主配置项
          */
-        PlaneConfiguration* getConfig() const;
+        shared_ptr<PlaneConfiguration> getConfig() const;
     private: 
-        NukeConfiguration* nukeConfig;
-        PlaneConfiguration* config;
-        WeaponConfiguration* weaponConfig;
+        shared_ptr<NukeConfiguration> nukeConfig;
+        shared_ptr<PlaneConfiguration> config;
+        shared_ptr<WeaponConfiguration> weaponConfig;
 };
 
 #endif //_CARRIERCONFIGURATION_H

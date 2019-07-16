@@ -11,27 +11,25 @@
  * FighterConfiguration implementation
  */
 
-FighterConfiguration::FighterConfiguration(WeaponConfiguration* const weaponConfig,
- RebuildableConfiguration* const rebuildConfig, PlaneConfiguration* const config) {
+FighterConfiguration::FighterConfiguration(shared_ptr<WeaponConfiguration> const weaponConfig,
+                                           shared_ptr<RebuildableConfiguration> const rebuildConfig,
+                                           shared_ptr<PlaneConfiguration> const config) {
     this->weaponConfig = weaponConfig;
     this->rebuildConfig = rebuildConfig;
     this->config = config;
 }
 
 FighterConfiguration::~FighterConfiguration() {
-    delete [] weaponConfig;
-    delete [] rebuildConfig;
-    delete [] config;
 }
 
-WeaponConfiguration* FighterConfiguration::getWeaponConfig() const{
+shared_ptr<WeaponConfiguration> FighterConfiguration::getWeaponConfig() const{
     return weaponConfig;
 }
 
-RebuildableConfiguration* FighterConfiguration::getRebuildConfig() const{
+shared_ptr<RebuildableConfiguration> FighterConfiguration::getRebuildConfig() const{
     return rebuildConfig;
 }
 
-PlaneConfiguration* FighterConfiguration::getConfig() const{
+shared_ptr<PlaneConfiguration> FighterConfiguration::getConfig() const{
     return config;
 }

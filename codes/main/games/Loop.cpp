@@ -24,7 +24,7 @@ using std::min, std::map, std::make_pair;
  * Loop implementation
  */
 
-Loop::Loop(LoopConfiguration* const config) {
+Loop::Loop(shared_ptr<LoopConfiguration> const config) {
     log->debug("构造主循环对象");
     maxTickAllowed = config->getMaxTickAllowed();
     timePerTick = config->getTimePerTick();
@@ -34,7 +34,6 @@ Loop::Loop(LoopConfiguration* const config) {
 }
 
 Loop::~Loop() {
-    log->debug("析构loop");
 }
 
 void Loop::run() {

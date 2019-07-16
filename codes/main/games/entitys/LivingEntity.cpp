@@ -7,7 +7,6 @@
 
 #include "LivingEntity.h"
 #include "../Player.h"
-#include <string>
 using std::to_string;
 
 /**
@@ -15,7 +14,7 @@ using std::to_string;
  */
 
 
-LivingEntity::LivingEntity(shared_ptr<Player> const player, PlaneConfiguration* const config,
+LivingEntity::LivingEntity(shared_ptr<Player> const player, shared_ptr<PlaneConfiguration> const config,
  shared_ptr<Entity> const parentEntity, const double x, const double y)
  :MovableEntity(config->getRadius(), Vector2D(0, config->getSpeed()), parentEntity, x, y) {
      this->player = player;

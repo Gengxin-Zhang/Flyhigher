@@ -10,6 +10,8 @@
 
 #include "WeaponConfiguration.h"
 #include "PlaneConfiguration.h"
+#include <memory>
+using std::shared_ptr;
 
 class BomberConfiguration {
     public:
@@ -18,7 +20,8 @@ class BomberConfiguration {
          * @param weaponConfig 武器配置项
          * @param config 主配置项
          */
-        BomberConfiguration(WeaponConfiguration* const weaponConfig, PlaneConfiguration* const config);
+        BomberConfiguration(shared_ptr<WeaponConfiguration> const weaponConfig,
+                            shared_ptr<PlaneConfiguration> const config);
         
         /**
          * 析构函数
@@ -29,16 +32,16 @@ class BomberConfiguration {
          * 获取武器配置项
          * @return 武器配置项
          */
-        WeaponConfiguration* getWeaponConfig() const;
+        shared_ptr<WeaponConfiguration> getWeaponConfig() const;
         
         /**
          * 获取主配置项
          * @return 主配置项
          */
-        PlaneConfiguration* getConfig() const;
+        shared_ptr<PlaneConfiguration> getConfig() const;
 private: 
-    WeaponConfiguration* weaponConfig;
-    PlaneConfiguration* config;
+    shared_ptr<WeaponConfiguration> weaponConfig;
+    shared_ptr<PlaneConfiguration> config;
 };
 
 #endif //_BOMBERCONFIGURATION_H

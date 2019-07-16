@@ -6,6 +6,8 @@
 
 
 #include "Carrier.h"
+#include <vector>
+using std::vector;
 
 /**
  * Carrier implementation
@@ -13,15 +15,15 @@
  * 母舰类
  */
 
-Carrier::Carrier(shared_ptr<Player> const player, CarrierConfiguration* const config, shared_ptr<Entity> const parentEntity, const double x, const double y):
- LivingEntity(player, config->getConfig(), parentEntity, x, y) {
-    mainWeapon = new Weapon(config->getWeaponConfig());
-    godWeapon = new Nuke(config->getNukeConfig());
+Carrier::Carrier(shared_ptr<Player> const player,
+                 shared_ptr<CarrierConfiguration> const config,
+                 shared_ptr<Entity> const parentEntity, const double x, const double y):
+                 LivingEntity(player, config->getConfig(), parentEntity, x, y) {
+    mainWeapon =  shared_ptr<Weapon>(new Weapon(config->getWeaponConfig()));
+    godWeapon = shared_ptr<Nuke>(new Nuke(config->getNukeConfig()));
 }
 
 Carrier::~Carrier() {
-    delete mainWeapon;
-    delete godWeapon;
 }
 
 vector<shared_ptr<Entity>> Carrier::see() const{

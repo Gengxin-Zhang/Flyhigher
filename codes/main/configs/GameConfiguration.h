@@ -21,19 +21,19 @@ class GameConfiguration {
          * 获取地图配置项
          * @return 地图配置项
          */
-        MapConfiguration* getMapConfig() const;
+        shared_ptr<MapConfiguration> getMapConfig() const;
         
         /**
          * 获取裁判配置项
          * @return 裁判配置项
          */
-        JudgerConfiguration* getJudgerConfig() const;
+        shared_ptr<JudgerConfiguration> getJudgerConfig() const;
         
         /**
          * 获取主循环配置项
          * @return 主循环配置项
          */
-        LoopConfiguration* getLoopConfig() const;
+        shared_ptr<LoopConfiguration> getLoopConfig() const;
         
         /**
          * 获取玩家个数
@@ -45,7 +45,7 @@ class GameConfiguration {
          * 获取玩家配置项
          * @param index 下标
          */
-        PlayerConfiguration* getPlayersConfig(const int index) const;
+        shared_ptr<PlayerConfiguration> getPlayersConfig(const int index) const;
             
         /**
          * 构造函数
@@ -55,19 +55,21 @@ class GameConfiguration {
          * @param playerNumber 玩家个数
          * @param playersConfig 玩家配置项组
          */
-        GameConfiguration(MapConfiguration* const mapConfig, JudgerConfiguration* const judgerConfig,
-         LoopConfiguration* const loopConfig, const int playerNumber, PlayerConfiguration** playersConfig);
+        GameConfiguration(shared_ptr<MapConfiguration> const mapConfig,
+                          shared_ptr<JudgerConfiguration> const judgerConfig,
+                          shared_ptr<LoopConfiguration> const loopConfig,
+                          const int playerNumber, shared_ptr<PlayerConfiguration>* playersConfig);
         
         /**
          * 析构函数
          */
         ~GameConfiguration();
 private: 
-    MapConfiguration* mapConfig;
-    JudgerConfiguration* judgerConfig;
-    LoopConfiguration* loopConfig;
+    shared_ptr<MapConfiguration> mapConfig;
+    shared_ptr<JudgerConfiguration> judgerConfig;
+    shared_ptr<LoopConfiguration> loopConfig;
     int playerNumber;
-    PlayerConfiguration** playersConfig;
+    shared_ptr<PlayerConfiguration>* playersConfig;
 };
 
 #endif //_GAMECONFIGURATION_H

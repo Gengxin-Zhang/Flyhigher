@@ -6,19 +6,22 @@
 
 
 #include "Bomber.h"
+#include <vector>
+using std::vector;
 
 /**
  * Bomber implementation
  */
 
 
-Bomber::Bomber(shared_ptr<Player> const player, BomberConfiguration* const config, shared_ptr<Entity> const parentEntity, const double x, const double y):
- LivingEntity(player, config->getConfig(), parentEntity, x, y)  {
-     weapon = new Weapon(config->getWeaponConfig());
+Bomber::Bomber(shared_ptr<Player> const player,
+               shared_ptr<BomberConfiguration> const config,
+               shared_ptr<Entity> const parentEntity, const double x, const double y):
+               LivingEntity(player, config->getConfig(), parentEntity, x, y)  {
+     weapon = shared_ptr<Weapon>(new Weapon(config->getWeaponConfig()));
 }
 
 Bomber::~Bomber() {
-    delete weapon;
 }
 
 vector<shared_ptr<Entity>> Bomber::see() const{

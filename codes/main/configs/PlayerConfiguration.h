@@ -24,8 +24,8 @@ class PlayerConfiguration {
          * @param color 颜色
          */
         PlayerConfiguration(const string name, const Color color,
-         CarrierConfiguration* const carrierConfig, BomberConfiguration* const bomberConfig,
-         FighterConfiguration* const fighterConfig);
+         shared_ptr<CarrierConfiguration> const carrierConfig, shared_ptr<BomberConfiguration> const bomberConfig,
+         shared_ptr<FighterConfiguration> const fighterConfig);
 
         /**
          * 析构函数
@@ -48,25 +48,25 @@ class PlayerConfiguration {
          * 获取母舰配置项
          * @return 母舰配置项
          */
-        CarrierConfiguration* getCarrierConfig() const;
+        shared_ptr<CarrierConfiguration> getCarrierConfig() const;
 
         /**
          * 获取轰炸机配置项
          * @return 轰炸机配置项
          */
-        BomberConfiguration* getBomberConfig() const;
+        shared_ptr<BomberConfiguration> getBomberConfig() const;
 
         /**
          * 获取战斗机配置项
          * @return 战斗机配置项
          */
-        FighterConfiguration* getFighterConfig() const;
+        shared_ptr<FighterConfiguration> getFighterConfig() const;
     private: 
         string name;
         Color color;
-        CarrierConfiguration* carrierConfig;
-        BomberConfiguration* bomberConfig;
-        FighterConfiguration* fighterConfig;
+        shared_ptr<CarrierConfiguration> carrierConfig;
+        shared_ptr<BomberConfiguration> bomberConfig;
+        shared_ptr<FighterConfiguration> fighterConfig;
 };
 
 #endif //_PLAYERCONFIGURATION_H

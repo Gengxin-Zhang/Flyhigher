@@ -10,7 +10,6 @@
 
 #include "MovableEntity.h"
 #include "../../configs/PlaneConfiguration.h"
-#include <vector>
 using std::vector;
 
 class Player;
@@ -25,7 +24,7 @@ class LivingEntity: public MovableEntity {
          * @param x x坐标
          * @param y y坐标
          */
-        LivingEntity(shared_ptr<Player> const player, PlaneConfiguration* const config,
+        LivingEntity(shared_ptr<Player> const player, shared_ptr<PlaneConfiguration> const config,
         shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
 
         /**

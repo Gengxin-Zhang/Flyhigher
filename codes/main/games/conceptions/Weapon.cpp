@@ -13,7 +13,7 @@
  * 武器类
  */
 
-Weapon::Weapon(WeaponConfiguration* const config) {
+Weapon::Weapon(shared_ptr<WeaponConfiguration> const config) {
     radius = config->getRadius();
     damage = config->getDamage();
     speed = config->getSpeed();

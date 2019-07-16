@@ -12,8 +12,6 @@
 #include "../../configs/CarrierConfiguration.h"
 #include "../conceptions/Nuke.h"
 #include "../conceptions/Weapon.h"
-#include <vector>
-using std::vector;
 
 class Player;
 
@@ -27,7 +25,7 @@ class Carrier: public LivingEntity {
          * @param x x坐标
          * @param y y坐标
          */
-        Carrier(shared_ptr<Player> const player, CarrierConfiguration* const config,
+        Carrier(shared_ptr<Player> const player, shared_ptr<CarrierConfiguration> const config,
          shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
@@ -71,9 +69,9 @@ class Carrier: public LivingEntity {
         virtual string getClassName() const;
     private:
         //主武器
-        Weapon* mainWeapon;
+        shared_ptr<Weapon> mainWeapon;
         //必杀武器，只能使用一次
-        Nuke* godWeapon;
+        shared_ptr<Nuke> godWeapon;
 };
 
 #endif //_CARRIER_H

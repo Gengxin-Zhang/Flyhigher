@@ -4,10 +4,7 @@
  * @version v1.0 beta
  */
 
-#include <cstring>
-#include <iostream>
 #include "./systems/Engine.h"
-using std::cout, std::endl, std::string;
 
 int __main(int argc, char** argv){
     bool debugMode = false;
@@ -18,7 +15,7 @@ int __main(int argc, char** argv){
             cout<<"Debug mode enabled"<<endl;
         }
     }
-    Engine* engine = Engine::getInstance();
+    shared_ptr<Engine> engine = Engine::getInstance();
     engine->startEngine(debugMode);
     return 0;
 }

@@ -6,24 +6,26 @@
 
 
 #include "Fighter.h"
+#include "../Player.h"
+#include <vector>
+using std::make_shared;
 
 /**
  * Fighter implementation
  */
 
 
-Fighter::Fighter(shared_ptr<Player> const player, FighterConfiguration* const config,
+Fighter::Fighter(shared_ptr<Player> const player, shared_ptr<FighterConfiguration> const config,
  shared_ptr<Entity> const parentEntity, const double x, const double y)
  :LivingEntity(player, config->getConfig(), parentEntity, x, y) {
     this->collecting = false;
-    this->weapon = new Weapon(config->getWeaponConfig());
-    RebuildableConfiguration* rConfig = config->getRebuildConfig();
+    this->weapon = shared_ptr<Weapon>(new Weapon(config->getWeaponConfig()));
+    shared_ptr<RebuildableConfiguration> rConfig = config->getRebuildConfig();
     rebuildPower = rConfig->getPower();
     rebuildTicks = rConfig->getTick();
 }
 
 Fighter::~Fighter() {
-    delete [] weapon;
 }
 
 void Fighter::die() {
@@ -46,8 +48,8 @@ bool Fighter::isCollecting() const{
     return collecting;
 }
 
-void Fighter::collect(ResourceEntity entity) {
-    collectingEntity = &entity;
+void Fighter::collect(ResourceEntity& entity) {
+    collectingEntity = make_shared<ResourceEntity>(entity);
     collectingEntity->setBeingCollected(true);
     collecting = true;
     //startTime = ;
@@ -56,7 +58,9 @@ void Fighter::collect(ResourceEntity entity) {
 
 void Fighter::collectCompletely() {
     //TODO: 我方资源值+=采集的资源值
-    delete collectingEntity;
+    shared_ptr<Player> ptr = getPlayer();
+    ptr->addPower(collectingEntity->getPower());
+    collectingEntity.reset();
     collectingEntity = nullptr;
     collecting = false;
 }

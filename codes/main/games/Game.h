@@ -12,12 +12,7 @@
 #include "Loop.h"
 #include "Judger.h"
 #include "Map.h"
-#include "Player.h"
-#include <string>
-#include <cstring>
 #include <map>
-#include <memory>
-using std::string, std::shared_ptr;
 
 class Engine;
 class Logger;
@@ -28,7 +23,7 @@ class Game {
          * 构造函数
          * @param config 配置项
          */
-        Game(GameConfiguration* const config);
+        Game(shared_ptr<GameConfiguration> const config);
         
         /**
          * 析构函数

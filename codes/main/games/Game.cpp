@@ -6,17 +6,14 @@
 
 
 #include "Game.h"
-#include "../../tools/Logger.h"
 #include "../systems/Engine.h"
-#include <exception>
 #define log Engine::getInstance()->getLogger()
-using std::invalid_argument;
 
 /**
  * Game implementation
  */
 
-Game::Game(GameConfiguration* const config) {
+Game::Game(shared_ptr<GameConfiguration> const config) {
     log->infomation("准备一场游戏");
     judger = std::shared_ptr<Judger>(new Judger(config->getJudgerConfig()));
     map = std::shared_ptr<Map>(new Map(config->getMapConfig()));

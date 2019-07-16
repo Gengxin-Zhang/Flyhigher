@@ -13,8 +13,9 @@
 
 
 PlayerConfiguration::PlayerConfiguration(const string name, const Color color,
-     CarrierConfiguration* const carrierConfig, BomberConfiguration* const bomberConfig,
-     FighterConfiguration* const fighterConfig) {
+                                         shared_ptr<CarrierConfiguration> const carrierConfig,
+                                         shared_ptr<BomberConfiguration> const bomberConfig,
+                                         shared_ptr<FighterConfiguration> const fighterConfig) {
     this->name = name;
     this->color = color;
     this->carrierConfig = carrierConfig;
@@ -23,9 +24,6 @@ PlayerConfiguration::PlayerConfiguration(const string name, const Color color,
 }
 
 PlayerConfiguration::~PlayerConfiguration() {
-    delete [] carrierConfig;
-    delete [] bomberConfig;
-    delete [] fighterConfig;
 }
 
 string PlayerConfiguration::getName() const{
@@ -36,14 +34,14 @@ Color PlayerConfiguration::getColor() const{
     return color;
 }
 
-CarrierConfiguration* PlayerConfiguration::getCarrierConfig() const{
+shared_ptr<CarrierConfiguration> PlayerConfiguration::getCarrierConfig() const{
     return carrierConfig;
 }
 
-BomberConfiguration* PlayerConfiguration::getBomberConfig() const{
+shared_ptr<BomberConfiguration> PlayerConfiguration::getBomberConfig() const{
     return  bomberConfig;
 }
 
-FighterConfiguration* PlayerConfiguration::getFighterConfig() const{
+shared_ptr<FighterConfiguration> PlayerConfiguration::getFighterConfig() const{
     return fighterConfig;
 }

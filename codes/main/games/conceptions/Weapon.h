@@ -9,6 +9,8 @@
 #define _WEAPON_H
 
 #include "../../configs/WeaponConfiguration.h"
+#include <memory>
+using std::shared_ptr;
 
 class Weapon {
     public: 
@@ -16,7 +18,7 @@ class Weapon {
          * 构造函数
          * @param config 配置项
          */
-        Weapon(WeaponConfiguration* const config);
+        Weapon(shared_ptr<WeaponConfiguration> const config);
         
         /**
          * 析构函数

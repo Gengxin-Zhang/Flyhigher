@@ -24,7 +24,7 @@ class Bomber: public LivingEntity {
          * @param x x坐标
          * @param y y坐标
          */
-        Bomber(shared_ptr<Player> const player, BomberConfiguration* const config,
+        Bomber(shared_ptr<Player> const player, shared_ptr<BomberConfiguration> const config,
          shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
@@ -62,7 +62,7 @@ class Bomber: public LivingEntity {
         virtual string toString() const;
     private: 
         //武器
-        Weapon* weapon;
+        shared_ptr<Weapon> weapon;
 };
 
 #endif //_BOMBER_H

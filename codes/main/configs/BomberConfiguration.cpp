@@ -11,20 +11,19 @@
  * BomberConfiguration implementation
  */
 
-BomberConfiguration::BomberConfiguration(WeaponConfiguration* const weaponConfig, PlaneConfiguration* const config) {
+BomberConfiguration::BomberConfiguration(shared_ptr<WeaponConfiguration> const weaponConfig,
+                                         shared_ptr<PlaneConfiguration> const config) {
     this->weaponConfig = weaponConfig;
     this->config = config;
 }
 
 BomberConfiguration::~BomberConfiguration() {
-    delete [] weaponConfig;
-    delete [] config;
 }
 
-WeaponConfiguration* BomberConfiguration::getWeaponConfig() const{
+shared_ptr<WeaponConfiguration> BomberConfiguration::getWeaponConfig() const{
     return weaponConfig;
 }
 
-PlaneConfiguration* BomberConfiguration::getConfig() const{
+shared_ptr<PlaneConfiguration> BomberConfiguration::getConfig() const{
     return config;
 }

@@ -9,7 +9,6 @@
 #define _MAP_H
 
 #include "../configs/MapConfiguration.h"
-#include "../../tools/Point2D.h"
 #include "./entitys/Entity.h"
 
 class Engine;
@@ -21,7 +20,7 @@ class Map {
          * 构造函数
          * @param 地图配置项
          */
-        Map(MapConfiguration* const config);
+        Map(shared_ptr<MapConfiguration> const config);
 
         /**
          * 析构函数

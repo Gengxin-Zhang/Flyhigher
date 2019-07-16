@@ -6,7 +6,6 @@
 
 
 #include "Judger.h"
-#include "../../tools/Logger.h"
 #include "../systems/Engine.h"
 #define log Engine::getInstance()->getLogger()
 
@@ -14,7 +13,7 @@
  * Judger implementation
  */
 
-Judger::Judger(JudgerConfiguration* const config){
+Judger::Judger(shared_ptr<JudgerConfiguration> const config){
     log->debug("构造裁判对象");
 }
 

@@ -26,7 +26,7 @@ class Fighter: public LivingEntity, public Rebuildable, public Collector{
          * @param x x坐标
          * @param y y坐标
          */
-        Fighter(shared_ptr<Player> const player, FighterConfiguration* const config,
+        Fighter(shared_ptr<Player> const player, shared_ptr<FighterConfiguration> const config,
          shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
             
         /**
@@ -65,7 +65,7 @@ class Fighter: public LivingEntity, public Rebuildable, public Collector{
          * 采集资源实体
          * @param entity 资源实体
          */
-        virtual void collect(ResourceEntity entity);
+        virtual void collect(ResourceEntity& entity);
 
         /**
          * 采集实体完毕
@@ -110,9 +110,9 @@ class Fighter: public LivingEntity, public Rebuildable, public Collector{
         virtual string toString() const;
     private:
         //正在采集的实体
-        ResourceEntity* collectingEntity;
+        shared_ptr<ResourceEntity> collectingEntity;
         //武器
-        Weapon* weapon;
+        shared_ptr<Weapon> weapon;
         //是否处于采集状态
         bool collecting;
         //开始采集的时间

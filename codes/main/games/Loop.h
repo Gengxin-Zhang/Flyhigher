@@ -8,13 +8,11 @@
 #ifndef _LOOP_H
 #define _LOOP_H
 
-#include <set>
 #include "../configs/LoopConfiguration.h"
-#include "./entitys/ResourceEntity.h"
-#include "./entitys/LivingEntity.h"
-#include "./entitys/Bullet.h"
 #include "Player.h"
+#include "./entitys/Bullet.h"
 #include <chrono>
+#include <set>
 using std::set, std::chrono::steady_clock, std::chrono::milliseconds;
 
 class Engine;
@@ -26,7 +24,7 @@ class Loop {
          * 构造函数
          * @param 配置项
          */
-        Loop(LoopConfiguration* const config);
+        Loop(shared_ptr<LoopConfiguration> const config);
 
         /**
          * 析构函数

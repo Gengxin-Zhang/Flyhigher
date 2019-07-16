@@ -9,20 +9,18 @@
 #include "./entitys/Carrier.h"
 #include "./entitys/Bomber.h"
 #include "./entitys/Fighter.h"
-#include "../../tools/Logger.h"
 #include "../systems/Engine.h"
-#include <string>
-#include <exception>
 #include <cmath>
 #define log Engine::getInstance()->getLogger()
 #define loop Engine::getInstance()->getNowGame()->getLoop()
-using std::to_string, std::invalid_argument;
+using std::to_string;
 
 /**
  * Player implementation
  */
 
-Player::Player(PlayerConfiguration* const config, const Point2D startPoint): enable_shared_from_this<Player>(){
+Player::Player(shared_ptr<PlayerConfiguration> const config,
+               const Point2D startPoint): enable_shared_from_this<Player>(){
     name = config->getName();
     log->debug("构造玩家对象：" + name);
     color = config->getColor();

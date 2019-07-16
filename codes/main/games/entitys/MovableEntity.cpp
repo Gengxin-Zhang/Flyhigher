@@ -6,7 +6,6 @@
 
 
 #include "MovableEntity.h"
-#include <cmath>
 
 /**
  * MovableEntity implementation

@@ -23,14 +23,14 @@ class Configuration {
 
         void load();
 
-        GameConfiguration* getGameConfiguration() const;
+        shared_ptr<GameConfiguration> getGameConfiguration() const;
 
-        static Configuration* getInstance();
+        static shared_ptr<Configuration> getInstance();
     private:
         Configuration(const string file);
         static bool isInit;
-        static Configuration* config;
-        GameConfiguration* gameConfig;
+        static shared_ptr<Configuration> config;
+        shared_ptr<GameConfiguration> gameConfig;
         YAML::Node root;
         string file;
 };

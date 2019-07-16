@@ -8,13 +8,12 @@
 #ifndef _ENGINE_H
 #define _ENGINE_H
 
-#include <string>
 #include <exception>
 #include "../../tools/Logger.h"
 #include "../configs/Configuration.h"
 #include "../games/Game.h"
 #include <thread>
-using std::string, std::invalid_argument, std::thread;
+using std::invalid_argument, std::thread;
 
 class Engine {
     public:
@@ -33,19 +32,19 @@ class Engine {
          * 注册Logger
          * @param logger 记录器
          */
-        void registerLogger(Logger* const logger);
+        void registerLogger(shared_ptr<Logger> const logger);
 
         /**
          * 返回Logger
          * @return logger 记录器
          */
-        Logger* getLogger() const;
+        shared_ptr<Logger> getLogger() const;
 
         /**
          * 获取单例模式的Engine的实例
          * @return 实例
          */
-        static Engine* getInstance();
+        static shared_ptr<Engine> getInstance();
 
         /**
          * 当前是否debug模式
@@ -57,13 +56,13 @@ class Engine {
          * 开始一场游戏
          * @param config 游戏配置项
          */
-        void startGame(GameConfiguration* const config);
+        void startGame(shared_ptr<GameConfiguration> const config);
 
         /**
          * 获取当前进行的游戏
          * @return 游戏
          */
-        Game* getNowGame() const;
+        shared_ptr<Game> getNowGame() const;
 
         /**
          * 关闭引擎
@@ -82,15 +81,15 @@ class Engine {
         bool onDebugMode() const;
 
 
-        Logger* logger;
+        shared_ptr<Logger> logger;
         string workDir;
-        Configuration* totalConfig;
-        static Engine* engine;
+        shared_ptr<Configuration> totalConfig;
+        static shared_ptr<Engine> engine;
         static bool hasInit;
         bool hasStarted;
         bool debugMode;
-        Game* nowGame;
-        thread* nowGameThread;
+        shared_ptr<Game> nowGame;
+        shared_ptr<thread> nowGameThread;
         bool hasNowGame;
 };
 

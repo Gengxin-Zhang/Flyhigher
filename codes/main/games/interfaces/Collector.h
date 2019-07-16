@@ -22,7 +22,7 @@ class Collector {
          * 采集一个资源实体
          * @param entity 实体
          */
-        virtual void collect(ResourceEntity entity) = 0;
+        virtual void collect(ResourceEntity& entity) = 0;
 
         /**
          * 采集完毕

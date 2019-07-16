@@ -7,14 +7,13 @@
 
 #ifndef _PLAYER_H
 #define _PLAYER_H
-#include <string>
 #include "../../tools/Color.h"
 #include "../configs/PlayerConfiguration.h"
 #include "./entitys/Carrier.h"
 #include "./entitys/Bomber.h"
 #include "./entitys/Fighter.h"
-#include <memory>
-using std::string, std::shared_ptr, std::enable_shared_from_this;
+
+using std::enable_shared_from_this;
 
 class Engine;
 class Logger;
@@ -25,7 +24,7 @@ class Player: public enable_shared_from_this<Player> {
          * 构造函数
          * @param config 配置项
          */
-        Player(PlayerConfiguration* const config, const Point2D startPoint);
+        Player(shared_ptr<PlayerConfiguration> const config, const Point2D startPoint);
 
         /**
          * 析构函数
@@ -99,7 +98,7 @@ class Player: public enable_shared_from_this<Player> {
         shared_ptr<Fighter> fighters[5];
         int power;
         Point2D startPoint;
-        PlayerConfiguration* config;
+        shared_ptr<PlayerConfiguration> config;
 };
 
 #endif //_PLAYER_H

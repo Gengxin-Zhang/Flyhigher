@@ -9,13 +9,15 @@
 #define _JUDGER_H
 
 #include "../configs/JudgerConfiguration.h"
+#include <memory>
+using std::shared_ptr;
 
 class Engine;
 class Logger;
 
 class Judger {
     public:
-        Judger(JudgerConfiguration * const config);
+        Judger(shared_ptr<JudgerConfiguration> const config);
         void init();
     private:
 };

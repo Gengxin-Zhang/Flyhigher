@@ -9,6 +9,8 @@
 #define _NUKE_H
 
 #include "../../configs/NukeConfiguration.h"
+#include <memory>
+using std::shared_ptr;
 
 class Nuke {
     public:
@@ -59,7 +61,7 @@ class Nuke {
          * 构造函数
          * @param config 配置项
          */
-        Nuke(NukeConfiguration* const config);
+        Nuke(shared_ptr<NukeConfiguration> const config);
 
         /**
          * 析构函数

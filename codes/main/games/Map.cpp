@@ -6,18 +6,15 @@
 
 
 #include "Map.h"
-#include "../../tools/Logger.h"
 #include "../systems/Engine.h"
-#include <exception>
-#include <string>
 #define log Engine::getInstance()->getLogger()
-using std::invalid_argument, std::to_string;
+using std::to_string;
 
 /**
  * Map implementation
  */
 
-Map::Map(MapConfiguration* const config){
+Map::Map(shared_ptr<MapConfiguration> const config){
     log->debug("构造地图对象");
     height = config->getHeight();
     width = config->getWidth();
@@ -26,7 +23,6 @@ Map::Map(MapConfiguration* const config){
 }
 
 Map::~Map(){
-    log->debug("析构map");
 }
 
 double Map::getHeight() const{

@@ -9,9 +9,8 @@
 #define _ENTITY_H
 
 #include "../../../tools/Vector2D.h"
-#include <string>
 #include <memory>
-using std::string, std::shared_ptr;
+using std::shared_ptr;
 
 class Entity {
     public: 
@@ -22,7 +21,8 @@ class Entity {
          * @param x x坐标
          * @param y y坐标
          */
-        Entity(const double radius, shared_ptr<Entity> const parentEntity = nullptr, const double x = 0, const double y = 0);
+        Entity(const double radius, shared_ptr<Entity> const parentEntity = nullptr,
+               const double x = 0, const double y = 0);
             
         /**
          * 获取父类对象

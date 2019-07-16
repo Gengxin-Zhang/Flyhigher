@@ -11,27 +11,25 @@
  * CarrierConfiguration implementation
  */
 
-CarrierConfiguration::CarrierConfiguration(WeaponConfiguration* const weaponConfig,
- NukeConfiguration* const nukeConfig, PlaneConfiguration* const config) {
+CarrierConfiguration::CarrierConfiguration(shared_ptr<WeaponConfiguration> const weaponConfig,
+                                           shared_ptr<NukeConfiguration> const nukeConfig,
+                                           shared_ptr<PlaneConfiguration> const config) {
      this->weaponConfig = weaponConfig;
      this->nukeConfig = nukeConfig;
      this->config = config;
 }
 
 CarrierConfiguration::~CarrierConfiguration() {
-    delete [] weaponConfig;
-    delete [] nukeConfig;
-    delete [] config;
 }
 
-WeaponConfiguration* CarrierConfiguration::getWeaponConfig() const{
+shared_ptr<WeaponConfiguration> CarrierConfiguration::getWeaponConfig() const{
     return weaponConfig;
 }
 
-NukeConfiguration* CarrierConfiguration::getNukeConfig() const{
+shared_ptr<NukeConfiguration> CarrierConfiguration::getNukeConfig() const{
     return nukeConfig;
 }
 
-PlaneConfiguration* CarrierConfiguration::getConfig() const{
+shared_ptr<PlaneConfiguration> CarrierConfiguration::getConfig() const{
     return config;
 }
