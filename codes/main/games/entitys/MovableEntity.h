@@ -41,6 +41,12 @@ class MovableEntity: public Entity {
         void goNextTick();
 
         /**
+         * 移动一个给定向量，距离为向量的模，方向为向量的方向
+         * @param pos 给定向量
+         */
+        void move(const Vector2D pos);
+
+        /**
          * 是否处于移动状态，false表示静止
          * @return 移动状态
          */

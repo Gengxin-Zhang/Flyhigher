@@ -27,12 +27,12 @@ double NukeConfiguration::getRadius() const{
     return radius;
 }
 
-int NukeConfiguration::getSpeed() const{
+double NukeConfiguration::getSpeed() const{
     return speed;
 }
 
 NukeConfiguration::NukeConfiguration(const int aoeDamage, const double aoeDamageRadius,
- const int damageDecrease, const double radius, const int speed) {
+ const int damageDecrease, const double radius, const double speed) {
     this->aoeDamage = aoeDamage;
     this->aoeDamageRadius = aoeDamageRadius;
     this-> damageDecrease = damageDecrease;

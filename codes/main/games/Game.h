@@ -64,6 +64,12 @@ class Game {
          * @return 玩家个数
          */
         int getPlayerNumber() const;
+
+        /**
+         * 获取全部玩家
+         * @return 全部玩家
+         */
+        std::map<string, shared_ptr<Player>> getPlayers();
     private:
         
         int player_num;
@@ -71,6 +77,7 @@ class Game {
         shared_ptr<Map> map;
         shared_ptr<Judger> judger;
         std::map<string, shared_ptr<Player>> players;
+        std::shared_ptr<Player>* tmp_players;
 };
 
 #endif //_GAME_H

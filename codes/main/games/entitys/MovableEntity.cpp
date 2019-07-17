@@ -23,13 +23,17 @@ Vector2D MovableEntity::getSpeed() const{
 }
 
 void MovableEntity::turnDirection(const double rad) {
-    if(rad < -M_PI/24 || rad > M_PI/24) return;
+//    if(rad < -M_PI/24 || rad > M_PI/24) return;
     speed = speed.rotate(rad);
 }
 
 void MovableEntity::goNextTick() {
-    setX(getX() + speed.getX());
-    setY(getY() + speed.getY());
+    move(speed);
+}
+
+void MovableEntity::move(const Vector2D pos){
+    setX(getX() + pos.getX());
+    setY(getY() + pos.getY());
 }
 
 bool MovableEntity::isMoving() const {

@@ -50,7 +50,7 @@ class Weapon {
          * 获取子弹速度标量
          * @return 子弹速度
          */
-        int getSpeed() const;
+        double getSpeed() const;
         
         /**
          * 获取射击冷却时间，单位tick
@@ -66,7 +66,7 @@ class Weapon {
     private: 
         double radius;
         int damage;
-        int speed;
+        double speed;
         int delay;
         long lastShoot;
         shared_ptr<Entity> parentEntity;

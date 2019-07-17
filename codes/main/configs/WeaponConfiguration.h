@@ -26,7 +26,7 @@ class WeaponConfiguration {
          * 返回武器子弹的速度标量
          * @return 速度
          */
-        int getSpeed() const;
+        double getSpeed() const;
 
         /**
          * 返回武器射击的冷却时间，单位tick
@@ -41,7 +41,7 @@ class WeaponConfiguration {
          * @param speed 子弹速度
          * @param delay 射击冷却时间
          */
-        WeaponConfiguration(const double radius, const int damage, const int speed, const int delay);
+        WeaponConfiguration(const double radius, const int damage, const double speed, const int delay);
         
         /**
          * 析构函数
@@ -50,7 +50,7 @@ class WeaponConfiguration {
     private: 
         double radius;
         int damage;
-        int speed;
+        double speed;
         int delay;
 };
 

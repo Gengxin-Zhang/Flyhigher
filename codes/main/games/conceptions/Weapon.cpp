@@ -37,6 +37,7 @@ bool Weapon::shoot(const double direction){
     lastShoot  = loop->getNowTick();
     shared_ptr<Bullet> bullet(new Bullet(radius, Vector2D(speed, direction, true),
                                          damage, parentEntity, parentEntity->getX(), parentEntity->getY()));
+    log->debug(bullet->toString() + "被射出");
     loop->addBullet(bullet);
     return true;
 }
@@ -49,7 +50,7 @@ int Weapon::getDamage() const{
     return damage;
 }
 
-int Weapon::getSpeed() const{
+double Weapon::getSpeed() const{
     return speed;
 }
 

@@ -12,6 +12,8 @@
 #include "JudgerConfiguration.h"
 #include "LoopConfiguration.h"
 #include "PlayerConfiguration.h"
+#include "LargeStarConfiguration.h"
+#include "LittleStarConfiguration.h"
 
 class GameConfiguration {
     public: 
@@ -41,9 +43,18 @@ class GameConfiguration {
             
         /**
          * 获取玩家配置项
-         * @param index 下标
          */
-        shared_ptr<PlayerConfiguration> getPlayersConfig(const int index) const;
+        shared_ptr<PlayerConfiguration> getPlayerConfig() const;
+
+        /**
+         * 获取大行星配置项
+         */
+        shared_ptr<LargeStarConfiguration> getLargeStarConfig() const;
+
+        /**
+         * 获取小行星配置项
+         */
+        shared_ptr<LittleStarConfiguration> getLittleStarConfig() const;
             
         /**
          * 构造函数
@@ -51,12 +62,16 @@ class GameConfiguration {
          * @param judgerConfig 裁判配置项
          * @param loopConfig 主循环配置项
          * @param playerNumber 玩家个数
-         * @param playersConfig 玩家配置项组
+         * @param playerConfig 玩家配置项
+         * @param largeStarConfig 大行星配置项
+         * @param littleStarConfig 小行星配置项
          */
         GameConfiguration(shared_ptr<MapConfiguration> const mapConfig,
                           shared_ptr<JudgerConfiguration> const judgerConfig,
                           shared_ptr<LoopConfiguration> const loopConfig,
-                          const int playerNumber, shared_ptr<PlayerConfiguration>* playersConfig);
+                          const int playerNumber, shared_ptr<PlayerConfiguration> const playerConfig,
+                          shared_ptr<LargeStarConfiguration> const largeStarConfig,
+                          shared_ptr<LittleStarConfiguration> const littleStarConfig);
         
         /**
          * 析构函数
@@ -67,7 +82,9 @@ private:
     shared_ptr<JudgerConfiguration> judgerConfig;
     shared_ptr<LoopConfiguration> loopConfig;
     int playerNumber;
-    shared_ptr<PlayerConfiguration>* playersConfig;
+    shared_ptr<PlayerConfiguration> playerConfig;
+    shared_ptr<LargeStarConfiguration> largeStarConfig;
+    shared_ptr<LittleStarConfiguration> littleStarConfig;
 };
 
 #endif //_GAMECONFIGURATION_H

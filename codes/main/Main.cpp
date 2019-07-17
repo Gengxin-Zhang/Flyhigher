@@ -8,7 +8,6 @@
 
 int __main(int argc, char** argv){
     bool debugMode = false;
-
     for(int i=0; i<argc; ++i){
         if(strcmp(argv[i], "debug")){
             debugMode = true;

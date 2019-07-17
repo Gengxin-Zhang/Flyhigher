@@ -6,8 +6,9 @@
 
 
 #include "Bullet.h"
+#include "../../systems/Engine.h"
 using std::to_string;
-
+#define log Engine::getInstance()->getLogger()
 /**
  * Bullet implementation
  */

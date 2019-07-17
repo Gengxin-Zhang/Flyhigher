@@ -38,17 +38,17 @@ class NukeConfiguration {
          * 获取子弹速度标量
          * @return 速度
          */
-        int getSpeed() const;
+        double getSpeed() const;
             
         /**
          * 构造函数
-         * @param aoeDamage
-         * @param aoeDamageRadius
-         * @param damageDecrease
-         * @param radius
-         * @param speed
+         * @param aoeDamage 中心伤害
+         * @param aoeDamageRadius 伤害半径
+         * @param damageDecrease 伤害锐减
+         * @param radius 碰撞半径
+         * @param speed 速度
          */
-        NukeConfiguration(const int aoeDamage, const double aoeDamageRadius, const int damageDecrease, const double radius, const int speed);
+        NukeConfiguration(const int aoeDamage, const double aoeDamageRadius, const int damageDecrease, const double radius, const double speed);
         
         /**
          * 析构函数
@@ -59,7 +59,7 @@ class NukeConfiguration {
         double aoeDamageRadius;
         int damageDecrease;
         double radius;
-        int speed;
+        double speed;
 };
 
 #endif //_NUKECONFIGURATION_H

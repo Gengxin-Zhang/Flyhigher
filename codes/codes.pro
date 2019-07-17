@@ -1,27 +1,43 @@
-QT -= gui
+#-------------------------------------------------
+#
+# Project created by QtCreator 2019-07-17T20:08:27
+#
+#-------------------------------------------------
 
-CONFIG += c++17 console
-CONFIG -= app_bundle
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+TARGET = Flyhigher
+TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
-# any Qt feature that has been marked deprecated (the exact warnings
+# any feature of Qt which has been marked as deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
 # deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
-# You can also make your code fail to compile if it uses deprecated APIs.
+# You can also make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+CONFIG += c++17
+CONFIG+= console
+
 HEADERS += tools/Vector2D.h \
             tools/Color.h \
             tools/Point2D.h \
-            tools/Logger.h \
+            tools/Logger.h \ \
+    ui/readonlydelegate.h \
+    ui/uiconfig.h
 
 SOURCES += tools/Vector2D.cpp \
             tools/Color.cpp \
             tools/Point2D.cpp \
-            tools/Logger.cpp
+            tools/Logger.cpp \
+            ui/readonlydelegate.cpp \
+            ui/uiconfig.cpp
 
 
 HEADERS += main/configs/Configuration.h \
@@ -128,3 +144,6 @@ INCLUDEPATH += $$PWD/../OpenSource/yaml-cpp/include
 DEPENDPATH += $$PWD/../OpenSource/yaml-cpp/build
 
 INCLUDEPATH += $$PWD/../OpenSource/rapidjson/include
+
+FORMS += \
+    ui/uiconfig.ui

@@ -19,9 +19,10 @@ Game::Game(shared_ptr<GameConfiguration> const config) {
     map = std::shared_ptr<Map>(new Map(config->getMapConfig()));
     loop = std::shared_ptr<Loop>(new Loop(config->getLoopConfig()));
     player_num = config->getPlayerNumber();
+    tmp_players = new std::shared_ptr<Player>[player_num];
     for(int i=0; i<player_num; ++i){
-        std::shared_ptr<Player> player(new Player(config->getPlayersConfig(i), map->getBrithPoint(i)));
-        players[player->getName()] = player;
+        std::shared_ptr<Player> player(new Player(config->getPlayerConfig()));
+        tmp_players[i] = player;
     }
 }
 
@@ -31,10 +32,12 @@ Game::~Game() {
 
 void Game::run() {
     judger->init();
-    for(std::map<string,std::shared_ptr<Player>>::iterator it = players.begin(); it != players.end(); ++it){
-        it->second->init();
-    }
+    judger->readStartData();
     log->infomation("开始一场游戏");
+    for(int i=0; i<player_num; ++i){
+        players.insert(make_pair(tmp_players[i]->getUID(), tmp_players[i]));
+    }
+    delete [] tmp_players;
     loop->init();
     loop->run();
     log->debug("结束loop");
@@ -59,4 +62,8 @@ shared_ptr<Player> Game::getPlayer(const string name) {
 
 int Game::getPlayerNumber() const{
     return player_num;
+}
+
+std::map<string, shared_ptr<Player>> Game::getPlayers() {
+    return players;
 }

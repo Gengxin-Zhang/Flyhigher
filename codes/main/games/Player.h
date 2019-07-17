@@ -21,7 +21,7 @@ class Player: public enable_shared_from_this<Player> {
          * 构造函数
          * @param config 配置项
          */
-        Player(shared_ptr<PlayerConfiguration> const config, const Point2D startPoint);
+        Player(shared_ptr<PlayerConfiguration> const config);
 
         /**
          * 析构函数
@@ -31,7 +31,7 @@ class Player: public enable_shared_from_this<Player> {
         /**
          * 初始化状态
          */
-        void init();
+        void init(const string uid, const string name, const Color color, const Point2D startPoint);
 
         /**
          * 获得胜利
@@ -97,17 +97,37 @@ class Player: public enable_shared_from_this<Player> {
         /**
          * 建造完毕
          */
-        void buildComplately();
+        void buildCompletely();
 
         /**
          * 建造是否完成
          * @return 建造是否完成
          */
         bool isBuildFinished() const;
+
+        /**
+         * 是否允许母舰周围的自动回复生命值
+         * @return 是否允许
+         */
+        bool isAllowHeal() const;
+
+        /**
+         * 设置是否允许母舰周围的自动回复生命值
+         * @param allowHeal 是否允许
+         */
+        void setAllowHeal(const bool allowHeal);
+
+
+        /**
+         * 获取Player的唯一ID
+         * @param uid 唯一ID
+         */
+        string getUID() const;
     private: 
         bool isBuilding;
         long buildStartTick;
         long buildEndTick;
+        string uid;
         string name;
         Color color;
         shared_ptr<Carrier> carrier;
@@ -116,6 +136,7 @@ class Player: public enable_shared_from_this<Player> {
         int power;
         Point2D startPoint;
         shared_ptr<PlayerConfiguration> config;
+        bool allowHeal;
 };
 
 #endif //_PLAYER_H

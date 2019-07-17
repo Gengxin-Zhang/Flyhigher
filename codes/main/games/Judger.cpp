@@ -41,15 +41,19 @@ bool Judger::readJson(const char* json, const long allowTime){
     }
     const Value& data = playerData->value;
     Value::ConstMemberIterator uid = document.FindMember("uid");
-    if(uid == document.MemberEnd() || !uid->value.IsString()){ //TODO: 指定类型！
+    if(uid == document.MemberEnd() || !uid->value.IsString()){
         return false;
     }
-    shared_ptr<Player> player = game->getPlayer(uid->value.GetString()); //TODO: 指定类型！
+    shared_ptr<Player> player = game->getPlayer(uid->value.GetString());
     Value::ConstMemberIterator build = data.FindMember("build");
     if(build != data.MemberEnd() && data.IsBool()){
         player->build();
     }
-    Value::ConstMemberIterator car = playerData->value.FindMember("build");
+    Value::ConstMemberIterator allowHeal = playerData->value.FindMember("allow_heal");
+    if(allowHeal != data.MemberEnd() && allowHeal->value.IsBool()){
+        player->setAllowHeal(allowHeal->value.GetBool());
+    }
+    Value::ConstMemberIterator car = playerData->value.FindMember("carrier");
     if(car != data.MemberEnd() && car->value.IsObject()){
         const Value& carrier = car->value;
         readCarrierJson(carrier, player->getCarrier());
@@ -169,6 +173,19 @@ bool Judger::checkTimestamp(const Document& document, const long& allowTime){
         return false;
     }else{
         return allowTime <= time->value.GetInt64();
+    }
+}
+
+void Judger::readyToWrite(){
+
+}
+
+void Judger::readStartData(){
+    //读取一个json
+    const char* json;
+
+    for(auto &p: game->getPlayers()){
+        p.second->init("", "", Color(0,0,0,0), Point2D(0,0));
     }
 }
 

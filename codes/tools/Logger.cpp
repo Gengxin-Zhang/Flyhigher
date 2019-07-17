@@ -73,7 +73,7 @@ void Logger::debug(const string str, const int num) {
 void Logger::debug(const string str) {
     if(Engine::isDebugMode()){
         out<<"[debug][";
-        cout<<CYAN<<"[debug][";
+        cout<<RED<<"[debug][";
         out_time();
         out<<"]"<<str<<endl;
         cout<<"]"<<str<<endl;

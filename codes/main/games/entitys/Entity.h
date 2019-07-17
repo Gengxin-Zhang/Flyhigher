@@ -50,6 +50,12 @@ class Entity {
          * @param y y坐标
          */
         void setY(const double y);
+
+        /**
+         * 获取坐标的点对象表示
+         * @return 点对象
+         */
+        Point2D getPoint() const;
             
         /**
          * 获取碰撞半径
@@ -139,11 +145,9 @@ class Entity {
          * @return UID
          */
         int getUID() const;
-
-
+        static int total_id;
     private: 
         int uid;
-        static int total_id;
         //父实体
         shared_ptr<Entity> parentEntity;
         //x坐标

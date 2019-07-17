@@ -46,6 +46,10 @@ void Entity::setY(const double y) {
     this->y = y;
 }
 
+Point2D Entity::getPoint() const{
+    return Point2D(x, y);
+}
+
 double Entity::getRadius() const{
     return radius;
 }

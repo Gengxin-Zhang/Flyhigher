@@ -41,9 +41,8 @@ bool LivingEntity::damage(const int damage) {
     nowHealth -= damage;
     if(nowHealth <= 0){
         die();
-        return true;
     }
-    return false;
+    return death;
 }
 
 void LivingEntity::init() {

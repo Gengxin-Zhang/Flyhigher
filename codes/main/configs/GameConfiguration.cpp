@@ -28,23 +28,24 @@ int GameConfiguration::getPlayerNumber() const{
     return playerNumber;
 }
 
-shared_ptr<PlayerConfiguration> GameConfiguration::getPlayersConfig(const int index) const{
-    if(index < 0 || index >= playerNumber){
-        throw invalid_argument("index should not be " + to_string(index));
-    }
-    return playersConfig[index];
+shared_ptr<PlayerConfiguration> GameConfiguration::getPlayerConfig() const{
+    return playerConfig;
 }
 
 GameConfiguration::GameConfiguration(shared_ptr<MapConfiguration> const mapConfig,
                                      shared_ptr<JudgerConfiguration> const judgerConfig,
                                      shared_ptr<LoopConfiguration> const loopConfig,
                                      const int playerNumber,
-                                     shared_ptr<PlayerConfiguration>* playersConfig) {
+                                     shared_ptr<PlayerConfiguration> const playerConfig,
+                                     shared_ptr<LargeStarConfiguration> const largeStarConfig,
+                                     shared_ptr<LittleStarConfiguration> const littleStarConfig) {
      this->mapConfig = mapConfig;
      this->judgerConfig = judgerConfig;
      this->loopConfig = loopConfig;
-     this->playersConfig = playersConfig;
+     this->playerConfig = playerConfig;
      this->playerNumber = playerNumber;
+     this->largeStarConfig =largeStarConfig;
+     this->littleStarConfig = littleStarConfig;
 }
 
 GameConfiguration::~GameConfiguration() {

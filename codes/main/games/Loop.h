@@ -13,7 +13,9 @@
 #include "./entitys/Bullet.h"
 #include <chrono>
 #include <map>
+#include <utility>
 using std::chrono::steady_clock, std::chrono::milliseconds;
+using std::pair;
 
 class Loop {
     public: 
@@ -129,12 +131,74 @@ class Loop {
         long getNowTick() const;
 
     private:
+        /**
+         * 为一个活实体进行的边界检测
+         * @param p 活实体map对
+         */
+        static void edgeCheckForALivingEntity(pair<int, shared_ptr<LivingEntity>> p);
+
+        /**
+         * 对活实体进行边界检测
+         */
+        void edgeCheckForLivingEntity();
+
+        /**
+         * 对子弹进行边界检测
+         */
+        void edgeCheckForBullet();
+
+        /**
+         * 对活实体和活实体进行碰撞检测
+         */
+        void impactCheckForLivingEntityAndLivingEntity();
+
+        /**
+         * 对子弹和子弹进行碰撞检测
+         */
+        void impactCheckForBulletAndBullet();
+
+        /**
+         * 对子弹和活实体进行碰撞检测
+         */
+        void impactCheckForBulletAndLivingEntity();
+
+        /**
+         * 让每个可移动实体延其运动向量走一个tick的距离
+         */
+        void moveNextTick();
+
+        /**
+         * 以文本信息的形式显示当前tick的各实体动态
+         * 请注意，本函数只在debug模式下有效
+         */
+        void showInText() const;
+
+        /**
+         * 母舰恢复检测
+         */
+        void healCheck();
+
+        /**
+         * 建造完毕检测
+         */
+        void buildFinishedCheck();
+
+        /**
+         * 采集完毕检测
+         */
+        void collectFinishedCheck();
+
+        /**
+         * 数据写出
+         */
+        void dataWrite();
         std::map<int,shared_ptr<Entity>> allEntity;
         std::map<int,shared_ptr<ResourceEntity>> allResourceEntity;
         std::map<int,shared_ptr<Bullet>> allBullet;
         std::map<int,shared_ptr<LivingEntity>> allLivingEntity;
         long nowTick;
         steady_clock::time_point nowTickStartTime;
+        steady_clock::time_point nowTickEndTime;
         long maxTickAllowed;
         milliseconds timePerTick;
 };

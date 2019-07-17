@@ -69,6 +69,7 @@ bool Fighter::collect(shared_ptr<ResourceEntity> const entity) {
 }
 
 void Fighter::collectCompletely() {
+    if(!collecting) return;
     shared_ptr<Player> ptr = getPlayer();
     ptr->addPower(collectingEntity->getPower());
     loop->removeResourceEntity(collectingEntity->getUID());
@@ -76,6 +77,7 @@ void Fighter::collectCompletely() {
 }
 
 bool Fighter::collectFinished() const{
+    if(!collecting) return false;
     return loop->getNowTick() >= endTime;
 }
 

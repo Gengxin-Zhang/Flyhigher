@@ -50,7 +50,7 @@ class Nuke {
          * 获取子弹速度标量
          * #return 速度标量
          */
-        int getSpeed() const;
+        double getSpeed() const;
         
         /**
          * 向固定方位开火，弧度制，与y轴正半轴的夹角，逆时针为正
@@ -75,7 +75,7 @@ class Nuke {
         double aoeDamageRadius;
         int damageDecrease;
         double radius;
-        int speed;
+        double speed;
         shared_ptr<Entity> parentEntity;
 };
 

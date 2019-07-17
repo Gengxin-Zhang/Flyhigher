@@ -19,20 +19,21 @@ using std::to_string;
  * Player implementation
  */
 
-Player::Player(shared_ptr<PlayerConfiguration> const config,
-               const Point2D startPoint): enable_shared_from_this<Player>(){
-    name = config->getName();
-    log->debug("构造玩家对象：" + name);
-    color = config->getColor();
+Player::Player(shared_ptr<PlayerConfiguration> const config): enable_shared_from_this<Player>(){
+    log->debug("构造玩家对象：");
     power = 0;
-    this->startPoint = startPoint;
     this->config = config;
 }
 
 Player::~Player() {
 }
 
-void Player::init() {
+void Player::init(const string uid, const string name, const Color color, const Point2D startPoint) {
+    this->name = name;
+    this->color = color;
+    this->uid = uid;
+    this->startPoint = startPoint;
+    allowHeal = true;
     isBuilding = false;
     buildStartTick = 0;
     buildEndTick = 0;
@@ -42,7 +43,7 @@ void Player::init() {
     carrier->init();
     loop->addLivingEntity(carrier);
     log->debug("添加母舰到玩家对象：" + name);
-    Vector2D v1 = Vector2D(0, 100);
+    Vector2D v1 = Vector2D(0, 50);
     for(int i=0; i<3; ++i){
         bombers[i] = shared_ptr<Bomber>(new Bomber(shared_from_this(), config->getBomberConfig()));
         bombers[i]->setPoint(v1.toPoint2D(startPoint));
@@ -51,7 +52,7 @@ void Player::init() {
         v1 = v1.rotate(2*M_PI/3);
     }
     log->debug("添加轰炸机到玩家对象：" + name);
-    Vector2D v2 = Vector2D(0, -100);
+    Vector2D v2 = Vector2D(0, -50);
     for(int i=0; i<5; ++i){
         fighters[i] = shared_ptr<Fighter>(new Fighter(shared_from_this(), config->getFighterConfig()));
         fighters[i]->setPoint(v2.toPoint2D(startPoint));
@@ -59,6 +60,8 @@ void Player::init() {
         loop->addLivingEntity(fighters[i]);
         v2 = v2.rotate(2*M_PI/5);
     }
+    fighters[1]->setPoint(Vector2D(-50, 0).toPoint2D(startPoint));
+    fighters[4]->setPoint(Vector2D(50, 0).toPoint2D(startPoint));
     log->debug("添加战斗机到玩家对象：" + name);
 }
 
@@ -96,6 +99,10 @@ Color Player::getColor() const{
     return color;
 }
 
+string Player::getUID() const{
+    return uid;
+}
+
 void Player::addPower(const int power) {
     log->debug("玩家" + name + "当前资源：", this->power);
     log->debug("玩家" + name + "获得资源：", power);
@@ -128,10 +135,12 @@ bool Player::build(){
 }
 
 bool Player::isBuildFinished() const {
+    if(!isBuilding)return false;
     return loop->getNowTick() >= buildEndTick;
 }
 
-void Player::buildComplately(){
+void Player::buildCompletely(){
+    if(!isBuilding)return;
     isBuilding = false;
     buildStartTick = 0;
     for(int i=0; i<5; ++i){
@@ -141,4 +150,12 @@ void Player::buildComplately(){
             return;
         }
     }
+}
+
+bool Player::isAllowHeal() const{
+    return allowHeal;
+}
+
+void Player::setAllowHeal(const bool allowHeal) {
+    this->allowHeal = allowHeal;
 }

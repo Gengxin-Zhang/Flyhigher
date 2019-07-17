@@ -26,6 +26,7 @@ class LoopConfiguration {
         /**
          * 构造函数
          * @param maxTickAllowed 系统允许的最大ticks
+         * @param timePerTick 每tick允许的最小时间，单位ms
          */
         LoopConfiguration(const long maxTickAllowed, const milliseconds timePerTick);
         

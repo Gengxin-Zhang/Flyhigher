@@ -19,8 +19,6 @@ class Configuration {
 
         void reload();
 
-        void load();
-
         shared_ptr<GameConfiguration> getGameConfiguration() const;
 
         static shared_ptr<Configuration> getInstance();
@@ -30,6 +28,7 @@ class Configuration {
         static shared_ptr<Configuration> config;
         shared_ptr<GameConfiguration> gameConfig;
         YAML::Node root;
+        YAML::Emitter emitter;
         string file;
 };
 

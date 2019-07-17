@@ -27,6 +27,8 @@ class Judger {
         void read(const long allowTime);
         //TODO: UID类型
         map<string, const char*> write() const;
+        void readyToWrite();
+        void readStartData();
     private:
         void readFighterJson(const Value& root, const shared_ptr<Fighter>& fighter);
         void readCarrierJson(const Value& root, const shared_ptr<Carrier>& carrier);
@@ -34,6 +36,7 @@ class Judger {
         bool readJson(const char* json, const long allowTime);
         bool checkTimestamp(const Document& document, const long& allowTime);
         int maxTimeout;
+        map<string, Document::AllocatorType&> buff;
 };
 
 #endif //_JUDGER_H
