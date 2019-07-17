@@ -86,11 +86,6 @@ class LivingEntity: public MovableEntity, public enable_shared_from_this<LivingE
         virtual ~LivingEntity();
             
         /**
-         * 视野内的所有实体
-         */
-        virtual vector<shared_ptr<Entity>> see() const = 0;
-            
-        /**
          * 判断实体是否在视野内
          * @param ano 实体
          */
@@ -102,6 +97,12 @@ class LivingEntity: public MovableEntity, public enable_shared_from_this<LivingE
          * @return 是否成功触发射击，若处于CD等情况会触发失败
          */
         virtual bool shoot(const double direction) const = 0;
+
+        /**
+         * 距离下一次射击还有多久冷却时间
+         * @return 冷却时间
+         */
+        virtual int getWeaponCD() const = 0;
 
         /**
          * 将实体以字符串显示

@@ -33,11 +33,6 @@ class Carrier: public LivingEntity {
          * 析构函数
          */
         ~Carrier();
-         
-        /**
-         * 视野内的实体
-         */
-        virtual vector<shared_ptr<Entity>> see() const;
             
         /**
          * 判断实体是否在视野内
@@ -50,6 +45,12 @@ class Carrier: public LivingEntity {
          * @param direction 方向，以y轴正半轴为0，逆时针为正，弧度制
          */
         virtual bool shoot(const double direction) const;
+
+        /**
+         * 距离下一次射击还有多久冷却时间
+         * @return 冷却时间
+         */
+        virtual int getWeaponCD() const;
             
         /**
          * 发射必杀武器
@@ -73,12 +74,23 @@ class Carrier: public LivingEntity {
          * 初始化行为
          */
         virtual void init();
+
+        /**
+         * 是否已经使用过超级武器
+         * @return 是否
+         */
+        bool getNukeShooted() const;
+
+
     private:
         //主武器
         shared_ptr<Weapon> mainWeapon;
         //必杀武器，只能使用一次
         shared_ptr<Nuke> godWeapon;
         shared_ptr<CarrierConfiguration> config;
+        double sightAngle;
+        double longSight;
+        double shortSight;
 };
 
 #endif //_CARRIER_H

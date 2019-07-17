@@ -7,7 +7,10 @@
 
 #include "Carrier.h"
 #include <vector>
-using std::vector;
+#include <cmath>
+using std::vector, std::cos;
+#include "../../systems/Engine.h"
+#define loop Engine::getInstance()->getNowGame()->getLoop()
 
 /**
  * Carrier implementation
@@ -32,12 +35,14 @@ void Carrier::init(){
 Carrier::~Carrier() {
 }
 
-vector<shared_ptr<Entity>> Carrier::see() const{
-    //TODO: 思考怎么实现ing
-}
-
 bool Carrier::isInSight(const Entity& ano) const{
-    //TODO: 思考怎么实现ing
+    if(isMoving()){
+        if(getSpeed().getCosineWith(toVector2D(ano)) > 0 && getSpeed().getCosineWith(toVector2D(ano)) < cos(sightAngle)){
+                return getDistance(ano) <= longSight;
+        }
+    }else{
+        return getDistance(ano) <= shortSight;
+    }
 }
 
 bool Carrier::shoot(const double direction) const{
@@ -48,10 +53,18 @@ bool Carrier::shootGodWeapon(const double direction) const{
     return godWeapon->shoot(direction);
 }
 
+bool Carrier::getNukeShooted() const {
+    return godWeapon->hasShoot();
+}
+
 string Carrier::getClassName() const{
     return "Carrier";
 }
 
 string Carrier::toString() const{
     return LivingEntity::toString() +"[Carrier] ()";
+}
+
+int Carrier::getWeaponCD() const{
+    return mainWeapon->getDelay() - (loop->getNowTick() - mainWeapon->getLastShoot());
 }

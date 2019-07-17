@@ -120,6 +120,19 @@ class Vector2D {
          */
         Point2D toPoint2D(const Point2D basePoint) const;
 
+
+        /**
+         * 获取绝对于x轴正半轴的角度
+         * @return 弧度
+         */
+        double getAbsolutionAngle() const;
+
+        /**
+         * 计算与另一个向量的叉积的值
+         * @param ano 另一个向量
+         */
+        double crossProduct(const Vector2D& ano) const;
+
         /**
          * 获取类型名称
          * @return 类型名

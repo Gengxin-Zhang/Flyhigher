@@ -33,10 +33,6 @@ class Bomber: public LivingEntity {
          */
         ~Bomber();
             
-        /**
-         * 获得视野内的对象
-         */
-        virtual vector<shared_ptr<Entity>> see() const;
             
         /**
          * 实体是否位于视野中
@@ -49,6 +45,12 @@ class Bomber: public LivingEntity {
          * @param direction 方向，以y轴正半轴为0，逆时针为正，弧度制
          */
         virtual bool shoot(const double direction) const;
+
+        /**
+         * 距离下一次射击还有多久冷却时间
+         * @return 冷却时间
+         */
+        virtual int getWeaponCD() const;
 
         /**
          * 获取类型名称
@@ -66,10 +68,14 @@ class Bomber: public LivingEntity {
          * 初始化行为
          */
         virtual void init();
+
     private: 
         //武器
         shared_ptr<Weapon> weapon;
         shared_ptr<BomberConfiguration> config;
+        double sightAngle;
+        double longSight;
+        double shortSight;
 };
 
 #endif //_BOMBER_H

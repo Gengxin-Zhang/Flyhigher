@@ -17,8 +17,9 @@
 #include "./entitys/Bomber.h"
 #include "./entitys/Fighter.h"
 #include <map>
+#include <set>
 using namespace rapidjson;
-using std::shared_ptr, std::map;
+using std::shared_ptr, std::map, std::set;
 
 class Judger {
     public:
@@ -29,6 +30,7 @@ class Judger {
         map<string, const char*> write() const;
         void readyToWrite();
         void readStartData();
+        void dataWrite(map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sights);
     private:
         void readFighterJson(const Value& root, const shared_ptr<Fighter>& fighter);
         void readCarrierJson(const Value& root, const shared_ptr<Carrier>& carrier);

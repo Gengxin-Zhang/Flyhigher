@@ -50,18 +50,30 @@ class Player: public enable_shared_from_this<Player> {
         shared_ptr<Carrier> getCarrier() const;
             
         /**
-         * 返回其第index个轰炸机的指针
-         * @param index 索引值
+         * 返回指定uid轰炸机的指针
+         * @param uid 唯一ID
          * @return 轰炸机
          */
         shared_ptr<Bomber> getBomber(const int uid);
             
         /**
-         * 返回其第index个战斗机的指针
-         * @param index 索引值
+         * 返回指定uid战斗机的指针
+         * @param uid 唯一ID
          * @return 战斗机
          */
         shared_ptr<Fighter> getFighter(const int uid);
+
+        /**
+         * 返回所有轰炸机的组成的map
+         * @return 轰炸机们
+         */
+        map<int, shared_ptr<Bomber>> getBombers() const;
+
+        /**
+         * 返回所有战斗机的组成的map
+         * @return 战斗机们
+         */
+        map<int, shared_ptr<Fighter>> getFighters() const;
 
         /**
          * 获取玩家名
@@ -123,6 +135,11 @@ class Player: public enable_shared_from_this<Player> {
          * @param uid 唯一ID
          */
         string getUID() const;
+
+        int getPower() const;
+        bool getBuilding() const;
+
+        int getRemainBuildTick() const;
     private: 
         bool isBuilding;
         long buildStartTick;

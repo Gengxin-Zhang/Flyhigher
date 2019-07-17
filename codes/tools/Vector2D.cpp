@@ -97,6 +97,15 @@ Point2D Vector2D::toPoint2D(const Point2D basePoint) const{
     return Point2D(basePoint.getX()+x, basePoint.getY()+y);
 }
 
+double Vector2D::getAbsolutionAngle() const{
+    if(Vector2D(1,0).crossProduct(*this) > 0) return acos(getCosineWith(Vector2D(1,0)));
+    else return -acos(getCosineWith(Vector2D(1,0)));
+}
+
+double Vector2D::crossProduct(const Vector2D& ano) const{
+    return x*ano.y - y*ano.x;
+}
+
 string Vector2D::toString() const{
     return "[Vector2D] (" + to_string(x) + ", " + to_string(y) + ")";
 }

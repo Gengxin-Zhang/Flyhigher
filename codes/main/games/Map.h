@@ -55,6 +55,7 @@ class Map {
          * @return 出生点
          */
         Point2D getBrithPoint(const int index) const;
+        bool getBuilding() const;
     private:
         double height;
         double width;

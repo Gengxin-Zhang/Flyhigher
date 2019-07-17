@@ -40,11 +40,6 @@ class Fighter: public LivingEntity, public Collector {
         virtual void die();
             
         /**
-         * 获取视野内的实体
-         */
-        virtual vector<shared_ptr<Entity>> see() const;
-            
-        /**
          * 判断实体是否位于视野内
          * @param ano 实体
          */
@@ -55,6 +50,12 @@ class Fighter: public LivingEntity, public Collector {
          * @param direction 方向，以y轴正半轴为0，逆时针为正，弧度制
          */
         virtual bool shoot(const double direction) const;
+
+        /**
+         * 距离下一次射击还有多久冷却时间
+         * @return 冷却时间
+         */
+        virtual int getWeaponCD() const;
             
         /**
          * 是否处于采集状态
@@ -82,6 +83,11 @@ class Fighter: public LivingEntity, public Collector {
          * 开始采集的时间
          */
         long getStartTime() const;
+
+        /**
+         * 还有多久采集完
+         */
+        int getRemainTime() const;
 
         /**
          * 重建需要的ticks
@@ -115,6 +121,7 @@ class Fighter: public LivingEntity, public Collector {
          * @return 是否完成
          */
         virtual bool collectFinished() const;
+
     private:
         //正在采集的实体
         shared_ptr<ResourceEntity> collectingEntity;
@@ -130,6 +137,9 @@ class Fighter: public LivingEntity, public Collector {
         //重造需要的资源
         int rebuildPower;
         shared_ptr<FighterConfiguration> config;
+        double sightAngle;
+        double longSight;
+        double shortSight;
 };
 
 #endif //_FIGHTER_H

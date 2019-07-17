@@ -7,7 +7,10 @@
 
 #include "Bomber.h"
 #include <vector>
-using std::vector;
+#include "../../systems/Engine.h"
+#include <cmath>
+#define loop Engine::getInstance()->getNowGame()->getLoop()
+using std::vector, std::cos;
 
 /**
  * Bomber implementation
@@ -29,12 +32,14 @@ void Bomber::init(){
     weapon = shared_ptr<Weapon>(new Weapon(config->getWeaponConfig(), shared_from_this()));
 }
 
-vector<shared_ptr<Entity>> Bomber::see() const{
-    //TODO: 思考怎么实现ing
-}
-
 bool Bomber::isInSight(const Entity& ano) const{
-    //TODO: 思考怎么实现ing
+    if(isMoving()){
+        if(getSpeed().getCosineWith(toVector2D(ano)) > 0 && getSpeed().getCosineWith(toVector2D(ano)) < cos(sightAngle)){
+                return getDistance(ano) <= longSight;
+        }
+    }else{
+        return getDistance(ano) <= shortSight;
+    }
 }
 
 bool Bomber::shoot(const double direction) const{
@@ -47,4 +52,8 @@ string Bomber::getClassName() const{
 
 string Bomber::toString() const{
     return LivingEntity::toString() +"[Bomber] ()";
+}
+
+int Bomber::getWeaponCD() const{
+    return weapon->getDelay() - (loop->getNowTick() - weapon->getLastShoot());
 }

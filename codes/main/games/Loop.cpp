@@ -312,24 +312,31 @@ void Loop::collectFinishedCheck(){
     }
 }
 
-void Loop::dataWrite(){
-    rapidjson::Document document;
-        document.SetObject();
-        rapidjson::Document::AllocatorType& allocator = document.GetAllocator();
-    steady_clock::now();
-    //视野判断
-//    for(auto &le: allLivingEntity){
-//        for(auto &le2: allLivingEntity){
-//            if(le==le2) continue;
-
-//        }
-//        for(auto &b: allBullet){
-
-//        }
-//        for(auto &re: allResourceEntity){
-
-//        }
-//    }
+map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> Loop::sightsOperate(){
+    log->debug("视野判断");
+    map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sights;
+    for(auto &le: allLivingEntity){
+        set<shared_ptr<Entity>> thissights;
+        for(auto &le2: allLivingEntity){
+            if(le==le2) continue;
+            if(le.second->getPlayer() == le2.second->getPlayer()) continue;
+            if(le.second->isInSight(*le2.second)){
+                thissights.insert(le2.second);
+            }
+        }
+        for(auto &b: allBullet){
+            if(le.second->isInSight(*b.second)){
+                thissights.insert(b.second);
+            }
+        }
+        for(auto &re: allResourceEntity){
+            if(le.second->isInSight(*re.second)){
+                thissights.insert(re.second);
+            }
+        }
+        sights.insert(make_pair(le.second, thissights));
+    }
+    return sights;
 }
 
 void Loop::run() {
@@ -361,8 +368,10 @@ void Loop::run() {
         collectFinishedCheck();
         //临时显示
         showInText();
+        //视野判断
+        map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sights = sightsOperate();
         //数据写出
-        dataWrite();
+        judger->dataWrite(sights);
         //休眠机制（确保最小tick的执行时间为timePerTick）
         duration<double> time_span = duration_cast<duration<double>>(steady_clock::now() - nowTickStartTime);
         milliseconds deltatime = duration_cast<milliseconds>(time_span);

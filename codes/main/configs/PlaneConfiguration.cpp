@@ -33,14 +33,29 @@ int PlaneConfiguration::getHealPower() const{
 }
 
 PlaneConfiguration::PlaneConfiguration(const int maxHealth, const double speed, const double radius,
- const int healRate, const int healPower) {
+ const int healRate, const int healPower, const double sightAngle, const double longSight, const double shortSight) {
     this->maxHealth = maxHealth;
     this->speed = speed;
     this->radius =radius;
     this->healRate = healRate;
     this->healPower = healPower;
+    this->sightAngle = sightAngle;
+    this->longSight = longSight;
+    this->shortSight = shortSight;
 }
 
 PlaneConfiguration::~PlaneConfiguration() {
 
+}
+
+double PlaneConfiguration::getSightAngle() const{
+    return sightAngle;
+}
+
+double PlaneConfiguration::getLongSight() const{
+    return longSight;
+}
+
+double PlaneConfiguration::getShortSight() const{
+    return shortSight;
 }

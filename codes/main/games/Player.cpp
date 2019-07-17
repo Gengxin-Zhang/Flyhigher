@@ -103,6 +103,10 @@ string Player::getUID() const{
     return uid;
 }
 
+int Player::getPower() const{
+    return power;
+}
+
 void Player::addPower(const int power) {
     log->debug("玩家" + name + "当前资源：", this->power);
     log->debug("玩家" + name + "获得资源：", power);
@@ -156,6 +160,22 @@ bool Player::isAllowHeal() const{
     return allowHeal;
 }
 
+bool Player::getBuilding() const{
+    return isBuilding;
+}
+
 void Player::setAllowHeal(const bool allowHeal) {
     this->allowHeal = allowHeal;
+}
+
+int Player::getRemainBuildTick() const{
+    return buildEndTick - loop->getNowTick();
+}
+
+map<int, shared_ptr<Bomber>>  Player::getBombers() const{
+    return bombers;
+}
+
+map<int, shared_ptr<Fighter>> Player::getFighters() const {
+    return fighters;
 }

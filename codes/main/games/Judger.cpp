@@ -10,6 +10,7 @@
 #define log Engine::getInstance()->getLogger()
 #define game Engine::getInstance()->getNowGame()
 #define loop Engine::getInstance()->getNowGame()->getLoop()
+using std::chrono::duration, std::chrono::duration_cast;
 
 /**
  * Judger implementation
@@ -176,10 +177,6 @@ bool Judger::checkTimestamp(const Document& document, const long& allowTime){
     }
 }
 
-void Judger::readyToWrite(){
-
-}
-
 void Judger::readStartData(){
     //读取一个json
     const char* json;
@@ -188,9 +185,222 @@ void Judger::readStartData(){
         p.second->init("", "", Color(0,0,0,0), Point2D(0,0));
     }
 }
+void Judger::dataWrite(map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sights){
+    map<string, const char*> results;
+    for(auto &p: game->getPlayers()){
+        StringBuffer strBuf;
+        Writer<rapidjson::StringBuffer> writer(strBuf);
+        writer.StartObject();
+        writer.Key("time");
+        writer.Int64(duration_cast<milliseconds>(steady_clock::now().time_since_epoch()).count());
+        writer.Key("tick");
+        writer.Int64(loop->getNowTick());
+        writer.Key("uid");
+        writer.String(p.second->getUID().c_str());
+        writer.Key("player_data");
+        writer.StartObject();
+        writer.Key("power");
+        writer.Int(p.second->getPower());
+        writer.Key("build");
+        writer.Bool(p.second->getBuilding());
+        writer.Key("remain_time");
+        writer.Int(p.second->getRemainBuildTick());
+        writer.Key("carrier");
+        writer.StartObject();
+        writer.Key("move");
+        writer.Bool(p.second->getCarrier()->isMoving());
+        writer.Key("direction");
+        writer.Double(p.second->getCarrier()->getSpeed().getAbsolutionAngle());
+        writer.Key("health");
+        writer.Int(p.second->getCarrier()->getNowHealth());
+        writer.Key("x");
+        writer.Double(p.second->getCarrier()->getX());
+        writer.Key("y");
+        writer.Double(p.second->getCarrier()->getY());
+        writer.Key("weapon_cd");
+        writer.Int(p.second->getCarrier()->getWeaponCD());
+        writer.Key("used_nuke");
+        writer.Bool(p.second->getCarrier()->getNukeShooted());
+        writer.Key("sights");
+        writer.StartArray();
+        for(auto &e: sights.find(p.second->getCarrier())->second){
+            writer.StartObject();
+            writer.Key("uid");
+            writer.Int(e->getUID());
+            writer.Key("type");
+            writer.String(e->getClassName().c_str());
+            writer.Key("abs_direction");
+            writer.Double(Vector2D(p.second->getCarrier()->getPoint(), e->getPoint()).getAbsolutionAngle());
+            writer.Key("distance");
+            writer.Double(p.second->getCarrier()->getDistance(*e));
+            writer.EndObject();
+        }
+        writer.EndArray();
+        writer.EndObject();
+        writer.Key("bomber");
+        writer.StartArray();
+        for(auto &b: p.second->getBombers()){
+            writer.StartObject();
+            writer.Key("move");
+            writer.Bool(b.second->isMoving());
+            writer.Key("direction");
+            writer.Double(b.second->getSpeed().getAbsolutionAngle());
+            writer.Key("health");
+            writer.Int(b.second->getNowHealth());
+            writer.Key("x");
+            writer.Double(b.second->getX());
+            writer.Key("y");
+            writer.Double(b.second->getY());
+            writer.Key("weapon_cd");
+            writer.Int(b.second->getWeaponCD());
+            writer.Key("sights");
+            writer.StartArray();
+            for(auto &e: sights.find(b.second)->second){
+                writer.StartObject();
+                writer.Key("uid");
+                writer.Int(e->getUID());
+                writer.Key("type");
+                writer.String(e->getClassName().c_str());
+                writer.Key("abs_direction");
+                writer.Double(Vector2D(b.second->getPoint(), e->getPoint()).getAbsolutionAngle());
+                writer.Key("distance");
+                writer.Double(b.second->getDistance(*e));
+                if(e->getClassName() == "LittleStarEntity" || e->getClassName() == "LargeStarEntity"){
+                    writer.Key("isBeingCollected");
+                    writer.Bool(std::dynamic_pointer_cast<ResourceEntity>(e)->isBeingCollected());
+                }else if(e->getClassName() == "Bullet"){
+                    writer.Key("move_direction");
+                    writer.Double(std::dynamic_pointer_cast<Bullet>(e)->getSpeed().getAbsolutionAngle());
+                }else if(e->getClassName() =="Bomber" || e->getClassName() =="Fighter"){
+                    writer.Key("move");
+                    writer.Bool(std::dynamic_pointer_cast<LivingEntity>(e)->isMoving());
+                    writer.Key("move_direction");
+                    writer.Double(std::dynamic_pointer_cast<LivingEntity>(e)->getSpeed().getAbsolutionAngle());
+                }else if(e->getClassName() =="Fighter"){
+                    writer.Key("move");
+                    writer.Bool(std::dynamic_pointer_cast<LivingEntity>(e)->isMoving());
+                    writer.Key("move_direction");
+                    writer.Double(std::dynamic_pointer_cast<LivingEntity>(e)->getSpeed().getAbsolutionAngle());
+                    writer.Key("collecting");
+                    writer.Bool(std::dynamic_pointer_cast<Fighter>(e)->isCollecting());
+                }
+                writer.EndObject();
+            }
+            writer.EndArray();
+            writer.EndObject();
+        }
+        writer.EndArray();
+        writer.Key("bomber");
+        writer.StartArray();
+        for(auto &b: p.second->getBombers()){
+            writer.StartObject();
+            writer.Key("move");
+            writer.Bool(b.second->isMoving());
+            writer.Key("direction");
+            writer.Double(b.second->getSpeed().getAbsolutionAngle());
+            writer.Key("health");
+            writer.Int(b.second->getNowHealth());
+            writer.Key("x");
+            writer.Double(b.second->getX());
+            writer.Key("y");
+            writer.Double(b.second->getY());
+            writer.Key("weapon_cd");
+            writer.Int(b.second->getWeaponCD());
+            writer.Key("sights");
+            writer.StartArray();
+            for(auto &e: sights.find(b.second)->second){
+                writer.StartObject();
+                writer.Key("uid");
+                writer.Int(e->getUID());
+                writer.Key("type");
+                writer.String(e->getClassName().c_str());
+                writer.Key("abs_direction");
+                writer.Double(Vector2D(b.second->getPoint(), e->getPoint()).getAbsolutionAngle());
+                writer.Key("distance");
+                writer.Double(b.second->getDistance(*e));
+                if(e->getClassName() == "LittleStarEntity" || e->getClassName() == "LargeStarEntity"){
+                    writer.Key("isBeingCollected");
+                    writer.Bool(std::dynamic_pointer_cast<ResourceEntity>(e)->isBeingCollected());
+                }else if(e->getClassName() == "Bullet"){
+                    writer.Key("move_direction");
+                    writer.Double(std::dynamic_pointer_cast<Bullet>(e)->getSpeed().getAbsolutionAngle());
+                }else if(e->getClassName() =="Bomber" || e->getClassName() =="Fighter"){
+                    writer.Key("move");
+                    writer.Bool(std::dynamic_pointer_cast<LivingEntity>(e)->isMoving());
+                    writer.Key("move_direction");
+                    writer.Double(std::dynamic_pointer_cast<LivingEntity>(e)->getSpeed().getAbsolutionAngle());
+                }else if(e->getClassName() =="Fighter"){
+                    writer.Key("move");
+                    writer.Bool(std::dynamic_pointer_cast<LivingEntity>(e)->isMoving());
+                    writer.Key("move_direction");
+                    writer.Double(std::dynamic_pointer_cast<LivingEntity>(e)->getSpeed().getAbsolutionAngle());
+                    writer.Key("collecting");
+                    writer.Bool(std::dynamic_pointer_cast<Fighter>(e)->isCollecting());
+                }
+                writer.EndObject();
+            }
+            writer.EndArray();
+            writer.EndObject();
+        }
+        writer.EndArray();
+        writer.Key("fighter");
+        writer.StartArray();
+        for(auto &f: p.second->getFighters()){
+            writer.StartObject();
+            writer.Key("move");
+            writer.Bool(f.second->isMoving());
+            writer.Key("direction");
+            writer.Double(f.second->getSpeed().getAbsolutionAngle());
+            writer.Key("health");
+            writer.Int(f.second->getNowHealth());
+            writer.Key("x");
+            writer.Double(f.second->getX());
+            writer.Key("y");
+            writer.Double(f.second->getY());
+            writer.Key("collecting");
+            writer.Bool(f.second->isCollecting());
+            writer.Key("remain_time");
+            writer.Int(f.second->getRemainTime());
+            writer.Key("weapon_cd");
+            writer.Int(f.second->getWeaponCD());
+            writer.Key("sights");
+            writer.StartArray();
+            for(auto &e: sights.find(f.second)->second){
+                writer.StartObject();
+                writer.Key("uid");
+                writer.Int(e->getUID());
+                writer.Key("type");
+                writer.String(e->getClassName().c_str());
+                writer.Key("abs_direction");
+                writer.Double(Vector2D(f.second->getPoint(), e->getPoint()).getAbsolutionAngle());
+                writer.Key("distance");
+                writer.Double(f.second->getDistance(*e));
+                if(e->getClassName() == "LittleStarEntity" || e->getClassName() == "LargeStarEntity"){
+                    writer.Key("isBeingCollected");
+                    writer.Bool(std::dynamic_pointer_cast<ResourceEntity>(e)->isBeingCollected());
+                }else if(e->getClassName() == "Bullet"){
+                    writer.Key("move_direction");
+                    writer.Double(std::dynamic_pointer_cast<Bullet>(e)->getSpeed().getAbsolutionAngle());
+                }else if(e->getClassName() =="Bomber" || e->getClassName() =="Fighter"){
+                    writer.Key("move");
+                    writer.Bool(std::dynamic_pointer_cast<LivingEntity>(e)->isMoving());
+                    writer.Key("move_direction");
+                    writer.Double(std::dynamic_pointer_cast<LivingEntity>(e)->getSpeed().getAbsolutionAngle());
+                }else if(e->getClassName() =="Fighter"){
+                    writer.Key("move");
+                    writer.Bool(std::dynamic_pointer_cast<LivingEntity>(e)->isMoving());
+                    writer.Key("move_direction");
+                    writer.Double(std::dynamic_pointer_cast<LivingEntity>(e)->getSpeed().getAbsolutionAngle());
+                    writer.Key("collecting");
+                    writer.Bool(std::dynamic_pointer_cast<Fighter>(e)->isCollecting());
+                }
+                writer.EndObject();
+            }
+            writer.EndArray();
+            writer.EndObject();
+        }
+        writer.EndArray();
+    }
 
-//TODO: 传出数据
-//TODO: UID类型
-map<string, const char*> Judger::write() const{
 
 }

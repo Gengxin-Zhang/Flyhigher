@@ -9,7 +9,8 @@
 #include "../Player.h"
 #include <vector>
 #include "../../systems/Engine.h"
-using std::make_shared;
+#include <cmath>
+using std::make_shared, std::cos;
 #define loop Engine::getInstance()->getNowGame()->getLoop()
 
 /**
@@ -41,12 +42,14 @@ void Fighter::init(){
     weapon = shared_ptr<Weapon>(new Weapon(config->getWeaponConfig(), shared_from_this()));
 }
 
-vector<shared_ptr<Entity>> Fighter::see() const{
-    //TODO: 思考怎么实现ing
-}
-
 bool Fighter::isInSight(const Entity& ano) const{
-     //TODO: 思考怎么实现ing
+    if(isMoving()){
+        if(getSpeed().getCosineWith(toVector2D(ano)) > 0 && getSpeed().getCosineWith(toVector2D(ano)) < cos(sightAngle)){
+                return getDistance(ano) <= longSight;
+        }
+    }else{
+        return getDistance(ano) <= shortSight;
+    }
 }
 
 bool Fighter::shoot(const double direction) const{
@@ -57,6 +60,7 @@ bool Fighter::isCollecting() const{
     return collecting;
 }
 bool Fighter::collect(shared_ptr<ResourceEntity> const entity) {
+    if(entity->isBeingCollected()) return false;
     if(collecting) return false;
     if(!isOverlapped(*entity) && !isContained(*entity) && !contains(*entity)) return false;
     if(isMoving()) return false;
@@ -102,6 +106,11 @@ int Fighter::getRebuildPower() const{
     return rebuildPower;
 }
 
+int Fighter::getRemainTime() const{
+    if(!collecting) return 0;
+    return collectingEntity->getCollectTick() - (loop->getNowTick() - startTime);
+}
+
 Collector::~Collector(){
 
 }
@@ -112,4 +121,8 @@ string Fighter::getClassName() const{
 
 string Fighter::toString() const{
     return LivingEntity::toString() +"[Fighter] ()";
+}
+
+int Fighter::getWeaponCD() const{
+    return weapon->getDelay() - (loop->getNowTick() - weapon->getLastShoot());
 }

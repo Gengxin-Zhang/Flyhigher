@@ -13,9 +13,10 @@
 #include "./entitys/Bullet.h"
 #include <chrono>
 #include <map>
+#include <set>
 #include <utility>
 using std::chrono::steady_clock, std::chrono::milliseconds;
-using std::pair;
+using std::pair, std::set;
 
 class Loop {
     public: 
@@ -189,9 +190,10 @@ class Loop {
         void collectFinishedCheck();
 
         /**
-         * 数据写出
+         * 视野检测
          */
-        void dataWrite();
+        map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sightsOperate();
+
         std::map<int,shared_ptr<Entity>> allEntity;
         std::map<int,shared_ptr<ResourceEntity>> allResourceEntity;
         std::map<int,shared_ptr<Bullet>> allBullet;

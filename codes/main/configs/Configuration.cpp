@@ -96,11 +96,17 @@ void Configuration::reload() {
         nuke_radius = root["carrier"]["nuke"]["radius"].as<double>();
         nuke_speed = root["carrier"]["nuke"]["speed"].as<double>();
     }
+    double sightAngle = 0.6, longSight = 100, shortSight = 50;
+    if(!defaultMode){
+        sightAngle = root["carrier"]["normal"]["sightAngle"].as<double>();
+        longSight = root["carrier"]["normal"]["longSight"].as<double>();
+        shortSight  = root["carrier"]["normal"]["shortSight"].as<double>();
+    }
     shared_ptr<CarrierConfiguration> carrierConfig =
             shared_ptr<CarrierConfiguration>(new CarrierConfiguration(
                 shared_ptr<WeaponConfiguration>(new WeaponConfiguration(weapon_radius, damage, bullet_speed, delay)),
                 shared_ptr<NukeConfiguration>(new NukeConfiguration(aoeDamage, aoeRadius, damageDecrease, nuke_radius, nuke_speed)),
-                shared_ptr<PlaneConfiguration>(new PlaneConfiguration(health, speed, radius, healRate, healPower))));
+                shared_ptr<PlaneConfiguration>(new PlaneConfiguration(health, speed, radius, healRate, healPower, sightAngle, longSight, shortSight))));
     int b_health = 500, b_healRate = 1, b_healPower = 20;
     double b_speed = 0.5, b_radius = 10;
     if(!defaultMode){
@@ -118,10 +124,16 @@ void Configuration::reload() {
         b_damage = root["bomber"]["weapon"]["damage"].as<int>();
         b_delay = root["bomber"]["weapon"]["cd"].as<int>();
     }
+    double b_sightAngle = 0.4, b_longSight = 80, b_shortSight = 40;
+    if(!defaultMode){
+        b_sightAngle = root["bomber"]["normal"]["sightAngle"].as<double>();
+        b_longSight = root["bomber"]["normal"]["longSight"].as<double>();
+        b_shortSight  = root["bomber"]["normal"]["shortSight"].as<double>();
+    }
     shared_ptr<BomberConfiguration> bomberConfig =
             shared_ptr<BomberConfiguration>(new BomberConfiguration(
                 shared_ptr<WeaponConfiguration>(new WeaponConfiguration(b_weapon_radius, b_damage, b_bullet_speed, b_delay)),
-                shared_ptr<PlaneConfiguration>(new PlaneConfiguration(b_health, b_speed, b_radius, b_healRate, b_healPower))));
+                shared_ptr<PlaneConfiguration>(new PlaneConfiguration(b_health, b_speed, b_radius, b_healRate, b_healPower, b_sightAngle, b_longSight, b_shortSight))));
     int f_health = 200, f_healRate = 5, f_healPower = 5;
     double f_speed = 5, f_radius = 10;
     if(!defaultMode){
@@ -144,11 +156,17 @@ void Configuration::reload() {
         rebuild_tick = root["fighter"]["rebuild"]["tick"].as<int>();
         rebuild_power = root["fighter"]["rebuild"]["power"].as<int>();
     }
+    double f_sightAngle = 0.2, f_longSight = 40, f_shortSight = 20;
+    if(!defaultMode){
+        f_sightAngle = root["bomber"]["normal"]["sightAngle"].as<double>();
+        f_longSight = root["bomber"]["normal"]["longSight"].as<double>();
+        f_shortSight  = root["bomber"]["normal"]["shortSight"].as<double>();
+    }
     shared_ptr<FighterConfiguration> fighterConfig =
             shared_ptr<FighterConfiguration>(new FighterConfiguration(
                 shared_ptr<WeaponConfiguration>(new WeaponConfiguration(f_weapon_radius, f_damage, f_bullet_speed, f_delay)),
                 shared_ptr<RebuildableConfiguration>(new RebuildableConfiguration(rebuild_power, rebuild_tick)),
-                shared_ptr<PlaneConfiguration>(new PlaneConfiguration(f_health, f_radius, f_speed, f_healRate, f_healPower))));
+                shared_ptr<PlaneConfiguration>(new PlaneConfiguration(f_health, f_radius, f_speed, f_healRate, f_healPower, f_sightAngle, f_longSight, f_shortSight))));
     shared_ptr<PlayerConfiguration> playerConfig = shared_ptr<PlayerConfiguration>(new PlayerConfiguration(carrierConfig, bomberConfig, fighterConfig));
     int little_power = 20, little_radius = 3, little_collectTick = 10;
     if(!defaultMode){
