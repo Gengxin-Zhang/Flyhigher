@@ -57,6 +57,7 @@ struct user{
     // 存储用户数据
     std::string appid; // 分配的用户appid
     std::string name; // 用户名，辅助显示
+    std::string color;
     uint64_t last_message; // 记录最近一次收到消息的时间戳
     bool verified = false;
     user(){};
@@ -118,7 +119,7 @@ void init_server(){
     server["RMQ_USER"] >> RMQ_USER;
     server["RMQ_PWD"] >> RMQ_PWD;
     server["MIN_INTERVAL"] >> MIN_INTERVAL;
-    std::cout << DEBUG_MODE;
+//    std::cout << DEBUG_MODE;
     channel = AmqpClient::Channel::Create(RMQ_HOST);//, RMQ_PORT, RMQ_USER, RMQ_PWD);
     channel-> DeclareExchange(RMQ_EXCHANGENAME, AmqpClient::Channel::EXCHANGE_TYPE_TOPIC);
     std::string queue_name = channel->DeclareQueue("FLYHIGHER", false, true, false, false);
@@ -136,31 +137,47 @@ void send_message_to_rmq(std::string key, std::string data){
 }
 
 
-void handel_auth(server *s, websocketpp::connection_hdl *hdl, std::string appid){
+void handel_auth(server *s, websocketpp::connection_hdl *hdl, std::string appid, const Document& data, std::string raw_data){
     Document result;
     result.SetObject();
     Document::AllocatorType& allocator = result.GetAllocator();
     
-    for (int i=0; i<PLAYER_COUNT; i++){
-        if (appid == players[i].appid){
-            users[appid] = players[i];
-            result.AddMember("op", "auth", allocator);
-            result.AddMember("status", true, allocator);
-            result.AddMember("code", 0, allocator);
-            result.AddMember("msg", "", allocator);
-            result.AddMember("data", Value(kNullType), allocator);
-            s->send(*hdl, document_to_string(result).c_str(), websocketpp::frame::opcode::text);
-            return;
-        }
+//    for (int i=0; i<PLAYER_COUNT; i++){
+//        if (appid == players[i].appid){
+//            users[appid] = players[i];
+//            result.AddMember("op", "auth", allocator);
+//            result.AddMember("status", true, allocator);
+//            result.AddMember("code", 0, allocator);
+//            result.AddMember("msg", "", allocator);
+//            result.AddMember("data", Value(kNullType), allocator);
+//            s->send(*hdl, document_to_string(result).c_str(), websocketpp::frame::opcode::text);
+//            return;
+//        }
+//    }
+    try{
+        user usertemp = user();
+        usertemp.appid = appid;
+        usertemp.name = data["name"].GetString();
+        usertemp.color = data["color"].GetString();
+        usertemp.last_message = now();
+        users[appid] = usertemp;
+        send_message_to_rmq("auth", raw_data);
+        result.AddMember("op", "auth", allocator);
+        result.AddMember("status", true, allocator);
+        result.AddMember("code", 0, allocator);
+        result.AddMember("msg", "", allocator);
+        result.AddMember("data", Value(kNullType), allocator);
+        s->send(*hdl, document_to_string(result).c_str(), websocketpp::frame::opcode::text);
+        return;
+    }catch( ... ){
+        result.AddMember("op", "auth", allocator);
+        result.AddMember("status", false, allocator);
+        result.AddMember("code", 1004, allocator);
+        result.AddMember("msg", "appid error", allocator);
+        result.AddMember("data", Value(kNullType), allocator);
+        s->send(*hdl, document_to_string(result).c_str(), websocketpp::frame::opcode::text);
+        return;
     }
-    
-    result.AddMember("op", "auth", allocator);
-    result.AddMember("status", false, allocator);
-    result.AddMember("code", 1004, allocator);
-    result.AddMember("msg", "appid error", allocator);
-    result.AddMember("data", Value(kNullType), allocator);
-    s->send(*hdl, document_to_string(result).c_str(), websocketpp::frame::opcode::text);
-    return;
 }
 
 void handel_action(server *s, websocketpp::connection_hdl *hdl, user& u, std::string raw_data){
@@ -237,7 +254,7 @@ void on_message( server *s, websocketpp::connection_hdl hdl, message_ptr msg ) {
     // 首先判断是否是认证信息
     if (op == "auth"){
         // 身份验证消息
-        handel_auth(s, &hdl, appid);
+        handel_auth(s, &hdl, appid, data, raw_data);
     }
     user now_user = verify_user(appid);
     if (!now_user.verified){
@@ -286,9 +303,11 @@ int main() {
         try {
             std::cout << "[*] Server Starting on 0.0.0.0:" << WS_PORT << std::endl;
             echo_server.init_asio();
-            send_message_to_rmq("test", "test");
-            for (int i=0;i<100;i++)
-                send_message_to_rmq("test", "test");
+//            send_message_to_rmq("test", "test");
+            
+//            RabbitMQ测试
+//            for (int i=0;i<100;i++)
+//                send_message_to_rmq("test", "test");
         
             echo_server.set_open_handler( bind( &on_open, &echo_server, ::_1 ));
             echo_server.set_message_handler( bind( &on_message, &echo_server, ::_1, ::_2 ));
