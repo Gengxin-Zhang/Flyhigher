@@ -28,7 +28,9 @@ std::shared_ptr<DataReader> DataReader::getInstance(){
 }
 
 void DataReader::read_data_from_rmq(){
-    AmqpClient::Envelope::ptr_t envelope = channel->BasicConsumeMessage(consumer_tag);
-    std::string buffer = envelope->Message()->Body();
-    msg_pool.push(buffer);
+    while(true){
+        AmqpClient::Envelope::ptr_t envelope = channel->BasicConsumeMessage(consumer_tag);
+        std::string buffer = envelope->Message()->Body();
+        msg_pool.push(buffer);
+    }
 }
