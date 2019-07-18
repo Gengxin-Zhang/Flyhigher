@@ -7,6 +7,9 @@
 
 #include "Engine.h"
 #include "../games/Game.h"
+#include <QMessageBox>
+#include <memory>
+using std::make_shared;
 
 /**
  * Engine implementation
@@ -61,11 +64,6 @@ shared_ptr<Logger> Engine::getLogger() const{
     return logger;
 }
 
-void* threadStartGame(shared_ptr<Game> game){
-    game->run();
-    return nullptr;
-}
-
 void Engine::startGame(shared_ptr<GameConfiguration> const config){
     if(hasNowGame){
         logger->warning("不能启动两次游戏！");
@@ -73,10 +71,12 @@ void Engine::startGame(shared_ptr<GameConfiguration> const config){
     }
     hasNowGame = true;
     logger->debug("创建启动线程");
-    this->nowGame = shared_ptr<Game>(new Game(config));
+    nowGame = shared_ptr<Game>(new Game(config));
     logger->debug("启动线程开始执行");
-    this->nowGameThread = shared_ptr<thread>(new thread(threadStartGame, nowGame));
+    nowGameThread = shared_ptr<StartThread>(new StartThread(nowGame));
+    nowGameThread->start();
     //进入显示程序
+    hasNowGame = false;
 }
 
 shared_ptr<Game> Engine::getNowGame() const{

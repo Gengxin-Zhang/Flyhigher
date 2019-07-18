@@ -63,6 +63,7 @@ void Player::init(const string uid, const string name, const Color color, const 
     fighters[1]->setPoint(Vector2D(-50, 0).toPoint2D(startPoint));
     fighters[4]->setPoint(Vector2D(50, 0).toPoint2D(startPoint));
     log->debug("添加战斗机到玩家对象：" + name);
+    lost = false;
 }
 
 void Player::win() {
@@ -71,6 +72,7 @@ void Player::win() {
 
 void Player::lose() {
     log->information("玩家" + name + "失败");
+    lost = true;
 }
 
 shared_ptr<Carrier> Player::getCarrier() const{

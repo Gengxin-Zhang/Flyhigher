@@ -495,5 +495,8 @@ void UIConfig::on_pb_default_clicked()
 
 void UIConfig::on_pb_start_clicked()
 {
+    this->hide();
+    Judger::jsons.push("{\"uid\": \"A1B2C3\", \"name\": \"XHH\", \"color_a\": 255, \"color_r\": 255, \"color_g\": 255, \"color_b\": 255}");
+    Judger::jsons.push("{\"uid\": \"A3B2C1\", \"name\": \"NMD\", \"color_a\": 255, \"color_r\": 255, \"color_g\": 255, \"color_b\": 255}");
     Engine::getInstance()->startGame(Configuration::getInstance()->getGameConfiguration());
 }

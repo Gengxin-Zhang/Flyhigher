@@ -8,6 +8,7 @@
 #include "Judger.h"
 #include "../systems/Engine.h"
 #include <QMessageBox>
+#include "../../ui/uitest.h"
 #define log Engine::getInstance()->getLogger()
 #define game Engine::getInstance()->getNowGame()
 #define loop Engine::getInstance()->getNowGame()->getLoop()
@@ -31,10 +32,22 @@ void Judger::init(){
 
 //TODO: 消息队列的对接处理
 void Judger::read(const long allowTime){
-
+    set<string> uids;
+    begin:
+    while(jsons.empty()){
+        log->debug("等待数据接入中...");
+        std::this_thread::sleep_for(milliseconds(1000));
+    }
+    const char* json = jsons.front();
+    jsons.pop();
+    if(!readJson(json, allowTime, uids)){
+        goto begin;
+    }else if(uids.size() < game->getPlayerNumber()){
+        goto begin;
+    }
 }
 
-bool Judger::readJson(const char* json, const long allowTime){
+bool Judger::readJson(const char* json, const long allowTime, set<string>& uids){
     Document document;
     document.Parse(json);
     if(!checkTimestamp(document, allowTime)){
@@ -49,6 +62,7 @@ bool Judger::readJson(const char* json, const long allowTime){
     if(uid == document.MemberEnd() || !uid->value.IsString()){
         return false;
     }
+    if(uids.find(uid->value.GetString())!=uids.end()) return false;
     shared_ptr<Player> player = game->getPlayer(uid->value.GetString());
     Value::ConstMemberIterator build = data.FindMember("build");
     if(build != data.MemberEnd() && data.IsBool()){
@@ -85,6 +99,7 @@ bool Judger::readJson(const char* json, const long allowTime){
             }
         }
     }
+    uids.insert(uid->value.GetString());
     return true;
 }
 
@@ -190,33 +205,37 @@ bool Judger::readStartData(){
             std::this_thread::sleep_for(milliseconds(1000));
             ++i;
             if(i > 10){
-                log->warning("由于长时间未能开始游戏，游戏中止。");
                 QMessageBox::warning(nullptr, "警告", "由于长时间未能开始游戏，游戏中止。");
+                log->warning("由于长时间未能开始游戏，游戏中止。");
                 return false;
             }
+            continue;
         }
         const char* json = jsons.front();
+        log->debug("收到预先数据");
         jsons.pop();
         Document document;
         document.Parse(json);
+        log->debug("收到预先数据1");
         Value::ConstMemberIterator uid = document.FindMember("uid");
-        if(uid == document.MemberEnd()) continue;
-        if(!uid->value.IsString()) continue;
+        if(uid == document.MemberEnd() || !uid->value.IsString()) continue;
+        log->debug("收到预先数据2");
         Value::ConstMemberIterator name = document.FindMember("name");
-        if(name == document.MemberEnd()) continue;
-        if(!name->value.IsString()) continue;
+        if(name == document.MemberEnd() || !name->value.IsString()) continue;
+        log->debug("收到预先数据3");
         Value::ConstMemberIterator a = document.FindMember("color_a");
-        if(a == document.MemberEnd()) continue;
-        if(!a->value.IsInt()) continue;
+        if(a == document.MemberEnd() || !a->value.IsInt()) continue;
+        log->debug("收到预先数据4");
         Value::ConstMemberIterator r = document.FindMember("color_r");
-        if(r == document.MemberEnd()) continue;
-        if(!r->value.IsInt()) continue;
+        if(r == document.MemberEnd() || !r->value.IsInt()) continue;
+        log->debug("收到预先数据5");
         Value::ConstMemberIterator g = document.FindMember("color_g");
-        if(g == document.MemberEnd()) continue;
-        if(!g->value.IsInt()) continue;
+        if(g == document.MemberEnd() || !g->value.IsInt()) continue;
+        log->debug("收到预先数据6");
         Value::ConstMemberIterator b = document.FindMember("color_b");
-        if(b == document.MemberEnd()) continue;
-        if(!b->value.IsInt()) continue;
+        if(b == document.MemberEnd() || !b->value.IsInt()) continue;
+
+        log->debug("收到预先数据7");
         game->tmp_players[index++]->init(uid->value.GetString(), name->value.GetString(),
                                          Color(a->value.GetInt(), r->value.GetInt(), g->value.GetInt(), b->value.GetInt()),
                                          mapp->getBrithPoint());
@@ -442,5 +461,8 @@ void Judger::dataWrite(map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> si
         writer.EndObject();
         results.insert(make_pair(p.second->getUID(), strBuf.GetString()));
     }
-    //(调用传参提供数据)
+    for(auto &p: results){
+        log->warning(p.first);
+        log->debug(p.second);
+    }
 }

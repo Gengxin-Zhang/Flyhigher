@@ -30,17 +30,21 @@ ICON = Icon.icns
 
 HEADERS += tools/Vector2D.h \
     main/games/ResourceEntityGenerator.h \
+    main/systems/StartThread.h \
             tools/Color.h \
             tools/Point2D.h \
             tools/Logger.h \
-            tools/DataReader.h
+ \#            tools/DataReader.h
+    ui/uitest.h
 
 SOURCES += tools/Vector2D.cpp \
             main/games/ResourceEntityGenerator.cpp \
+    main/systems/StartThread.cpp \
             tools/Color.cpp \
             tools/Point2D.cpp \
             tools/Logger.cpp \
-            tools/DataReader.cpp
+ \#            tools/DataReader.cpp
+    ui/uitest.cpp
 
 
 HEADERS += ui/readonlydelegate.h \
@@ -142,7 +146,7 @@ SOURCES += main/Main.cpp
 SOURCES += main.cpp
 
 
-SOURCES += server/server/main.cpp
+#SOURCES += server/server/main.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -159,4 +163,5 @@ DEPENDPATH += $$PWD/../OpenSource/yaml-cpp/build
 INCLUDEPATH += $$PWD/../OpenSource/rapidjson/include
 
 FORMS += \
-    ui/uiconfig.ui
+    ui/uiconfig.ui \
+    ui/uitest.ui

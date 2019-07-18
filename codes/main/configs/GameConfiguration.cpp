@@ -51,3 +51,11 @@ GameConfiguration::GameConfiguration(shared_ptr<MapConfiguration> const mapConfi
 GameConfiguration::~GameConfiguration() {
 
 }
+
+shared_ptr<LargeStarConfiguration> GameConfiguration::getLargeStarConfig() const{
+    return largeStarConfig;
+}
+
+shared_ptr<LittleStarConfiguration> GameConfiguration::getLittleStarConfig() const{
+    return littleStarConfig;
+}

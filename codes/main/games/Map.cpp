@@ -61,6 +61,6 @@ int Map::getMaxPlayersAllowed() const{
     return maxPlayersAllowed;
 }
 
-Point2D Map::getBrithPoint() const{
+Point2D Map::getBrithPoint(){
     return birthPoints[getRandperm()];
 }

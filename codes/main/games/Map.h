@@ -55,7 +55,7 @@ class Map {
          * 获取随机出生点中心（注意：每次调用此函数返回值不同，只允许一个player调用一次）
          * @return 出生点
          */
-        Point2D getBrithPoint() const;
+        Point2D getBrithPoint();
     private:
         /**
          * 获取不重复随机值，用于随机出生点

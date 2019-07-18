@@ -13,6 +13,7 @@
 #include "../configs/Configuration.h"
 #include "../games/Game.h"
 #include <thread>
+#include "StartThread.h"
 using std::invalid_argument, std::thread;
 
 class Engine {
@@ -68,6 +69,7 @@ class Engine {
          * 关闭引擎
          */
         void shutdown() const;
+
     private:
         /**
          * 构造函数
@@ -89,7 +91,7 @@ class Engine {
         bool hasStarted;
         bool debugMode;
         shared_ptr<Game> nowGame;
-        shared_ptr<thread> nowGameThread;
+        shared_ptr<StartThread> nowGameThread;
         bool hasNowGame;
 };
 

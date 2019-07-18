@@ -23,6 +23,8 @@ using std::queue;
 using namespace rapidjson;
 using std::shared_ptr, std::map, std::set;
 
+class UITest;
+
 class Judger {
     public:
         static queue<const char*> jsons;
@@ -38,7 +40,7 @@ class Judger {
         void readFighterJson(const Value& root, const shared_ptr<Fighter>& fighter);
         void readCarrierJson(const Value& root, const shared_ptr<Carrier>& carrier);
         void readBomberJson(const Value& root, const shared_ptr<Bomber>& bomber);
-        bool readJson(const char* json, const long allowTime);
+        bool readJson(const char* json, const long allowTime, set<string>& uids);
         bool checkTimestamp(const Document& document, const long& allowTime);
         int maxTimeout;
         map<string, Document::AllocatorType&> buff;
