@@ -12,7 +12,7 @@
  */
 
 
-MapConfiguration::MapConfiguration(const double height, const double width, const int maxPlayer, const Point2D* birthPoints) {
+MapConfiguration::MapConfiguration(const int height, const int width, const int maxPlayer, const Point2D* birthPoints) {
     this->height = height;
     this->width = width;
     this->maxPlayer = maxPlayer;
@@ -23,11 +23,11 @@ MapConfiguration::~MapConfiguration() {
 
 }
 
-double MapConfiguration::getHeight() const{
+int MapConfiguration::getHeight() const{
     return height;
 }
 
-double MapConfiguration::getWidth() const{
+int MapConfiguration::getWidth() const{
     return width;
 }
 

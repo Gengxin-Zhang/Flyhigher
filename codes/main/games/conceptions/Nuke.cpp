@@ -45,7 +45,7 @@ bool Nuke::shoot(const double direction){
     }
     shooted = true;
     shared_ptr<Bullet> bullet(new Bullet(radius, Vector2D(speed, direction, true),
-                                         10000, parentEntity, parentEntity->getX(), parentEntity->getY()));
+                                         aoeDamage, parentEntity, parentEntity->getX(), parentEntity->getY()));
     log->debug(bullet->toString() + "被射出");
     loop->addBullet(bullet);
     return true;

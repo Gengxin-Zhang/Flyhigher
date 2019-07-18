@@ -7,10 +7,14 @@
 
 #include "Judger.h"
 #include "../systems/Engine.h"
+#include <QMessageBox>
 #define log Engine::getInstance()->getLogger()
 #define game Engine::getInstance()->getNowGame()
 #define loop Engine::getInstance()->getNowGame()->getLoop()
+#define mapp Engine::getInstance()->getNowGame()->getMap()
 using std::chrono::duration, std::chrono::duration_cast;
+
+queue<const char*> Judger::jsons = queue<const char*>();
 
 /**
  * Judger implementation
@@ -177,13 +181,48 @@ bool Judger::checkTimestamp(const Document& document, const long& allowTime){
     }
 }
 
-void Judger::readStartData(){
-    //读取一个json
-    const char* json;
-
-    for(auto &p: game->getPlayers()){
-        p.second->init("", "", Color(0,0,0,0), Point2D(0,0));
+bool Judger::readStartData(){
+    set<string> uids;
+    int i=0, index = 0;
+    while(uids.size() < game->getPlayerNumber()){
+        if(jsons.empty()){
+            log->warning("数据池空缺！");
+            std::this_thread::sleep_for(milliseconds(1000));
+            ++i;
+            if(i > 10){
+                log->warning("由于长时间未能开始游戏，游戏中止。");
+                QMessageBox::warning(nullptr, "警告", "由于长时间未能开始游戏，游戏中止。");
+                return false;
+            }
+        }
+        const char* json = jsons.front();
+        jsons.pop();
+        Document document;
+        document.Parse(json);
+        Value::ConstMemberIterator uid = document.FindMember("uid");
+        if(uid == document.MemberEnd()) continue;
+        if(!uid->value.IsString()) continue;
+        Value::ConstMemberIterator name = document.FindMember("name");
+        if(name == document.MemberEnd()) continue;
+        if(!name->value.IsString()) continue;
+        Value::ConstMemberIterator a = document.FindMember("color_a");
+        if(a == document.MemberEnd()) continue;
+        if(!a->value.IsInt()) continue;
+        Value::ConstMemberIterator r = document.FindMember("color_r");
+        if(r == document.MemberEnd()) continue;
+        if(!r->value.IsInt()) continue;
+        Value::ConstMemberIterator g = document.FindMember("color_g");
+        if(g == document.MemberEnd()) continue;
+        if(!g->value.IsInt()) continue;
+        Value::ConstMemberIterator b = document.FindMember("color_b");
+        if(b == document.MemberEnd()) continue;
+        if(!b->value.IsInt()) continue;
+        game->tmp_players[index++]->init(uid->value.GetString(), name->value.GetString(),
+                                         Color(a->value.GetInt(), r->value.GetInt(), g->value.GetInt(), b->value.GetInt()),
+                                         mapp->getBrithPoint());
+        uids.insert(uid->value.GetString());
     }
+    return true;
 }
 void Judger::dataWrite(map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sights){
     map<string, const char*> results;
@@ -400,7 +439,8 @@ void Judger::dataWrite(map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> si
             writer.EndObject();
         }
         writer.EndArray();
+        writer.EndObject();
+        results.insert(make_pair(p.second->getUID(), strBuf.GetString()));
     }
-
-
+    //(调用传参提供数据)
 }

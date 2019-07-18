@@ -18,18 +18,21 @@
 #include "./entitys/Fighter.h"
 #include <map>
 #include <set>
+#include <queue>
+using std::queue;
 using namespace rapidjson;
 using std::shared_ptr, std::map, std::set;
 
 class Judger {
     public:
+        static queue<const char*> jsons;
         Judger(shared_ptr<JudgerConfiguration> const config);
         void init();
         void read(const long allowTime);
         //TODO: UID类型
         map<string, const char*> write() const;
         void readyToWrite();
-        void readStartData();
+        bool readStartData();
         void dataWrite(map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sights);
     private:
         void readFighterJson(const Value& root, const shared_ptr<Fighter>& fighter);

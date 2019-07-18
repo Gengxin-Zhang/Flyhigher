@@ -131,6 +131,12 @@ class Loop {
          */
         long getNowTick() const;
 
+        /**
+         * 是否有玩家获胜
+         * @return 是否
+         */
+        bool hasPlayerWin();
+
     private:
         /**
          * 为一个活实体进行的边界检测
@@ -194,6 +200,11 @@ class Loop {
          */
         map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sightsOperate();
 
+        /**
+         * 使用超级武器造成爆炸
+         * @param nuke 子弹
+         */
+        void nuke_boom(shared_ptr<Bullet> const nuke);
         std::map<int,shared_ptr<Entity>> allEntity;
         std::map<int,shared_ptr<ResourceEntity>> allResourceEntity;
         std::map<int,shared_ptr<Bullet>> allBullet;

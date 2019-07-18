@@ -13,11 +13,13 @@
 #include "Judger.h"
 #include "Map.h"
 #include <map>
+#include "ResourceEntityGenerator.h"
 
 class Engine;
 
 class Game {
-    public: 
+    public:
+        std::shared_ptr<Player>* tmp_players;
         /**
          * 构造函数
          * @param config 配置项
@@ -31,8 +33,9 @@ class Game {
         
         /**
          * 开始游戏
+         * @return 运行状态码，0表示程序正常结束，1表示异常状态结束
          */
-        void run();
+        int run();
 
         /**
          * 获取地图实例
@@ -70,6 +73,12 @@ class Game {
          * @return 全部玩家
          */
         std::map<string, shared_ptr<Player>> getPlayers();
+
+        /**
+         * 获取资源生成器
+         * @return 资源生成器
+         */
+        std::shared_ptr<ResourceEntityGenerator> getResourceGenerator();
     private:
         
         int player_num;
@@ -77,7 +86,7 @@ class Game {
         shared_ptr<Map> map;
         shared_ptr<Judger> judger;
         std::map<string, shared_ptr<Player>> players;
-        std::shared_ptr<Player>* tmp_players;
+        std::shared_ptr<ResourceEntityGenerator> resourceGenerator;
 };
 
 #endif //_GAME_H

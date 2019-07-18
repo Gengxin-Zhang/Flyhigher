@@ -4,15 +4,20 @@
  * @version v1.0 beta
  */
 
-
 #include "Map.h"
 #include "../systems/Engine.h"
+#include <algorithm>
+#include <random>
 #define log Engine::getInstance()->getLogger()
-using std::to_string;
+using std::to_string, std::shuffle, std::random_device, std::mt19937;
 
 /**
  * Map implementation
  */
+
+int Map::getRandperm(){
+    return temp[inx++];
+}
 
 Map::Map(shared_ptr<MapConfiguration> const config){
     log->debug("构造地图对象");
@@ -20,16 +25,23 @@ Map::Map(shared_ptr<MapConfiguration> const config){
     width = config->getWidth();
     maxPlayersAllowed = config->getMaxPlayer();
     birthPoints = config->getBirthPoints();
+    random_device rd;
+    mt19937 g(rd());
+    for (int i = 0; i < maxPlayersAllowed; ++i){
+        temp.push_back(i + 1);
+    }
+    inx = 0;
+    shuffle(temp.begin(), temp.end(), g);
 }
 
 Map::~Map(){
 }
 
-double Map::getHeight() const{
+int Map::getHeight() const{
     return height;
 }
 
-double Map::getWidth() const{
+int Map::getWidth() const{
     return width;
 }
 
@@ -49,10 +61,6 @@ int Map::getMaxPlayersAllowed() const{
     return maxPlayersAllowed;
 }
 
-Point2D Map::getBrithPoint(const int index) const{
-    if(index < 0 || index >= maxPlayersAllowed){
-        log->severe("获取不存在的地图出生点，值：", index);
-        throw invalid_argument("index should not be " + to_string(index));
-    }
-    return birthPoints[index];
+Point2D Map::getBrithPoint() const{
+    return birthPoints[getRandperm()];
 }

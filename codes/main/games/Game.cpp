@@ -24,24 +24,29 @@ Game::Game(shared_ptr<GameConfiguration> const config) {
         std::shared_ptr<Player> player(new Player(config->getPlayerConfig()));
         tmp_players[i] = player;
     }
+    resourceGenerator = std::shared_ptr<ResourceEntityGenerator>(new ResourceEntityGenerator());
 }
 
 Game::~Game() {
 
 }
 
-void Game::run() {
+int Game::run() {
     judger->init();
-    judger->readStartData();
-    log->information("开始一场游戏");
+    log->information("等待接入中...");
+    if(judger->readStartData()){
+        return 1;
+    }
     for(int i=0; i<player_num; ++i){
         players.insert(make_pair(tmp_players[i]->getUID(), tmp_players[i]));
     }
     delete [] tmp_players;
+    log->information("初始化游戏进程");
     loop->init();
+    log->information("开始游戏！");
     loop->run();
     log->debug("结束loop");
-    delete this;
+    return 0;
 }
 
 shared_ptr<Map> Game::getMap() const{
@@ -66,4 +71,8 @@ int Game::getPlayerNumber() const{
 
 std::map<string, shared_ptr<Player>> Game::getPlayers() {
     return players;
+}
+
+std::shared_ptr<ResourceEntityGenerator> Game::getResourceGenerator(){
+    return resourceGenerator;
 }

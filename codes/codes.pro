@@ -27,18 +27,26 @@ CONFIG+= console
 
 ICON = Icon.icns
 
+
 HEADERS += tools/Vector2D.h \
+    main/games/ResourceEntityGenerator.h \
             tools/Color.h \
             tools/Point2D.h \
-            tools/Logger.h \ \
-    ui/readonlydelegate.h \
-    ui/uiconfig.h
+            tools/Logger.h \
+            tools/DataReader.h
 
 SOURCES += tools/Vector2D.cpp \
+            main/games/ResourceEntityGenerator.cpp \
             tools/Color.cpp \
             tools/Point2D.cpp \
             tools/Logger.cpp \
-            ui/readonlydelegate.cpp \
+            tools/DataReader.cpp
+
+
+HEADERS += ui/readonlydelegate.h \
+           ui/uiconfig.h
+
+SOURCES += ui/readonlydelegate.cpp \
             ui/uiconfig.cpp
 
 
@@ -132,6 +140,9 @@ SOURCES += main/Main.cpp
 
 
 SOURCES += main.cpp
+
+
+SOURCES += server/server/main.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

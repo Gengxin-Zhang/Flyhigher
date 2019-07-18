@@ -76,6 +76,7 @@ void Engine::startGame(shared_ptr<GameConfiguration> const config){
     this->nowGame = shared_ptr<Game>(new Game(config));
     logger->debug("启动线程开始执行");
     this->nowGameThread = shared_ptr<thread>(new thread(threadStartGame, nowGame));
+    //进入显示程序
 }
 
 shared_ptr<Game> Engine::getNowGame() const{

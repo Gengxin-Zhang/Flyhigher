@@ -18,6 +18,7 @@
 #define mapp Engine::getInstance()->getNowGame()->getMap()
 #define game Engine::getInstance()->getNowGame()
 #define judger Engine::getInstance()->getNowGame()->getJudger()
+#define config Configuration::getInstance()->getGameConfiguration()
 #define le_iter map<int,shared_ptr<LivingEntity>>::iterator
 #define b_iter map<int,shared_ptr<Bullet>>::iterator
 #define re_iter map<int,shared_ptr<ResourceEntity>>::iterator
@@ -29,10 +30,10 @@ using std::min, std::make_pair, std::max, std::dynamic_pointer_cast;
  * Loop implementation
  */
 
-Loop::Loop(shared_ptr<LoopConfiguration> const config) {
+Loop::Loop(shared_ptr<LoopConfiguration> const loop_config) {
     log->debug("构造主循环对象");
-    maxTickAllowed = config->getMaxTickAllowed();
-    timePerTick = config->getTimePerTick();
+    maxTickAllowed = loop_config->getMaxTickAllowed();
+    timePerTick = loop_config->getTimePerTick();
     allEntity = std::map<int,shared_ptr<Entity>>();
     allResourceEntity = std::map<int,shared_ptr<ResourceEntity>>();
     allBullet = std::map<int,shared_ptr<Bullet>>();
@@ -150,6 +151,12 @@ void Loop::impactCheckForBulletAndBullet(){
             shared_ptr<Bullet> ptr_b1=b1->second, ptr_b2=b2->second;
             if(ptr_b1->isOverlapped(*ptr_b2) || ptr_b1->contains(*ptr_b2) || ptr_b1->isContained(*ptr_b2)){
                 log->debug(ptr_b1->toString() + "碰撞" + ptr_b2->toString());
+                if(ptr_b1->getDamage() == config->getPlayerConfig()->getCarrierConfig()->getNukeConfig()->getAoeDamage()){
+                    nuke_boom(ptr_b1);
+                }
+                if(ptr_b2->getDamage() == config->getPlayerConfig()->getCarrierConfig()->getNukeConfig()->getAoeDamage()){
+                    nuke_boom(ptr_b2);
+                }
                 allBullet.erase(b1++);
                 log->debug("删除子弹Entity-" + to_string(ptr_b1->getUID()));
                 if(b1 == b2){
@@ -160,6 +167,22 @@ void Loop::impactCheckForBulletAndBullet(){
                 if(b1 == allBullet.end()) return;
                 else if(b2 == allBullet.end()) goto for_b_b_out_begin;
                 else goto for_b_b_in_begin;
+            }
+        }
+    }
+}
+
+void Loop::nuke_boom(shared_ptr<Bullet> const nuke){
+    shared_ptr<NukeConfiguration> nukeConfig = config->getPlayerConfig()->getCarrierConfig()->getNukeConfig();
+    for(le_iter le=allLivingEntity.begin(); le!=allLivingEntity.end(); ++le){
+        shared_ptr<LivingEntity> ptr_le = le->second;
+        if(ptr_le->getDistance(*nuke) < nukeConfig->getAoeDamageRadius()){
+            if(ptr_le->damage(int(nuke->getDamage() - ptr_le->getDistance(*nuke) * nukeConfig->getDamageDecrease()))){
+                log->debug(ptr_le->toString() + "死亡");
+                allLivingEntity.erase(le++);
+                if(le == allLivingEntity.end()){
+                    break;
+                }
             }
         }
     }
@@ -182,6 +205,9 @@ void Loop::impactCheckForBulletAndLivingEntity(){
                 if(ptr_b->damageTo(*ptr_le)){
                     log->debug(ptr_le->toString() + "死亡");
                     allLivingEntity.erase(le++);
+                }
+                if(ptr_b->getDamage() == config->getPlayerConfig()->getCarrierConfig()->getNukeConfig()->getAoeDamage()){
+                    nuke_boom(ptr_b);
                 }
                 allBullet.erase(b++);
                 log->debug("删除子弹Entity-" + to_string(ptr_b->getUID()));
@@ -312,6 +338,52 @@ void Loop::collectFinishedCheck(){
     }
 }
 
+bool Loop::hasPlayerWin(){
+    bool flag = false;
+    shared_ptr<Player> last = nullptr;
+    for(auto &p: game->getPlayers()){
+        if(p.second->isLost()){
+            continue;
+        }
+        if(!p.second->getCarrier()->isDeath()){
+            if(flag) return false;
+            else{
+                flag = true;
+                last = p.second;
+                continue;
+            }
+        }
+        for(auto &b: p.second->getBombers()){
+            if(!b.second->isDeath()){
+                if(flag) return false;
+                else{
+                    flag = true;
+                    last = p.second;
+                    continue;
+                }
+            }
+        }
+        for(auto &f: p.second->getFighters()){
+            if(!f.second->isDeath()){
+                if(flag) return false;
+                else{
+                    flag = true;
+                    last = p.second;
+                    continue;
+                }
+            }
+        }
+        p.second->lose();
+    }
+    if(last == nullptr){
+        endWithTimeOut();
+    }else{
+        last->win();
+        endWithWinner(last);
+    }
+    return true;
+}
+
 map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> Loop::sightsOperate(){
     log->debug("视野判断");
     map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sights;
@@ -347,6 +419,8 @@ void Loop::run() {
         nowTickStartTime = steady_clock::now();
         //读入数据
         judger->read(duration_cast<milliseconds>(nowTickEndTime.time_since_epoch()).count());
+        //生成资源实体
+        game->getResourceGenerator()->generate(allResourceEntity.size());
         //运动
         moveNextTick();
         //边界检测：出界的实体强制设定在界内最近点
@@ -372,6 +446,8 @@ void Loop::run() {
         map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sights = sightsOperate();
         //数据写出
         judger->dataWrite(sights);
+        //判断胜利
+        if(hasPlayerWin())return;
         //休眠机制（确保最小tick的执行时间为timePerTick）
         duration<double> time_span = duration_cast<duration<double>>(steady_clock::now() - nowTickStartTime);
         milliseconds deltatime = duration_cast<milliseconds>(time_span);
@@ -407,6 +483,11 @@ long Loop::getMaxTickAllowed() const {
 
 void Loop::addResourceEntity(shared_ptr<ResourceEntity> const entity){
     log->debug("添加资源实体");
+    for(auto &re: allResourceEntity){
+        if(re.second->isOverlapped(*entity) || re.second->contains(*entity) || re.second->isContained(*entity)){
+            return;
+        }
+    }
     allResourceEntity.insert(make_pair(entity->getUID(), entity));
     allEntity.insert(make_pair(entity->getUID(), entity));
 }

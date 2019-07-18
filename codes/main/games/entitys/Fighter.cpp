@@ -32,6 +32,7 @@ Fighter::~Fighter() {
 }
 
 void Fighter::die() {
+    LivingEntity::die();
     if(collecting) stopCollecting();
 }
 

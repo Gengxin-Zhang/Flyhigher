@@ -136,10 +136,29 @@ class Player: public enable_shared_from_this<Player> {
          */
         string getUID() const;
 
+        /**
+         * 获取玩家当前拥有的资源值
+         * @return 资源值
+         */
         int getPower() const;
+
+        /**
+         * 获取是否处于建造中
+         * @return 是否
+         */
         bool getBuilding() const;
 
+        /**
+         * 距离建造结束还有多少时间
+         * @return tick
+         */
         int getRemainBuildTick() const;
+
+        /**
+         * 是否输掉了游戏
+         * @return 是否已经输掉
+         */
+        bool isLost() const;
     private: 
         bool isBuilding;
         long buildStartTick;
@@ -154,6 +173,7 @@ class Player: public enable_shared_from_this<Player> {
         Point2D startPoint;
         shared_ptr<PlayerConfiguration> config;
         bool allowHeal;
+        bool lost;
 };
 
 #endif //_PLAYER_H
