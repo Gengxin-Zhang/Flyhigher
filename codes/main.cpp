@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     __main(argc, argv);
     QApplication a(argc, argv);
-    log->infomation("初始化完毕");
+    log->information("初始化完毕");
     UIConfig conf;
     conf.init();
     conf.show();

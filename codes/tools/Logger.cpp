@@ -90,7 +90,7 @@ void Logger::debug(const string str, const bool flag) {
     }
 }
 
-void Logger::infomation(const string str, const long num) {
+void Logger::information(const string str, const long num) {
     out<<"[info][";
     cout<<RESET<<"[info][";
     out_time();
@@ -98,7 +98,7 @@ void Logger::infomation(const string str, const long num) {
     cout<<"]"<<str<<": "<<num<<endl;
 }
 
-void Logger::infomation(const string str, const int num) {
+void Logger::information(const string str, const int num) {
     out<<"[info][";
     cout<<RESET<<"[info][";
     out_time();
@@ -106,7 +106,7 @@ void Logger::infomation(const string str, const int num) {
     cout<<"]"<<str<<": "<<num<<endl;
 }
 
-void Logger::infomation(const string str) {
+void Logger::information(const string str) {
     out<<"[info][";
     cout<<RESET<<"[info][";
     out_time();
@@ -114,7 +114,7 @@ void Logger::infomation(const string str) {
     cout<<"]"<<str<<endl;
 }
 
-void Logger::infomation(const string str, const bool flag) {
+void Logger::information(const string str, const bool flag) {
     out<<"[info][";
     cout<<RESET<<"[info][";
     out_time();

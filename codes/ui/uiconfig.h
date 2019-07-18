@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QStringListModel>
 #include <QStandardItemModel>
+#include "../main/configs/Configuration.h"
 
 namespace Ui {
 class UIConfig;
@@ -20,6 +21,10 @@ public:
 
 private:
     Ui::UIConfig *ui;
+    shared_ptr<Configuration> config;
+    QString strTemp;
+    bool isChanged;
+    QStandardItemModel* itemModel;
     void showLoop();
     void showMap();
     void showCarrier();
@@ -27,9 +32,20 @@ private:
     void showFighter();
     void showLargeStar();
     void showLittleStar();
+    void saveLoop();
+    void saveMap();
+    void saveCarrier();
+    void saveBomber();
+    void saveFighter();
+    void saveLargeStar();
+    void saveLittleStar();
+
 
 private slots:
     void showClick(QModelIndex index);
+    void on_pb_apply_clicked();
+    void on_pb_default_clicked();
+    void on_pb_start_clicked();
 };
 
 #endif // UICONFIG_H

@@ -22,6 +22,12 @@ class Configuration {
         shared_ptr<GameConfiguration> getGameConfiguration() const;
 
         static shared_ptr<Configuration> getInstance();
+
+        void writeToYaml();
+
+        YAML::Node getRoot() const;
+
+        void setDefault();
     private:
         Configuration(const string file);
         static bool isInit;

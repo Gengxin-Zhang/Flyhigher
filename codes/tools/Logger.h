@@ -58,27 +58,27 @@ class Logger {
          * @param str 文字说明
          * @param num 数字变量
          */
-        void infomation(const string str, const long num);
+        void information(const string str, const long num);
 
         /**
          * 输出info信息
          * @param str 文字说明
          * @param num 数字变量
          */
-        void infomation(const string str, const int num);
+        void information(const string str, const int num);
             
         /**
          * 输出info信息
          * @param str 文字说明
          */
-        void infomation(const string str);
+        void information(const string str);
             
         /**
          * 输出info信息
          * @param str 文字说明
          * @param flag 布尔变量
          */
-        void infomation(const string str, const bool flag);
+        void information(const string str, const bool flag);
             
         /**
          * 输出warn信息

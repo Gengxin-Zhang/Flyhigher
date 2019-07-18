@@ -391,13 +391,13 @@ void Loop::init() {
 }
 
 void Loop::endWithWinner(shared_ptr<Player> const winner) {
-    log->infomation("游戏结束！");
+    log->information("游戏结束！");
     log->debug("存在玩家胜利的游戏结束");
     winner->win();
 }
 
 void Loop::endWithTimeOut() {
-    log->infomation("游戏结束！");
+    log->information("游戏结束！");
     log->debug("时间用尽的游戏结束");
 }
 

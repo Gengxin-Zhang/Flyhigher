@@ -36,6 +36,8 @@ bool Bomber::isInSight(const Entity& ano) const{
     if(isMoving()){
         if(getSpeed().getCosineWith(toVector2D(ano)) > 0 && getSpeed().getCosineWith(toVector2D(ano)) < cos(sightAngle)){
                 return getDistance(ano) <= longSight;
+        }else{
+            return false;
         }
     }else{
         return getDistance(ano) <= shortSight;

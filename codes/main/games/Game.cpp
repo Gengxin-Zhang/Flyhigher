@@ -14,7 +14,7 @@
  */
 
 Game::Game(shared_ptr<GameConfiguration> const config) {
-    log->infomation("准备一场游戏");
+    log->information("准备一场游戏");
     judger = std::shared_ptr<Judger>(new Judger(config->getJudgerConfig()));
     map = std::shared_ptr<Map>(new Map(config->getMapConfig()));
     loop = std::shared_ptr<Loop>(new Loop(config->getLoopConfig()));
@@ -33,7 +33,7 @@ Game::~Game() {
 void Game::run() {
     judger->init();
     judger->readStartData();
-    log->infomation("开始一场游戏");
+    log->information("开始一场游戏");
     for(int i=0; i<player_num; ++i){
         players.insert(make_pair(tmp_players[i]->getUID(), tmp_players[i]));
     }

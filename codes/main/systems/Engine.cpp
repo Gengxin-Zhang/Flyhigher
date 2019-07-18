@@ -45,7 +45,7 @@ void Engine::startEngine(const bool debugMode) {
     }
     this->debugMode = debugMode;
     this->registerLogger(shared_ptr<Logger>(new Logger("./out.txt")));
-    logger->infomation("成功启动！");
+    logger->information("成功启动！");
     logger->debug("debug模式：开启");
 }
 

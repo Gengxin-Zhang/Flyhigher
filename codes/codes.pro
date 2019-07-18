@@ -25,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++17
 CONFIG+= console
 
+ICON = Icon.icns
+
 HEADERS += tools/Vector2D.h \
             tools/Color.h \
             tools/Point2D.h \

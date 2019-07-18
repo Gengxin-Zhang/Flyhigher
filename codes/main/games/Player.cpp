@@ -66,11 +66,11 @@ void Player::init(const string uid, const string name, const Color color, const 
 }
 
 void Player::win() {
-    log->infomation("玩家" + name + "胜利");
+    log->information("玩家" + name + "胜利");
 }
 
 void Player::lose() {
-    log->infomation("玩家" + name + "失败");
+    log->information("玩家" + name + "失败");
 }
 
 shared_ptr<Carrier> Player::getCarrier() const{
