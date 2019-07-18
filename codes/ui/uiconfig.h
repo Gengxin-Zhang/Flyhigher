@@ -39,8 +39,8 @@ private:
     void saveFighter();
     void saveLargeStar();
     void saveLittleStar();
-
-
+public slots:
+    void receiveslot(int state);
 private slots:
     void showClick(QModelIndex index);
     void on_pb_apply_clicked();

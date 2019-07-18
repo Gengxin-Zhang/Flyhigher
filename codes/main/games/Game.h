@@ -34,7 +34,7 @@ class Game {
         /**
          * 开始游戏
          */
-        void run();
+        int run();
 
         /**
          * 获取地图实例

@@ -25,6 +25,8 @@ Map::Map(shared_ptr<MapConfiguration> const config){
     width = config->getWidth();
     maxPlayersAllowed = config->getMaxPlayer();
     birthPoints = config->getBirthPoints();
+    log->debug(birthPoints[0].toString());
+    log->debug(birthPoints[1].toString());
     random_device rd;
     mt19937 g(rd());
     for (int i = 0; i < maxPlayersAllowed; ++i){
@@ -62,5 +64,5 @@ int Map::getMaxPlayersAllowed() const{
 }
 
 Point2D Map::getBrithPoint(){
-    return birthPoints[getRandperm()];
+    return birthPoints[getRandperm()-1];
 }

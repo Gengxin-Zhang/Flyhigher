@@ -68,6 +68,7 @@ void Configuration::reload() {
             double x = root["map"]["birthPlaces"][to_string(i)]["x"].as<double>();
             double y = root["map"]["birthPlaces"][to_string(i)]["y"].as<double>();
             ps[i-1] = Point2D(x, y);
+            log->debug(ps[i-1].toString());
         }
     }
     shared_ptr<MapConfiguration> mapConfig =

@@ -27,7 +27,7 @@ class UITest;
 
 class Judger {
     public:
-        static queue<const char*> jsons;
+        static queue<string> jsons;
         Judger(shared_ptr<JudgerConfiguration> const config);
         void init();
         void read(const long allowTime);

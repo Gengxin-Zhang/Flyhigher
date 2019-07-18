@@ -19,7 +19,7 @@ class MapConfiguration {
          * @param maxPlayer 最大玩家数
          * @param birthPoints 出生点
          */
-        MapConfiguration(const int height, const int width, const int maxPlayer, const Point2D* birthPoints);
+        MapConfiguration(const int height, const int width, const int maxPlayer, Point2D* birthPoints);
 
         /**
          * 析构函数
@@ -48,12 +48,12 @@ class MapConfiguration {
          * 获取出生点
          * @return 出生点数组
          */
-        const Point2D* getBirthPoints() const;
+        Point2D* getBirthPoints() const;
     private: 
         int height;
         int width;
         int maxPlayer;
-        const Point2D* birthPoints;
+        Point2D* birthPoints;
 };
 
 #endif //_MAPCONFIGURATION_H

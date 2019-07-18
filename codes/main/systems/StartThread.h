@@ -6,10 +6,15 @@
 
 
 class StartThread: public QThread{
+    Q_OBJECT
+signals:
+    void send(const int state);
+    void back(QString s);
 public:
-    StartThread(shared_ptr<Game> const game);
+    StartThread();
+    void init(shared_ptr<Game> const game);
 protected:
-    void run();
+    virtual void run();
 private:
     shared_ptr<Game> game;
 };

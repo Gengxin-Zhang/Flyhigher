@@ -31,11 +31,11 @@ Game::~Game() {
 
 }
 
-void Game::run() {
+int Game::run() {
     judger->init();
     log->information("等待接入中...");
     if(!judger->readStartData()){
-        return;
+        return 1;
     }
     for(int i=0; i<player_num; ++i){
         players.insert(make_pair(tmp_players[i]->getUID(), tmp_players[i]));
@@ -46,7 +46,7 @@ void Game::run() {
     log->information("开始游戏！");
     loop->run();
     log->debug("结束loop");
-    return;
+    return 0;
 }
 
 shared_ptr<Map> Game::getMap() const{

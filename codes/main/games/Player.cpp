@@ -29,6 +29,7 @@ Player::~Player() {
 }
 
 void Player::init(const string uid, const string name, const Color color, const Point2D startPoint) {
+    log->debug(startPoint.toString());
     this->name = name;
     this->color = color;
     this->uid = uid;

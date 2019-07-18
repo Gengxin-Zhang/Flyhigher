@@ -22,6 +22,12 @@
      <height>161</height>
     </rect>
    </property>
+   <property name="lineWrapMode">
+    <enum>QTextEdit::WidgetWidth</enum>
+   </property>
+   <property name="lineWrapColumnOrWidth">
+    <number>1</number>
+   </property>
   </widget>
   <widget class="QTextEdit" name="te_output">
    <property name="geometry">

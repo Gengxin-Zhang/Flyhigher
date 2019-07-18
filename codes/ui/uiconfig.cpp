@@ -500,3 +500,11 @@ void UIConfig::on_pb_start_clicked()
     Judger::jsons.push("{\"uid\": \"A3B2C1\", \"name\": \"NMD\", \"color_a\": 255, \"color_r\": 255, \"color_g\": 255, \"color_b\": 255}");
     Engine::getInstance()->startGame(Configuration::getInstance()->getGameConfiguration());
 }
+
+
+void UIConfig::receiveslot(int state){
+    if(state == 1){
+        QMessageBox::warning(nullptr, "警告", "由于长时间未能开始游戏，游戏中止。");
+    }
+    this->show();
+}

@@ -15,7 +15,7 @@
 #define mapp Engine::getInstance()->getNowGame()->getMap()
 using std::chrono::duration, std::chrono::duration_cast;
 
-queue<const char*> Judger::jsons = queue<const char*>();
+queue<string> Judger::jsons = queue<string>();
 
 /**
  * Judger implementation
@@ -32,15 +32,16 @@ void Judger::init(){
 
 //TODO: 消息队列的对接处理
 void Judger::read(const long allowTime){
+    log->debug("允许的时间戳", allowTime);
     set<string> uids;
     begin:
     while(jsons.empty()){
         log->debug("等待数据接入中...");
-        std::this_thread::sleep_for(milliseconds(1000));
+        std::this_thread::sleep_for(milliseconds(5000));
     }
-    const char* json = jsons.front();
+    string json = jsons.front();
     jsons.pop();
-    if(!readJson(json, allowTime, uids)){
+    if(!readJson(json.c_str(), allowTime, uids)){
         goto begin;
     }else if(uids.size() < game->getPlayerNumber()){
         goto begin;
@@ -48,35 +49,43 @@ void Judger::read(const long allowTime){
 }
 
 bool Judger::readJson(const char* json, const long allowTime, set<string>& uids){
+    log->debug(json);
     Document document;
     document.Parse(json);
+    log->debug("1");
     if(!checkTimestamp(document, allowTime)){
         return false;
     }
+    log->debug("2");
     Value::ConstMemberIterator playerData = document.FindMember("player_data");
     if(!(playerData != document.MemberEnd() && playerData->value.IsObject())){
         return false;
     }
     const Value& data = playerData->value;
+    log->debug("3");
     Value::ConstMemberIterator uid = document.FindMember("uid");
     if(uid == document.MemberEnd() || !uid->value.IsString()){
         return false;
     }
     if(uids.find(uid->value.GetString())!=uids.end()) return false;
+    log->debug("4");
     shared_ptr<Player> player = game->getPlayer(uid->value.GetString());
     Value::ConstMemberIterator build = data.FindMember("build");
     if(build != data.MemberEnd() && data.IsBool()){
         player->build();
     }
+    log->debug("5");
     Value::ConstMemberIterator allowHeal = playerData->value.FindMember("allow_heal");
     if(allowHeal != data.MemberEnd() && allowHeal->value.IsBool()){
         player->setAllowHeal(allowHeal->value.GetBool());
     }
+    log->debug("6");
     Value::ConstMemberIterator car = playerData->value.FindMember("carrier");
     if(car != data.MemberEnd() && car->value.IsObject()){
         const Value& carrier = car->value;
         readCarrierJson(carrier, player->getCarrier());
     }
+    log->debug("7");
     Value::ConstMemberIterator bob = playerData->value.FindMember("bomber");
     if(bob != data.MemberEnd() && bob->value.IsArray()){
         for(auto &i: bob->value.GetArray()){
@@ -88,6 +97,7 @@ bool Judger::readJson(const char* json, const long allowTime, set<string>& uids)
             }
         }
     }
+    log->debug("8");
     Value::ConstMemberIterator fgt = playerData->value.FindMember("fighter");
     if(fgt != data.MemberEnd() && fgt->value.IsArray()){
         for(auto &i: fgt->value.GetArray()){
@@ -188,8 +198,11 @@ void Judger::readCarrierJson(const Value& root, const shared_ptr<Carrier>& carri
 }
 
 bool Judger::checkTimestamp(const Document& document, const long& allowTime){
+    log->debug("1111");
     Value::ConstMemberIterator time = document.FindMember("time");
-    if(!(time == document.MemberEnd() && time->value.IsInt64())){
+    log->debug("11");
+    if(time == document.MemberEnd() || !time->value.IsInt64()){
+        log->debug("111");
         return false;
     }else{
         return allowTime <= time->value.GetInt64();
@@ -205,37 +218,29 @@ bool Judger::readStartData(){
             std::this_thread::sleep_for(milliseconds(1000));
             ++i;
             if(i > 10){
-                QMessageBox::warning(nullptr, "警告", "由于长时间未能开始游戏，游戏中止。");
                 log->warning("由于长时间未能开始游戏，游戏中止。");
                 return false;
             }
             continue;
         }
-        const char* json = jsons.front();
+        string json = jsons.front();
+        log->debug(json);
         log->debug("收到预先数据");
         jsons.pop();
         Document document;
-        document.Parse(json);
-        log->debug("收到预先数据1");
+        document.Parse(json.c_str());
         Value::ConstMemberIterator uid = document.FindMember("uid");
         if(uid == document.MemberEnd() || !uid->value.IsString()) continue;
-        log->debug("收到预先数据2");
         Value::ConstMemberIterator name = document.FindMember("name");
         if(name == document.MemberEnd() || !name->value.IsString()) continue;
-        log->debug("收到预先数据3");
         Value::ConstMemberIterator a = document.FindMember("color_a");
         if(a == document.MemberEnd() || !a->value.IsInt()) continue;
-        log->debug("收到预先数据4");
         Value::ConstMemberIterator r = document.FindMember("color_r");
         if(r == document.MemberEnd() || !r->value.IsInt()) continue;
-        log->debug("收到预先数据5");
         Value::ConstMemberIterator g = document.FindMember("color_g");
         if(g == document.MemberEnd() || !g->value.IsInt()) continue;
-        log->debug("收到预先数据6");
         Value::ConstMemberIterator b = document.FindMember("color_b");
         if(b == document.MemberEnd() || !b->value.IsInt()) continue;
-
-        log->debug("收到预先数据7");
         game->tmp_players[index++]->init(uid->value.GetString(), name->value.GetString(),
                                          Color(a->value.GetInt(), r->value.GetInt(), g->value.GetInt(), b->value.GetInt()),
                                          mapp->getBrithPoint());
@@ -244,7 +249,7 @@ bool Judger::readStartData(){
     return true;
 }
 void Judger::dataWrite(map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sights){
-    map<string, const char*> results;
+    map<string, string> results;
     for(auto &p: game->getPlayers()){
         StringBuffer strBuf;
         Writer<rapidjson::StringBuffer> writer(strBuf);
@@ -461,8 +466,9 @@ void Judger::dataWrite(map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> si
         writer.EndObject();
         results.insert(make_pair(p.second->getUID(), strBuf.GetString()));
     }
-    for(auto &p: results){
-        log->warning(p.first);
-        log->debug(p.second);
+    QString s = "";
+    for(auto &i : results){
+        s.append(i.first.c_str()).append("\n").append(i.second.c_str()).append("\n");
     }
+    emit Engine::getInstance()->getThread()->back(s);
 }

@@ -22,6 +22,7 @@ public:
 
 private slots:
     void on_pb_enter_clicked();
+    void output(QString r);
 
 private:
     Ui::UITest *ui;

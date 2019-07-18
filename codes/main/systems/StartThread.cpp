@@ -2,10 +2,13 @@
 
 #include "Engine.h"
 
-StartThread::StartThread(shared_ptr<Game> const game){
+StartThread::StartThread(){
+}
+
+void StartThread::init(shared_ptr<Game> const game){
     this->game = game;
 }
 
 void StartThread::run(){
-    game->run();
+    emit send(game->run());
 }

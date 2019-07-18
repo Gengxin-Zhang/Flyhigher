@@ -42,7 +42,7 @@ Engine::~Engine() {
 
 }
 
-void Engine::startEngine(const bool debugMode) {
+void Engine::startEngine(StartThread* thread, const bool debugMode) {
     if(hasStarted){
         throw invalid_argument("You have already started once!");
     }
@@ -50,6 +50,7 @@ void Engine::startEngine(const bool debugMode) {
     this->registerLogger(shared_ptr<Logger>(new Logger("./out.txt")));
     logger->information("成功启动！");
     logger->debug("debug模式：开启");
+    nowGameThread = thread;
 }
 
 void Engine::registerLogger(shared_ptr<Logger> const logger) {
@@ -73,16 +74,17 @@ void Engine::startGame(shared_ptr<GameConfiguration> const config){
     logger->debug("创建启动线程");
     nowGame = shared_ptr<Game>(new Game(config));
     logger->debug("启动线程开始执行");
-    nowGameThread = shared_ptr<StartThread>(new StartThread(nowGame));
+    nowGameThread->init(nowGame);
     nowGameThread->start();
     //进入显示程序
     hasNowGame = false;
 }
 
-shared_ptr<Game> Engine::getNowGame() const{
-    return nowGame;
+StartThread* Engine::getThread() const{
+    return nowGameThread;
 }
 
-void Engine::shutdown() const{
-    engine.reset();
+
+shared_ptr<Game> Engine::getNowGame() const{
+    return nowGame;
 }

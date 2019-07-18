@@ -27,7 +27,7 @@ class Engine {
          * 启动主进程
          * @param debugMode 是否启用debug模式
          */
-        void startEngine(const bool debugMode);
+        void startEngine(StartThread* thread, const bool debugMode);
             
         /**
          * 注册Logger
@@ -65,10 +65,7 @@ class Engine {
          */
         shared_ptr<Game> getNowGame() const;
 
-        /**
-         * 关闭引擎
-         */
-        void shutdown() const;
+        StartThread* getThread() const;
 
     private:
         /**
@@ -91,7 +88,7 @@ class Engine {
         bool hasStarted;
         bool debugMode;
         shared_ptr<Game> nowGame;
-        shared_ptr<StartThread> nowGameThread;
+        StartThread* nowGameThread;
         bool hasNowGame;
 };
 
