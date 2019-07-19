@@ -3,6 +3,7 @@
 #include "../main/systems/Engine.h"
 #include "readonlydelegate.h"
 #include <QMessageBox>
+#include <QMap>
 #define log Engine::getInstance()->getLogger()
 #define myroot config->getRoot()
 using std::to_string;
@@ -12,6 +13,8 @@ UIConfig::UIConfig(QWidget *parent) :
     ui(new Ui::UIConfig)
 {
     ui->setupUi(this);
+    std::map<int, shared_ptr<Engine>> a;
+    a.insert(make_pair(1, Engine::getInstance()));
 }
 
 void UIConfig::init(){

@@ -149,8 +149,6 @@ SOURCES += main.cpp
 
 #SOURCES += server/server/main.cpp
 
-HEADERS += server/server/crow_all.h
-
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
@@ -326,10 +324,6 @@ else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_prg_exe
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_program_options
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_program_options
 else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_program_options
-
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_python27
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_python27
-else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_python27
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_random
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_random
