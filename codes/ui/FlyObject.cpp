@@ -6,16 +6,20 @@
 //
 
 #include "FlyObject.h"
-
-
-
-FlyObject::FlyObject(QObject *parent) {
+#include <random>
+ 
+ 
+ 
+FlyObject::FlyObject(QGraphicsItem *parent):QObject(), QGraphicsItem() {
     this->x = 0;
     this->y = 0;
     this->nextX = 0;
     this->nextY = 0;
-    this->color = Color(0, 0, 160, 230);
+    this->width = 0;
+    this->height = 0;
+    this->color = Color(200, 0, 160, 230);
     this->speed = 0;
+    setFlags(QGraphicsItem::ItemIsMovable);
 }
 
 FlyObject::~FlyObject(){
@@ -41,13 +45,18 @@ void FlyObject::setSpeed(const int speed){
     this->speed = speed;
 }
 
-void FlyObject::setPos(const int x, const int y){
+void FlyObject::msetPos(const int x, const int y){
     this->x = x;
     this->y = y;
 }
 
+void FlyObject::setNextPos(const int x, const int y){
+    this->nextX = x;
+    this->nextY = y;
+}
+
 Color FlyObject::getColor() const{
-//    return this->color;
+    return this->color;
 }
 
 void FlyObject::setColor(const Color c){
@@ -75,6 +84,82 @@ void FlyObject::move(){
     this->y += speed_y;
     
     // 调整位置
-    if (!(distance_x<0 ^ this->x>this->nextX)) this->x = this->nextX;
-    if (!(distance_y<0 ^ this->y>this->nextY)) this->y = this->nextY;
+    if (!(distance_x<0 ^ this->x<this->nextX)) this->x = this->nextX;
+    if (!(distance_y<0 ^ this->y<this->nextY)) this->y = this->nextY;
+    if (this->nextX == this->x and this->nextY == this->y){
+        this->status = false;
+    }else{
+        this->status = true;
+    }
+}
+
+QRectF FlyObject::boundingRect() const { 
+    return QRectF(this->x-this->width, this->y-this->height, this->x+this->width, this->y+this->height);
+}
+
+void FlyObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) { 
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+    std::default_random_engine e;
+    std::uniform_real_distribution<double> u(0.2,0.8);
+    
+    if(this->name == "Bomber"){
+        QPolygonF polygon;
+        double temp = 1.73*width;
+        painter->setBrush(QBrush(color.toQColor()));
+        painter->setPen(QPen(Qt::black,4));
+        polygon << QPointF(0, -width) << QPointF(0-temp, width/2.0)
+                << QPointF(0-temp/2.0, width/2.0) << QPointF(0-temp/4.0, 0)
+                << QPointF(0,width/2.0) << QPointF(temp/4.0, 0) << QPointF(temp/2.0, width/2)
+                << QPointF(temp, width/2.0);
+        painter->drawPolygon(polygon);
+    }else if (this->name == "Fighter"){
+        QPolygonF polygon;
+        QRadialGradient Radial(0,0,120,0,15);// gradient(0-0.3*width, 0.8*width, 0-0.3*width, 1.5*width);
+        
+        Radial.setColorAt(0.0,QColor("#BF616A"));
+        Radial.setColorAt(u(e),QColor("#EBCB8B"));
+        painter->setPen(Qt::transparent);
+        painter->setBrush(Radial);
+        painter->drawEllipse(0-0.6*width, 0.4*width, 1.2*width, (u(e)*2)*width);
+        
+        painter->setBrush(QBrush(color.toQColor()));
+        painter->setPen(QPen(Qt::black,4));
+        double temp = 1.5*width;
+        polygon << QPointF(0,0-temp) << QPointF(0-0.5*width, 0) << QPointF(0-width, 0.5*width) << QPointF(width, 0.5*width) << QPointF(0.5*width, 0);
+        painter->drawPolygon(polygon);
+        painter->setPen(QPen(Qt::black, 8));
+        painter->drawLine(0-0.3*width, 0.6*width, 0-0.3*width, 0.8*width);
+        painter->drawLine(0.3*width, 0.6*width, 0.3*width, 0.8*width);
+        painter->setPen(QPen(QColor("#EBCB8B"), 1));
+        
+    }else if (this->name == "Carrier"){
+        
+    }else if (this->name == "Bullet"){
+        
+    }else if (this->name == "LagerStar"){
+        
+    }else if (this->name == "LittleStar"){
+        
+    }
+    
+}
+
+void FlyObject::setSize(double width, double height){
+    this->width = width;
+    this->height = height;
+}
+int FlyObject::getWidth(){
+    return this->width;
+}
+int FlyObject::getHeight(){
+    return this->height;
+}
+
+void FlyObject::setName(std::string name){
+    this->name = name;
+}
+
+std::string FlyObject::getName() const{
+    return this->name;
 }

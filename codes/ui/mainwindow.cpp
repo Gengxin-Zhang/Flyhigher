@@ -7,8 +7,8 @@ mainWindow::mainWindow(QWidget *parent) : QMainWindow(parent)
     this->showFullScreen();
     QGraphicsScene scene;
     space = new SpaceWindow(this);
-    this->map_width = 400;
-    this->map_height = 400;
+    this->map_width = 500;
+    this->map_height = 500;
     space->resize(this->map_width, this->map_height);
     space->move((this->width()-this->map_width)/2, (this->height()-this->map_height)/2);
     space->show();

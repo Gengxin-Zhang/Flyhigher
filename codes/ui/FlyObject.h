@@ -14,26 +14,41 @@
 #include <cmath>
 #include <QObject>
 #include <QRectF>
+#include <QPolygonF>
+#include <QPointF>
+#include <QGraphicsItem>
 #include <QGraphicsRectItem>
 #include <QGraphicsEllipseItem>
+#include <QPainter>
+#include <QColor>
+#include <QBrush>
+#include <QPen>
+#include <QRadialGradient>
 #include "../tools/Color.h"
 
-class FlyObject {
-//    Q_OBJECT
+class FlyObject : public QObject, public QGraphicsItem {
+    Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 //
-//    Q_PROPERTY(QRectF geometry READ geometry WRITE setGeometry) 
+//    Q_PROPERTY(QRectF geometry READ geometry WRITE setGeometry)
 
 public:
-    explicit FlyObject(QObject *parent = 0);
+    explicit FlyObject(QGraphicsItem *parent=nullptr);
     ~FlyObject();
 //    FlyObject(std::string, int, std::string);
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     int getX() const;
     int getY() const;
     void setX(const int);
     void setY(const int);
-    void setPos(const int, const int);
+    void msetPos(const int, const int);
     void setSpeed(const int);
-    int getSpeed() const;
+    void setSize(double, double);
+    int getWidth();
+    int getHeight();
+    void setName(const std::string);
+    std::string getName() const;
     void setNextPos(const int, const int);
     Color getColor() const;
     void setColor(const Color c);
@@ -42,7 +57,10 @@ public:
 private:
     int x, y;
     int nextX, nextY;
+    double width, height;
     int speed;
+    std::string name;
     Color color;
+    bool status;
 };
 #endif /* FlyObject_hpp */

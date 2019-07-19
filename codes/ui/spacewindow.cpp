@@ -3,6 +3,7 @@
 #include <QRect>
 #include <QPen>
 #include <QPointF>
+#include <iostream>
 #include <QPolygonF>
 #include <QApplication>
 using std::map;
@@ -26,8 +27,8 @@ SpaceWindow::SpaceWindow(QWidget *parent) :
     setRenderHint(QPainter::Antialiasing);
     QPixmap pix(this->width(), this->height());
     pix.load("/User/zhangone/bg.jpg");
-    QPixmap temp = pix.scaled(this->width(), this->height(), Qt::KeepAspectRatioByExpanding);
-    setBackgroundBrush(temp);
+//    QPixmap temp = pix.scaled(this->width(), this->height(), Qt::KeepAspectRatioByExpanding);
+//    setBackgroundBrush(temp);
 //    QPixmap pix(SCENEWIDTH, SCENEHEIGHT);
     
     //显示flyhigher动画
@@ -87,32 +88,45 @@ SpaceWindow::SpaceWindow(QWidget *parent) :
     
     m_scene->addItem(letter);
     lettersGroupMoving->start(QAbstractAnimation::DeleteWhenStopped);
-     QGraphicsPolygonItem *pItem = new QGraphicsPolygonItem();
+//    QGraphicsPolygonItem *pItem = new QGraphicsPolygonItem();
+////    shared_ptr<FlyObject> newFlyObject = shared_ptr<FlyObject>(new FlyObject());
+//    shared_ptr<FlyObject> newFlyObject = shared_ptr<FlyObject>(new FlyObject());
+//    newFlyObject->setName("Fighter");
+//    newFlyObject->setSize(20, 20);
+//    newFlyObject->setNextPos(40,40);
+//    newFlyObject->setPos(0, 0);
+//    // 绘制多边形
+//    QPolygonF polygon;
+//    double width = 10;
+//    double temp = 1.7*width;
+//    polygon << QPointF(0, -width) << QPointF(0-temp, width/2.0)
+//    << QPointF(0-temp/2.0, width/2.0) << QPointF(0-temp/4.0, 0)
+//    << QPointF(0,width/2.0) << QPointF(temp/4.0, 0) << QPointF(temp/2.0, width/2)
+//    << QPointF(temp, width/2.0);
+//    pItem->setPolygon(polygon);
 
-    // 绘制多边形
-    QPolygonF polygon;
-    polygon << QPointF(200.0, 120.0) << QPointF(230.0, 130.0)
-        << QPointF(260.0, 180.0) << QPointF(200.0, 200.0);
-    pItem->setPolygon(polygon);
+//    // 设置画笔、画刷
+//    QPen pen = pItem->pen();
+//    pen.setWidth(1);
+//    pen.setColor(Qt::black);
+//    pItem->setPen(pen);
+//    pItem->setBrush(QBrush(QColor(0, 160, 230)));
+    
 
-    // 设置画笔、画刷
-    QPen pen = pItem->pen();
-    pen.setWidth(2);
-    pen.setColor(Qt::black);
-    pItem->setPen(pen);
-    pItem->setBrush(QBrush(QColor(0, 160, 230)));
-
-    m_scene->addItem(pItem);
+//    m_scene->addItem(&*newFlyObject);
+//    last_tick_snapshot.insert(std::make_pair(1, newFlyObject));
     
     game_monitor = new QTimer;
-    connect(game_monitor, SIGNAL(timeout()), this, SLOT(update_map()));
+    this->connect(game_monitor, SIGNAL(timeout()), this, SLOT(updateGraph()));
+    
+    startGame();
 }
 
 SpaceWindow::~SpaceWindow()
 {
 }
 
-void SpaceWindow::update_map(){
+void SpaceWindow::updateGraph (){
     m_scene->advance();
     QParallelAnimationGroup *flyanimation = new QParallelAnimationGroup(this);
 
@@ -124,7 +138,8 @@ void SpaceWindow::update_map(){
             map<int, shared_ptr<Entity>> now_tick_snapshot = status_copy_queue.front();
             status_copy_queue.pop();
             map<int, shared_ptr<FlyObject>> new_items;
-            std::for_each(now_tick_snapshot.begin(), now_tick_snapshot.end(), [=](std::map<int, shared_ptr<Entity>>::reference item){
+            for(auto item : now_tick_snapshot){
+            //std::for_each(now_tick_snapshot.begin(), now_tick_snapshot.end(), [=](std::map<int, shared_ptr<Entity>>::reference item){
                 std::string entity_name = item.second->getClassName();
                 int entity_id = item.first;
                 if (last_tick_snapshot.find(entity_id)!=last_tick_snapshot.end()){
@@ -135,26 +150,37 @@ void SpaceWindow::update_map(){
 
                     newFlyObject->setNextPos(item.second->getX(), item.second->getY());
                     newFlyObject->setPos(item.second->getX(), item.second->getY());
-                    
+                    newFlyObject->setName(entity_name);
+                    newFlyObject->setSize(item.second->getRadius(), item.second->getRadius());
                     newFlyObject->setColor(Color(0, 0, 160, 230));
                     new_items.insert(std::make_pair(entity_id, newFlyObject));
                 }
-            });
+            }
             last_tick_snapshot.swap(new_items);
 
             tick = 0;
         }
     }
-    std::for_each(last_tick_snapshot.begin(), last_tick_snapshot.end(), [=](std::map<int, shared_ptr<FlyObject>>::reference item){
+    for(auto item: last_tick_snapshot){
+//    std::for_each(last_tick_snapshot.begin(), last_tick_snapshot.end(), [=](std::map<int, shared_ptr<FlyObject>>::reference item){
         int x = item.second->getX();
         int y = item.second->getY();
         item.second->move();
-
-
-//        setAnimation(x, y, item.second.getX(), item.second.getY(), &graph_items[item.first], flyanimation)  
-              
-    });
+        item.second->update();
+        item.second->setNextPos(item.second->getX(), item.second->getHeight()+10);
+        if(item.second->getY()>500){
+            item.second->setNextPos(item.second->getX(), 0);
+        }
+//        std::cout << item.second->getX() <<" " << item.second->getY() << std::endl;
+//        item.second->setPos(item.second->getX(), item.second->getY());
+//        item.second->scenePos();
+//        std::cout << x << y << std::endl;
+//        QPropertyAnimation *moveAnim = new QPropertyAnimation(item.second "pos", flyanimation);
+//        moveAnim->
+//        setAnimation(x, y, item.second->getX(), item.second->getY(), item.second, flyanimation);
+    }
     flyanimation->start();
+    m_scene->update();
 }
 
 void SpaceWindow::startGame(){
@@ -163,3 +189,8 @@ void SpaceWindow::startGame(){
     game_monitor->start(20);
     tick = 0;
 }
+
+void SpaceWindow::addData(std::map<int, shared_ptr<Entity> >) { 
+    
+}
+
