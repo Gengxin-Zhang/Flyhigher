@@ -13,7 +13,7 @@
 #include <QGraphicsPolygonItem>
 
 #include "../main/games/entitys/Entity.h"
-#include "FlyObject.hpp"
+#include "FlyObject.h"
 #include "../tools/Color.h"
 
 using std::shared_ptr;

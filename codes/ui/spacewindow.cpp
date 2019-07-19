@@ -5,7 +5,7 @@
 #include <QPointF>
 #include <QPolygonF>
 #include <QApplication>
-#include <map>
+using std::map;
 
 
 SpaceWindow::SpaceWindow(QWidget *parent) :
@@ -121,17 +121,15 @@ void SpaceWindow::update_map(){
         // 每5个UI tick 更新一次目标位置
         if (!status_copy_queue.empty()){
 
-            std::map<int, shared_ptr<Entity>> now_tick_snapshot = status_copy_queue.front();
+            map<int, shared_ptr<Entity>> now_tick_snapshot = status_copy_queue.front();
             status_copy_queue.pop();
-            std::map<int, shared_ptr<FlyObject>> new_items;
+            map<int, shared_ptr<FlyObject>> new_items;
             std::for_each(now_tick_snapshot.begin(), now_tick_snapshot.end(), [=](std::map<int, shared_ptr<Entity>>::reference item){
-                const std::string entity_name = item.second->getClassName();
+                std::string entity_name = item.second->getClassName();
                 int entity_id = item.first;
                 if (last_tick_snapshot.find(entity_id)!=last_tick_snapshot.end()){
                     last_tick_snapshot[entity_id]->setNextPos(item.second->getX(), item.second->getY());
-                    new_items.insert(make_pair(1, shared_ptr<FlyObject>(new FlyObject())));
-//                    new_items.insert_or_assign(entity_id, items[entity_id]);
-//                    new_items.insert(std::make_pair(entity_id ,items[entity_id]));
+                    new_items.insert(make_pair(1, new_items[1]));
                 }else{
                     shared_ptr<FlyObject> newFlyObject = shared_ptr<FlyObject>(new FlyObject());
 

@@ -12,7 +12,7 @@ class mainWindow : public QMainWindow
     Q_OBJECT
 public:
     explicit mainWindow(QWidget *parent = nullptr);
-    void setMapSize(int, int);
+    void setMapSize(const int, const int);
     void setMap();
 
 

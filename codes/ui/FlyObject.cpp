@@ -5,7 +5,7 @@
 //  Created by zhangone on 2019/7/19.
 //
 
-#include "FlyObject.hpp"
+#include "FlyObject.h"
 
 
 
@@ -21,40 +21,40 @@ FlyObject::FlyObject(QObject *parent) {
 FlyObject::~FlyObject(){
 }
 
-int FlyObject::getX() { 
+int FlyObject::getX() const{
     return this->x;
 }
 
-int FlyObject::getY() { 
+int FlyObject::getY() const{
     return this->y;
 }
 
-void FlyObject::setY(int y) {
+void FlyObject::setY(const int y) {
     this->y = y;
 }
 
-void FlyObject::setX(int x){
+void FlyObject::setX(const int x){
     this->x = x;
 }
 
-void FlyObject::setSpeed(int speed){
+void FlyObject::setSpeed(const int speed){
     this->speed = speed;
 }
 
-void FlyObject::setPos(int x, int y){
+void FlyObject::setPos(const int x, const int y){
     this->x = x;
     this->y = y;
 }
 
-Color FlyObject::getColor(){
+Color FlyObject::getColor() const{
 //    return this->color;
 }
 
-void FlyObject::setColor(Color c){
+void FlyObject::setColor(const Color c){
     this->color = c;
 }
 
-int FlyObject::getDistance(int distance_x, int distance_y){
+int FlyObject::getDistance(int distance_x, int distance_y) const{
     // return 1;
    return (int)sqrt(distance_x*distance_x + distance_y*distance_y);
 }

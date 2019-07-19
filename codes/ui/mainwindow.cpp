@@ -14,7 +14,7 @@ mainWindow::mainWindow(QWidget *parent) : QMainWindow(parent)
     space->show();
 }
 
-void mainWindow::setMapSize(int x, int y){
+void mainWindow::setMapSize(const int x, const int y){
     this->map_width = x;
     this->map_height = y;
     space->resize(this->map_width, this->map_height);

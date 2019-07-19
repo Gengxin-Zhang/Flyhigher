@@ -34,7 +34,9 @@ HEADERS += tools/Vector2D.h \
             tools/Color.h \
             tools/Point2D.h \
             tools/Logger.h \
-            tools/DataReader.h
+            tools/DataReader.h \
+    ui/FlyObject.h \
+    ui/spacewindow.h
 
 
 SOURCES += tools/Vector2D.cpp \
@@ -43,16 +45,20 @@ SOURCES += tools/Vector2D.cpp \
             tools/Color.cpp \
             tools/Point2D.cpp \
             tools/Logger.cpp \
-            tools/DataReader.cpp
+            tools/DataReader.cpp \
+    ui/FlyObject.cpp \
+    ui/spacewindow.cpp
 
 
 HEADERS += ui/readonlydelegate.h \
            ui/uiconfig.h \
-             ui/uitest.h
+             ui/uitest.h \
+            ui/mainwindow.h
 
 SOURCES += ui/readonlydelegate.cpp \
             ui/uiconfig.cpp \
-            ui/uitest.cpp
+            ui/uitest.cpp \
+            ui/mainwindow.cpp
 
 
 HEADERS += main/configs/Configuration.h \
