@@ -167,12 +167,12 @@ void SpaceWindow::updateGraph (){
         int y = item.second->getY();
         item.second->move();
         item.second->update();
-        item.second->setNextPos(item.second->getX(), item.second->getHeight()+10);
-        if(item.second->getY()>500){
-            item.second->setNextPos(item.second->getX(), 0);
-        }
+//        item.second->setNextPos(item.second->getX(), item.second->getHeight()+10);
+//        if(item.second->getY()>500){
+//            item.second->setNextPos(item.second->getX(), 0);
+//        }
 //        std::cout << item.second->getX() <<" " << item.second->getY() << std::endl;
-//        item.second->setPos(item.second->getX(), item.second->getY());
+        item.second->setPos(item.second->getX(), item.second->getY());
 //        item.second->scenePos();
 //        std::cout << x << y << std::endl;
 //        QPropertyAnimation *moveAnim = new QPropertyAnimation(item.second "pos", flyanimation);
