@@ -9,6 +9,7 @@
 class DataReader{
   public:
     DataReader();
+    ~DataReader();
     DataReader(std::string host, int port, std::string exchange, std::string queue);
     std::queue<std::string> msg_pool;
     static std::shared_ptr<DataReader> getInstance();
