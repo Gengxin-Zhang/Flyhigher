@@ -226,6 +226,7 @@ bool Judger::readStartData(){
         string json = jsons.front();
         log->debug(json);
         log->debug("收到预先数据");
+        //TODO: 不合法数据会触发异常，catch掉
         jsons.pop();
         Document document;
         document.Parse(json.c_str());
@@ -249,6 +250,7 @@ bool Judger::readStartData(){
     return true;
 }
 void Judger::dataWrite(map<shared_ptr<LivingEntity>, set<shared_ptr<Entity>>> sights){
+    //TODO: 不合法数据会触发异常，catch掉
     map<string, string> results;
     for(auto &p: game->getPlayers()){
         StringBuffer strBuf;

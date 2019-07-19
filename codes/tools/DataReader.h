@@ -4,19 +4,19 @@
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
 #include "rapidjson/stringbuffer.h"
+#include <QThread>
 
 
-class DataReader{
+class DataReader: public QThread{
+    Q_OBJECT
   public:
     DataReader();
     ~DataReader();
-    DataReader(std::string host, int port, std::string exchange, std::string queue);
-    std::queue<std::string> msg_pool;
-    static std::shared_ptr<DataReader> getInstance();
+    std::queue<std::string> getMsgPool();
   private:
-    static std::shared_ptr<DataReader> dataReader;
-    static bool inited;
     AmqpClient::Channel::ptr_t channel;
     std::string consumer_tag;
-    void read_data_from_rmq();
+    std::queue<std::string> msg_pool;
+  protected:
+    virtual void run();
 };

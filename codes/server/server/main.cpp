@@ -35,23 +35,23 @@ using namespace rapidjson;
 
 
 // 配置信息
-static std::string CONFIG_NAME = "config.yaml"; // 配置文件 .yaml
+static std::string CONFIG_NAME = "server_config.yml"; // 配置文件 .yml
 
-int WS_PORT = 9090; // Websocket端口
-std::string RMQ_HOST = "127.0.0.1"; // RabbitMQ 服务器地址
-int RMQ_PORT = 5672; // RabbitMQ 端口
-std::string RMQ_KEY = "FLYHIGHER"; // RabbitMQ key
-std::string RMQ_EXCHANGENAME = "FLYHIGHER";
-std::string RMQ_USER = "FLYHIGHER"; //RabbitMQ服务端登录用户名
-std::string RMQ_PWD = ""; //RabbitMQ服务端登录密码
+static int WS_PORT = 9090; // Websocket端口
+static std::string RMQ_HOST = "127.0.0.1"; // RabbitMQ 服务器地址
+static int RMQ_PORT = 5672; // RabbitMQ 端口
+static std::string RMQ_KEY = "FLYHIGHER"; // RabbitMQ key
+static std::string RMQ_EXCHANGENAME = "FLYHIGHER";
+static std::string RMQ_USER = "FLYHIGHER"; //RabbitMQ服务端登录用户名
+static std::string RMQ_PWD = ""; //RabbitMQ服务端登录密码
 
 
-bool DEBUG_MODE = false; // 调试模式开关
-int PLAYER_COUNT = 0; // 配置文件中的玩家数
-int64_t MIN_INTERVAL; // 两条消息的最小时间间隔
+static bool DEBUG_MODE = false; // 调试模式开关
+static int PLAYER_COUNT = 0; // 配置文件中的玩家数
+static int64_t MIN_INTERVAL; // 两条消息的最小时间间隔
 //int MAX_PLAYER; // 最大用户数 没有必要
 
-AmqpClient::Channel::ptr_t channel;
+static AmqpClient::Channel::ptr_t channel;
 
 struct user{
     // 存储用户数据
@@ -63,8 +63,8 @@ struct user{
     user(){};
 };
 
-std::vector<user> players; // 配置文件中的用户信息
-std::map<std::string, user> users; // 维护用户 appid->user 映射表 ， 为了连接安全， 后期可改为secretkey加密验证，并为每条连接分配uuid的模式
+static std::vector<user> players; // 配置文件中的用户信息
+static std::map<std::string, user> users; // 维护用户 appid->user 映射表 ， 为了连接安全， 后期可改为secretkey加密验证，并为每条连接分配uuid的模式
 
 const user &verify_user(std::string appid){
     if(users.find(appid) != users.end()){
@@ -84,7 +84,7 @@ void operator >> (const YAML::Node& node, T& i) {
 //    s = node.as<int>();
 //}
 
-uint64_t now(){
+extern "C" uint64_t now(){
     // 获取 uint64_t 格式的当前时间戳
     std::chrono::milliseconds ms =
                  std::chrono::duration_cast< std::chrono::milliseconds >(
@@ -108,7 +108,7 @@ std::string document_to_string(Document &document){
     return buffer.GetString();
 } 
 
-void init_server(){
+extern "C" void init_server(){
     // 初始化服务器，读取配置信息，建立RabbitMQ连接
     YAML::Node server = YAML::LoadFile(CONFIG_NAME);
     server["DEBUG_MODE"] >> DEBUG_MODE;
@@ -126,18 +126,18 @@ void init_server(){
     channel->BindQueue(queue_name, RMQ_EXCHANGENAME, "");
 }
 
-void save_data(std::string){
+extern "C" void save_data(std::string){
     // 保存数据到缓存文件
 }
 
-void send_message_to_rmq(std::string key, std::string data){
+extern "C" void send_message_to_rmq(std::string key, std::string data){
     // 与AMQP交互， 推送消息到RabbitMQ
     channel->BasicPublish(RMQ_EXCHANGENAME, key,
                           AmqpClient::BasicMessage::Create(data));
 }
 
 
-void handel_auth(server *s, websocketpp::connection_hdl *hdl, std::string appid, const Document& data, std::string raw_data){
+extern "C" void handel_auth(server *s, websocketpp::connection_hdl *hdl, std::string appid, const Document& data, std::string raw_data){
     Document result;
     result.SetObject();
     Document::AllocatorType& allocator = result.GetAllocator();
@@ -180,7 +180,7 @@ void handel_auth(server *s, websocketpp::connection_hdl *hdl, std::string appid,
     }
 }
 
-void handel_action(server *s, websocketpp::connection_hdl *hdl, user& u, std::string raw_data){
+extern "C" void handel_action(server *s, websocketpp::connection_hdl *hdl, user& u, std::string raw_data){
     Document result;
     result.SetObject();
     Document::AllocatorType& allocator = result.GetAllocator();
@@ -208,7 +208,7 @@ void handel_action(server *s, websocketpp::connection_hdl *hdl, user& u, std::st
     return;
 }
 
-void on_open( server *s, websocketpp::connection_hdl hdl ) {
+extern "C" void on_open( server *s, websocketpp::connection_hdl hdl ) {
     // 根据连接句柄获得连接对象
     server::connection_ptr con = s->get_con_from_hdl( hdl );
     // 获得URL路径
@@ -217,7 +217,7 @@ void on_open( server *s, websocketpp::connection_hdl hdl ) {
     return;
 }
 
-void on_message( server *s, websocketpp::connection_hdl hdl, message_ptr msg ) {
+extern "C" void on_message( server *s, websocketpp::connection_hdl hdl, message_ptr msg ) {
     // websocket 消息响应函数
     std::string raw_data = msg->get_payload();
     // std::cout << &hdl << std::endl;
@@ -289,45 +289,45 @@ void on_message( server *s, websocketpp::connection_hdl hdl, message_ptr msg ) {
     save_data(raw_data);
 }
 
-int main() {
-    server echo_server;
+//int main() {
+//    server echo_server;
     
-    // 调整日志策略, none关闭日志
-    echo_server.set_access_channels( websocketpp::log::alevel::none );
-    echo_server.clear_access_channels( websocketpp::log::alevel::none );
+//    // 调整日志策略, none关闭日志
+//    echo_server.set_access_channels( websocketpp::log::alevel::none );
+//    echo_server.clear_access_channels( websocketpp::log::alevel::none );
     
-    // 读取数据，初始化服务器
-    init_server();
+//    // 读取数据，初始化服务器
+//    init_server();
     
-    while (true){
-        try {
-            std::cout << "[*] Server Starting on 0.0.0.0:" << WS_PORT << std::endl;
-            echo_server.init_asio();
-//            send_message_to_rmq("test", "test");
+//    while (true){
+//        try {
+//            std::cout << "[*] Server Starting on 0.0.0.0:" << WS_PORT << std::endl;
+//            echo_server.init_asio();
+////            send_message_to_rmq("test", "test");
             
-//            RabbitMQ测试
-//            for (int i=0;i<100;i++)
-//                send_message_to_rmq("test", "test");
+////            RabbitMQ测试
+////            for (int i=0;i<100;i++)
+////                send_message_to_rmq("test", "test");
         
-            echo_server.set_open_handler( bind( &on_open, &echo_server, ::_1 ));
-            echo_server.set_message_handler( bind( &on_message, &echo_server, ::_1, ::_2 ));
-            // 在所有网络接口的 PORT 上监听
-            echo_server.listen( WS_PORT );
+//            echo_server.set_open_handler( bind( &on_open, &echo_server, ::_1 ));
+//            echo_server.set_message_handler( bind( &on_message, &echo_server, ::_1, ::_2 ));
+//            // 在所有网络接口的 PORT 上监听
+//            echo_server.listen( WS_PORT );
         
-            // 启动服务器端Accept事件循环
-            echo_server.start_accept();
-            std::cout << "[+] Server Start successed!" << std::endl;
-            // 启动事件循环（ASIO的io_service），当前线程阻塞
-            echo_server.run();
+//            // 启动服务器端Accept事件循环
+//            echo_server.start_accept();
+//            std::cout << "[+] Server Start successed!" << std::endl;
+//            // 启动事件循环（ASIO的io_service），当前线程阻塞
+//            echo_server.run();
         
-        } catch ( websocketpp::exception const &e ) {
-            if (DEBUG_MODE)
-                std::cout << "[x] Server Error" << e.what() << std::endl;
-            else
-                std::cout << "[x] Server Error" << std::endl;
-        } catch ( ... ) {
-            std::cout << "[x] Other Exception" << std::endl;
-        }
-        std::cout << "[*] Server Restarting" << std::endl;
-    }
-}
+//        } catch ( websocketpp::exception const &e ) {
+//            if (DEBUG_MODE)
+//                std::cout << "[x] Server Error" << e.what() << std::endl;
+//            else
+//                std::cout << "[x] Server Error" << std::endl;
+//        } catch ( ... ) {
+//            std::cout << "[x] Other Exception" << std::endl;
+//        }
+//        std::cout << "[*] Server Restarting" << std::endl;
+//    }
+//}

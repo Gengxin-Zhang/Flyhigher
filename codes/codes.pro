@@ -147,7 +147,9 @@ SOURCES += main/Main.cpp
 SOURCES += main.cpp
 
 
-SOURCES += server/server/main.cpp
+#SOURCES += server/server/main.cpp
+
+HEADERS += server/server/crow_all.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -163,7 +165,6 @@ DEPENDPATH += $$PWD/../OpenSource/yaml-cpp/build
 
 INCLUDEPATH += $$PWD/../OpenSource/rapidjson/include
 
-INCLUDEPATH += $$PWD/../OpenSource/SimpleAmqpClient/src
 
 FORMS += \
     ui/uiconfig.ui \
@@ -175,8 +176,6 @@ else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_system
 
 INCLUDEPATH += $$PWD/../OpenSource/boost_1_69_0
 DEPENDPATH += $$PWD/../OpenSource/boost_1_69_0
-
-INCLUDEPATH += $$PWD/../OpenSource/websocketpp
 
 win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_thread
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_thread
@@ -226,3 +225,116 @@ win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0
 else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_locale
 else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_locale
 
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/SimpleAmqpClient/build/release/ -lSimpleAmqpClient.2.4.0
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/SimpleAmqpClient/build/debug/ -lSimpleAmqpClient.2.4.0
+else:unix: LIBS += -L$$PWD/../OpenSource/SimpleAmqpClient/build/ -lSimpleAmqpClient.2.4.0
+
+INCLUDEPATH += $$PWD/../OpenSource/SimpleAmqpClient/src
+DEPENDPATH += $$PWD/../OpenSource/SimpleAmqpClient/src
+
+INCLUDEPATH += $$PWD/../OpenSource/websocketpp
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_log_setup
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_log_setup
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_log_setup
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_log
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_log
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_log
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_wserialization
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_wserialization
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_wserialization
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_wave
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_wave
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_wave
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_timer
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_timer
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_timer
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_unit_test_framework
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_unit_test_framework
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_unit_test_framework
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_type_erasure
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_type_erasure
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_type_erasure
+
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_stacktrace_noop
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_stacktrace_noop
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_stacktrace_noop
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_stacktrace_basic
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_stacktrace_basic
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_stacktrace_basic
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_stacktrace_addr2line
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_stacktrace_addr2line
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_stacktrace_addr2line
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_serialization
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_serialization
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_serialization
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_math_c99
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_math_c99
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_math_c99
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_math_c99f
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_math_c99f
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_math_c99f
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_math_c99l
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_math_c99l
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_math_c99l
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_math_tr1
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_math_tr1
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_math_tr1
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_math_tr1f
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_math_tr1f
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_math_tr1f
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_math_tr1l
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_math_tr1l
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_math_tr1l
+
+
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_numpy27
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_numpy27
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_numpy27
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_prg_exec_monitor
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_prg_exec_monitor
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_prg_exec_monitor
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_program_options
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_program_options
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_program_options
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_python27
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_python27
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_python27
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_random
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_random
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_random
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/release/ -lboost_regex
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/debug/ -lboost_regex
+else:unix: LIBS += -L$$PWD/../OpenSource/boost_1_69_0/stage/lib/ -lboost_regex
