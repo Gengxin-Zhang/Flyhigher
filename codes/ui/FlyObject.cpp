@@ -7,7 +7,8 @@
 
 #include "FlyObject.h"
 #include <random>
- 
+#include <cmath>
+#include <iostream>
  
  
 FlyObject::FlyObject(QGraphicsItem *parent):QObject(), QGraphicsItem() {
@@ -19,6 +20,7 @@ FlyObject::FlyObject(QGraphicsItem *parent):QObject(), QGraphicsItem() {
     this->height = 0;
     this->color = Color(200, 0, 160, 230);
     this->speed = 0;
+    this->angel = 0;
     setFlags(QGraphicsItem::ItemIsMovable);
 }
 
@@ -31,6 +33,14 @@ int FlyObject::getX() const{
 
 int FlyObject::getY() const{
     return this->y;
+}
+
+int FlyObject::getNextX() const {
+    return this->nextX;
+}
+
+int FlyObject::getNextY() const {
+    return this->nextY;
 }
 
 void FlyObject::setY(const int y) {
@@ -93,6 +103,10 @@ void FlyObject::move(){
     }
 }
 
+void FlyObject::setAngel(int angel){
+    this->angel = angel;
+}
+
 QRectF FlyObject::boundingRect() const { 
     return QRectF(this->x-this->width, this->y-this->height, this->x+this->width, this->y+this->height);
 }
@@ -102,7 +116,8 @@ void FlyObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     Q_UNUSED(widget)
     std::default_random_engine e;
     std::uniform_real_distribution<double> u(0.2,0.8);
-    
+    painter->translate(0, 0);
+    painter->rotate(angel);
     if(this->name == "Bomber"){
         QPolygonF polygon;
         double temp = 1.73*width;
@@ -134,6 +149,10 @@ void FlyObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         painter->setPen(QPen(QColor("#EBCB8B"), 1));
         
     }else if (this->name == "Carrier"){
+        QPolygonF polygon;
+        double temp = 1.73*width;
+        painter->setPen(QPen(Qt::black,4));
+        polygon << QPointF(0,0-temp) << QPointF(0-0.5*width, 0) << QPointF(0-width, 0.5*width) << QPointF(width, 0.5*width) << QPointF(0.5*width, 0);
         
     }else if (this->name == "Bullet"){
         
@@ -143,6 +162,9 @@ void FlyObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         
     }
     
+//    painter->restore();
+    painter->resetTransform();
+//    std::cout << angel << std::endl;
 }
 
 void FlyObject::setSize(double width, double height){
@@ -162,4 +184,9 @@ void FlyObject::setName(std::string name){
 
 std::string FlyObject::getName() const{
     return this->name;
+}
+
+void FlyObject::setAngel(){
+    
+    this->angel = 90 - atan2(getNextX()-getX(), getNextY()-getY())*180/3.1415926535;
 }

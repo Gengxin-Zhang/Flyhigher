@@ -88,38 +88,35 @@ SpaceWindow::SpaceWindow(QWidget *parent) :
     
     m_scene->addItem(letter);
     lettersGroupMoving->start(QAbstractAnimation::DeleteWhenStopped);
-//    QGraphicsPolygonItem *pItem = new QGraphicsPolygonItem();
-////    shared_ptr<FlyObject> newFlyObject = shared_ptr<FlyObject>(new FlyObject());
+    QGraphicsPolygonItem *pItem = new QGraphicsPolygonItem();
 //    shared_ptr<FlyObject> newFlyObject = shared_ptr<FlyObject>(new FlyObject());
-//    newFlyObject->setName("Fighter");
-//    newFlyObject->setSize(20, 20);
-//    newFlyObject->setNextPos(40,40);
-//    newFlyObject->setPos(0, 0);
-//    // 绘制多边形
-//    QPolygonF polygon;
-//    double width = 10;
-//    double temp = 1.7*width;
-//    polygon << QPointF(0, -width) << QPointF(0-temp, width/2.0)
-//    << QPointF(0-temp/2.0, width/2.0) << QPointF(0-temp/4.0, 0)
-//    << QPointF(0,width/2.0) << QPointF(temp/4.0, 0) << QPointF(temp/2.0, width/2)
-//    << QPointF(temp, width/2.0);
-//    pItem->setPolygon(polygon);
-
-//    // 设置画笔、画刷
-//    QPen pen = pItem->pen();
-//    pen.setWidth(1);
-//    pen.setColor(Qt::black);
-//    pItem->setPen(pen);
-//    pItem->setBrush(QBrush(QColor(0, 160, 230)));
     
-
-//    m_scene->addItem(&*newFlyObject);
-//    last_tick_snapshot.insert(std::make_pair(1, newFlyObject));
+    
+    
+    shared_ptr<FlyObject> newFlyObject = shared_ptr<FlyObject>(new FlyObject());
+    newFlyObject->setName("Bomber");
+    newFlyObject->setSize(20, 20);
+    newFlyObject->setNextPos(80,40);
+    newFlyObject->setPos(40, 40);
+    newFlyObject->setColor(Color(100,0,160,230));
+    newFlyObject->setAngel();
+    m_scene->addItem(newFlyObject.get());
+    last_tick_snapshot.insert(std::make_pair(1, newFlyObject));
+    shared_ptr<FlyObject> newFlyObject1 = shared_ptr<FlyObject>(new FlyObject());
+    newFlyObject1->setName("Fighter");
+    newFlyObject1->setSize(20, 20);
+    newFlyObject1->setNextPos(80,80);
+    newFlyObject1->setPos(30, 20);
+    newFlyObject1->setColor(Color(100,0,160,230));
+    newFlyObject->setAngel();
+    m_scene->addItem(newFlyObject1.get());
+    last_tick_snapshot.insert(std::make_pair(3, newFlyObject1));
+    
     
     game_monitor = new QTimer;
     this->connect(game_monitor, SIGNAL(timeout()), this, SLOT(updateGraph()));
     
-//    startGame();
+    startGame();
 }
 
 SpaceWindow::~SpaceWindow()
@@ -144,7 +141,8 @@ void SpaceWindow::updateGraph (){
                 int entity_id = item.first;
                 if (last_tick_snapshot.find(entity_id)!=last_tick_snapshot.end()){
                     last_tick_snapshot[entity_id]->setNextPos(item.second->getX(), item.second->getY());
-                    new_items.insert(make_pair(1, new_items[1]));
+                    last_tick_snapshot[entity_id]->setAngel();
+                    new_items.insert(make_pair(entity_id, new_items[entity_id]));
                 }else{
                     shared_ptr<FlyObject> newFlyObject = shared_ptr<FlyObject>(new FlyObject());
 
@@ -153,32 +151,33 @@ void SpaceWindow::updateGraph (){
                     newFlyObject->setName(entity_name);
                     newFlyObject->setSize(item.second->getRadius(), item.second->getRadius());
                     newFlyObject->setColor(Color(0, 0, 160, 230));
+                    newFlyObject->setAngel();
+                    m_scene->addItem(newFlyObject.get());
                     new_items.insert(std::make_pair(entity_id, newFlyObject));
                 }
             }
+            for(auto item : last_tick_snapshot){
+                int entity_id = item.first;
+                if (new_items.find(entity_id) == new_items.end()){
+                    m_scene->removeItem(last_tick_snapshot[entity_id].get());
+                }
+            }
             last_tick_snapshot.swap(new_items);
-
-            tick = 0;
         }
+        tick = 0;
     }
     for(auto item: last_tick_snapshot){
 //    std::for_each(last_tick_snapshot.begin(), last_tick_snapshot.end(), [=](std::map<int, shared_ptr<FlyObject>>::reference item){
         int x = item.second->getX();
         int y = item.second->getY();
         item.second->move();
-        item.second->update();
-//        item.second->setNextPos(item.second->getX(), item.second->getHeight()+10);
-//        if(item.second->getY()>500){
-//            item.second->setNextPos(item.second->getX(), 0);
-//        }
 //        std::cout << item.second->getX() <<" " << item.second->getY() << std::endl;
-//        item.second->setPos(item.second->getX(), item.second->getY());
+        item.second->setPos(item.second->getX(), item.second->getY());
         
-//        item.second->scenePos();
-//        std::cout << x << y << std::endl;
-        QPropertyAnimation *moveAnim = new QPropertyAnimation(item.second.get() ,"pos", flyanimation);
-        moveAnim->setEndValue(QPointF(item.second->getX(), item.second->getY()));
-        
+        item.second->update();
+//        QPropertyAnimation *moveAnim = new QPropertyAnimation(item.second.get() ,"pos", flyanimation);
+//        moveAnim->setEndValue(QPointF(item.second->getX(), item.second->getY()));
+//        moveAnim->setDuration(200);
 //        moveAnim->
 //        setAnimation(x, y, item.second->getX(), item.second->getY(), item.second, flyanimation);
     }

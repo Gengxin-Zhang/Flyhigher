@@ -40,6 +40,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     int getX() const;
     int getY() const;
+    int getNextX() const;
+    int getNextY() const;
     void setX(const int);
     void setY(const int);
     void msetPos(const int, const int);
@@ -54,6 +56,8 @@ public:
     void setColor(const Color c);
     void move();
     int getDistance(int distance_x, int distance_y) const;
+    void setAngel(int angel);
+    void setAngel();
 private:
     int x, y;
     int nextX, nextY;
@@ -62,5 +66,6 @@ private:
     std::string name;
     Color color;
     bool status;
+    int angel;
 };
 #endif /* FlyObject_hpp */
