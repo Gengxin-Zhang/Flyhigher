@@ -150,16 +150,46 @@ void FlyObject::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
         
     }else if (this->name == "Carrier"){
         QPolygonF polygon;
-        double temp = 1.73*width;
+        QRadialGradient Radial(0,0,120,0,15);// gradient(0-0.3*width, 0.8*width, 0-0.3*width, 1.5*width);
+        
+        Radial.setColorAt(0.0,QColor("#81A1C1"));
+        Radial.setColorAt(u(e),QColor("#88C0D0"));
+        painter->setPen(Qt::transparent);
+        painter->setBrush(Radial);
+        painter->drawEllipse(0-0.6*width, 0.4*width, 1.2*width, (u(e)*2)*width);
+        
+        painter->setBrush(QBrush(color.toQColor()));
         painter->setPen(QPen(Qt::black,4));
-        polygon << QPointF(0,0-temp) << QPointF(0-0.5*width, 0) << QPointF(0-width, 0.5*width) << QPointF(width, 0.5*width) << QPointF(0.5*width, 0);
+        double temp = 2*width;
+        polygon << QPointF(0,0-temp) << QPointF(0-0.5*width, 0) << QPointF(0-width, 0.5*width) << QPointF(width, 0.9*width) << QPointF(0.9*width, 0);
+        painter->drawPolygon(polygon);
+        painter->setPen(QPen(Qt::black, 8));
+        painter->drawLine(0-0.3*width, 0.6*width, 0-0.3*width, 0.8*width);
+        painter->drawLine(0.3*width, 0.6*width, 0.3*width, 0.8*width);
+        painter->setPen(QPen(QColor("#EBCB8B"), 1));
         
     }else if (this->name == "Bullet"){
-        
+        painter->setPen(QPen(color.toColor(), 4));
+        painter->drawLine(0, 0,10,10);
     }else if (this->name == "LagerStar"){
+        QRadialGradient Radial(0,0,120,0,0);// gradient(0-0.3*width, 0.8*width, 0-0.3*width, 1.5*width);
+        
+        Radial.setColorAt(0.0,QColor("#B48EAD"));
+        Radial.setColorAt(u(e),QColor("#A3BE8C"));
+        radial.setColorAt(0.9, QColor("#EBCB8B"));
+        painter->setPen(Qt::transparent);
+        painter->setBrush(Radial);
+        painter->drawEllipse(0-width, 0-width, width, height);
         
     }else if (this->name == "LittleStar"){
+        QRadialGradient Radial(0,0,120,0,0);// gradient(0-0.3*width, 0.8*width, 0-0.3*width, 1.5*width);
         
+        Radial.setColorAt(0.0,QColor("#B48EAD"));
+        Radial.setColorAt(u(e),QColor("#A3BE8C"));
+        radial.setColorAt(0.9, QColor("#EBCB8B"));
+        painter->setPen(Qt::transparent);
+        painter->setBrush(Radial);
+        painter->drawEllipse(0-width/2, 0-width/2, width/2, height/2);
     }
     
 //    painter->restore();
