@@ -172,10 +172,13 @@ void SpaceWindow::updateGraph (){
 //            item.second->setNextPos(item.second->getX(), 0);
 //        }
 //        std::cout << item.second->getX() <<" " << item.second->getY() << std::endl;
-        item.second->setPos(item.second->getX(), item.second->getY());
+//        item.second->setPos(item.second->getX(), item.second->getY());
+        
 //        item.second->scenePos();
 //        std::cout << x << y << std::endl;
-//        QPropertyAnimation *moveAnim = new QPropertyAnimation(item.second "pos", flyanimation);
+        QPropertyAnimation *moveAnim = new QPropertyAnimation(item.second.get() ,"pos", flyanimation);
+        moveAnim->setEndValue(QPointF(item.second->getX(), item.second->getY()));
+        
 //        moveAnim->
 //        setAnimation(x, y, item.second->getX(), item.second->getY(), item.second, flyanimation);
     }
