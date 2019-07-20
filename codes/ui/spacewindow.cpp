@@ -6,6 +6,7 @@
 #include <iostream>
 #include <QPolygonF>
 #include <QApplication>
+#include <random>
 using std::map;
 
 
@@ -115,8 +116,10 @@ SpaceWindow::SpaceWindow(QWidget *parent) :
     
     game_monitor = new QTimer;
     this->connect(game_monitor, SIGNAL(timeout()), this, SLOT(updateGraph()));
-    
-    startGame();
+    QTimer *gen_rand_pos = new QTime();
+    this->connect(gen_rand_pos, SIGNAL(timeout()), this, SLOT(newPos()));
+    gen_rand_pos.start(2500);
+    // startGame();
 }
 
 SpaceWindow::~SpaceWindow()
@@ -172,7 +175,7 @@ void SpaceWindow::updateGraph (){
         int y = item.second->getY();
         item.second->move();
 //        std::cout << item.second->getX() <<" " << item.second->getY() << std::endl;
-        item.second->setPos(item.second->getX(), item.second->getY());
+        item.second->setPos(item.second->getNextX(), item.second->getNextY());
         
         item.second->update();
 //        QPropertyAnimation *moveAnim = new QPropertyAnimation(item.second.get() ,"pos", flyanimation);
@@ -192,7 +195,16 @@ void SpaceWindow::startGame(){
     tick = 0;
 }
 
-void SpaceWindow::addData(std::map<int, shared_ptr<Entity> >) { 
+void SpaceWindow::addData(std::map<int, shared_ptr<Entity>> newmap) { 
     
 }
 
+void SpaceWindow::newPos(){
+    for (auto item : last_tick_snapshot){
+        std::default_random_engine e;
+    std::uniform_real_distribution<double> u(-20,20);
+        int x = item.second->getX();
+        int y = item.second->getY()
+        item.second->setNextPose(x+u(e), y+u(e));
+    }
+}

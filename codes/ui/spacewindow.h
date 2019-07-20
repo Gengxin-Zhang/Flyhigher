@@ -31,6 +31,7 @@ public:
 
     public slots:
         void updateGraph();
+        void newPos();
 
 private:
     QGraphicsScene *m_scene;
