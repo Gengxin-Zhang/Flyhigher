@@ -108,10 +108,28 @@ SpaceWindow::SpaceWindow(QWidget *parent) :
     newFlyObject1->setSize(20, 20);
     newFlyObject1->setNextPos(80,80);
     newFlyObject1->setPos(30, 20);
-    newFlyObject1->setColor(Color(100,0,160,230));
-    newFlyObject->setAngel();
+    newFlyObject1->setColor(Color(100,94,129,172));
+    newFlyObject1->setAngel();
     m_scene->addItem(newFlyObject1.get());
-    last_tick_snapshot.insert(std::make_pair(3, newFlyObject1));
+    last_tick_snapshot.insert(std::make_pair(2, newFlyObject1));
+    shared_ptr<FlyObject> newFlyObject2 = shared_ptr<FlyObject>(new FlyObject());
+    newFlyObject2->setName("Carrier");
+    newFlyObject2->setSize(20, 20);
+    newFlyObject2->setNextPos(80,80);
+    newFlyObject2->setPos(30, 20);
+    newFlyObject2->setColor(Color(100,191,97,106));
+    newFlyObject2->setAngel();
+    m_scene->addItem(newFlyObject2.get());
+    last_tick_snapshot.insert(std::make_pair(3, newFlyObject2));
+    shared_ptr<FlyObject> newFlyObject3 = shared_ptr<FlyObject>(new FlyObject());
+    newFlyObject3->setName("Bomber");
+    newFlyObject3->setSize(20, 20);
+    newFlyObject3->setNextPos(80,80);
+    newFlyObject3->setPos(30, 20);
+    newFlyObject3->setColor(Color(100,208,135,112));
+    newFlyObject3->setAngel();
+    m_scene->addItem(newFlyObject3.get());
+    last_tick_snapshot.insert(std::make_pair(4, newFlyObject4));
     
     
     game_monitor = new QTimer;
