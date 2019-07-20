@@ -81,8 +81,6 @@ class Engine {
 
 
         shared_ptr<Logger> logger;
-        string workDir;
-        shared_ptr<Configuration> totalConfig;
         static shared_ptr<Engine> engine;
         static bool hasInit;
         bool hasStarted;

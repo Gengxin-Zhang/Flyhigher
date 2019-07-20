@@ -9,6 +9,7 @@
 #define _COLOR_H
 
 #include <string>
+#include <QColor>
 using std::string;
 
 class Color{
@@ -73,6 +74,12 @@ class Color{
          * @return 字符串
          */
         virtual string toString() const;
+
+        /**
+         * 转换为QT支持的颜色变量
+         * @return QT支持的颜色
+         */
+        QColor toQColor() const;
     private: 
         int alpha;
         int r;

@@ -3,6 +3,7 @@
 #include "../main/games/Judger.h"
 #include <QScrollBar>
 #include "../main/systems/Engine.h"
+#include "../tools/DataReader.h"
 #define log Engine::getInstance()->getLogger()
 
 UITest::UITest(QWidget *parent) :
@@ -21,7 +22,7 @@ UITest::~UITest()
 void UITest::on_pb_enter_clicked()
 {
     log->debug(ui->te_input->toPlainText().toStdString());
-    Judger::jsons.push(ui->te_input->toPlainText().toStdString());
+    DataReader::getMsgPool().push(ui->te_input->toPlainText().toStdString());
     ui->te_backup->setText(ui->te_input->toPlainText() + "\n");
     ui->te_input->setText("");
 }

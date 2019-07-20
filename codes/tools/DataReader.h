@@ -12,11 +12,11 @@ class DataReader: public QThread{
   public:
     DataReader();
     ~DataReader();
-    std::queue<std::string> getMsgPool();
+    static std::queue<std::string> getMsgPool();
   private:
     AmqpClient::Channel::ptr_t channel;
     std::string consumer_tag;
-    std::queue<std::string> msg_pool;
+    static std::queue<std::string> msg_pool;
   protected:
     virtual void run();
 };

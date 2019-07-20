@@ -61,8 +61,8 @@ shared_ptr<Loop> Game::getLoop() const{
     return loop;
 }
 
-shared_ptr<Player> Game::getPlayer(const string name) {
-    return players[name];
+shared_ptr<Player> Game::getPlayer(const string uid) {
+    return players[uid];
 }
 
 int Game::getPlayerNumber() const{

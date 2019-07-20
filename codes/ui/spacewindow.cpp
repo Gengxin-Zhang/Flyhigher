@@ -119,7 +119,7 @@ SpaceWindow::SpaceWindow(QWidget *parent) :
     game_monitor = new QTimer;
     this->connect(game_monitor, SIGNAL(timeout()), this, SLOT(updateGraph()));
     
-    startGame();
+//    startGame();
 }
 
 SpaceWindow::~SpaceWindow()

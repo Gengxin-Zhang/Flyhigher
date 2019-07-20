@@ -1,5 +1,6 @@
 #include "DataReader.h"
-#include <thread>
+
+std::queue<std::string> DataReader::msg_pool = std::queue<std::string>();
 
 DataReader::DataReader(){
     channel = AmqpClient::Channel::Create("localhost");
@@ -19,4 +20,8 @@ void DataReader::run(){
         std::string buffer = envelope->Message()->Body();
         msg_pool.push(buffer);
     }
+}
+
+std::queue<std::string> DataReader::getMsgPool(){
+    return msg_pool;
 }

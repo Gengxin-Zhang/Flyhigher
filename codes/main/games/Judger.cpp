@@ -9,13 +9,13 @@
 #include "../systems/Engine.h"
 #include <QMessageBox>
 #include "../../ui/uitest.h"
+#include "../../tools/DataReader.h"
 #define log Engine::getInstance()->getLogger()
 #define game Engine::getInstance()->getNowGame()
 #define loop Engine::getInstance()->getNowGame()->getLoop()
 #define mapp Engine::getInstance()->getNowGame()->getMap()
+#define jsons DataReader::getMsgPool()
 using std::chrono::duration, std::chrono::duration_cast;
-
-queue<string> Judger::jsons = queue<string>();
 
 /**
  * Judger implementation
@@ -34,10 +34,16 @@ void Judger::init(){
 void Judger::read(const long allowTime){
     log->debug("允许的时间戳", allowTime);
     set<string> uids;
+    int i = 0;
     begin:
     while(jsons.empty()){
+        ++i;
+        if(i> 5){
+            return;
+        }
         log->debug("等待数据接入中...");
-        std::this_thread::sleep_for(milliseconds(5000));
+        std::this_thread::sleep_for(milliseconds(100));
+
     }
     string json = jsons.front();
     jsons.pop();

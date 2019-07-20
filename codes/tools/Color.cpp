@@ -85,3 +85,7 @@ string Color::toString() const{
 string Color::getClassName() const{
     return "Color";
 }
+
+QColor Color::toQColor() const{
+    return QColor(r,g,b,alpha);
+}

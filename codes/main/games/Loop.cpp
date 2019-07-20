@@ -230,7 +230,7 @@ void Loop::showInText() const{
     for(auto &re: allResourceEntity){
         shared_ptr<ResourceEntity> ptr_re = re.second;
         log->debug("resourceEntity loc["+ to_string(ptr_re->getX()) + "," + to_string(ptr_re->getY()) + "]");
-        graph[50-int(ptr_re->getY())/10][int(ptr_re->getX())/10] = 1;
+        graph[xstart + 50-int(ptr_re->getY())/10][ystart + int(ptr_re->getX())/5] = 'R';
     }
     for(auto &le: allLivingEntity){
         shared_ptr<LivingEntity> ptr_le = le.second;

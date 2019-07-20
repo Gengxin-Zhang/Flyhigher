@@ -5,6 +5,7 @@
 #include <QStringListModel>
 #include <QStandardItemModel>
 #include "../main/configs/Configuration.h"
+#include "./ui/mainwindow.h"
 
 namespace Ui {
 class UIConfig;
@@ -18,6 +19,7 @@ public:
     explicit UIConfig(QWidget *parent = nullptr);
     ~UIConfig();
     void init();
+signals:
 
 private:
     Ui::UIConfig *ui;
@@ -25,6 +27,7 @@ private:
     QString strTemp;
     bool isChanged;
     QStandardItemModel* itemModel;
+    mainWindow* mw;
     void showLoop();
     void showMap();
     void showCarrier();

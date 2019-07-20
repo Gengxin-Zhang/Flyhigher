@@ -14,12 +14,8 @@ public:
     explicit mainWindow(QWidget *parent = nullptr);
     void setMapSize(const int, const int);
     void setMap();
-
-
-signals:
-
 public slots:
-    
+
 private:
     int map_width, map_height;
     SpaceWindow *space;

@@ -56,10 +56,10 @@ class Game {
 
         /**
          * 获取玩家实例
-         * @param name 玩家名称
+         * @param name 玩家UID
          * @return 玩家实例
          */
-        shared_ptr<Player> getPlayer(const string name);
+        shared_ptr<Player> getPlayer(const string uid);
 
         /**
          * 获取当前玩家数

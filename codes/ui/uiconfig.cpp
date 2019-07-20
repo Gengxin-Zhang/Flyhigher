@@ -499,8 +499,10 @@ void UIConfig::on_pb_default_clicked()
 void UIConfig::on_pb_start_clicked()
 {
     this->hide();
-    Judger::jsons.push("{\"uid\": \"A1B2C3\", \"name\": \"XHH\", \"color_a\": 255, \"color_r\": 255, \"color_g\": 255, \"color_b\": 255}");
-    Judger::jsons.push("{\"uid\": \"A3B2C1\", \"name\": \"NMD\", \"color_a\": 255, \"color_r\": 255, \"color_g\": 255, \"color_b\": 255}");
+    mw = new mainWindow;
+    mw->show();
+//    Judger::jsons.push("{\"uid\": \"A\", \"name\": \"XHH\", \"color_a\": 100, \"color_r\": 127, \"color_g\": 221, \"color_b\": 87}");
+//    Judger::jsons.push("{\"uid\": \"B\", \"name\": \"NMD\", \"color_a\": 100, \"color_r\": 87, \"color_g\": 89, \"color_b\": 123}");
     Engine::getInstance()->startGame(Configuration::getInstance()->getGameConfiguration());
 }
 
@@ -508,6 +510,10 @@ void UIConfig::on_pb_start_clicked()
 void UIConfig::receiveslot(int state){
     if(state == 1){
         QMessageBox::warning(nullptr, "警告", "由于长时间未能开始游戏，游戏中止。");
+        mw->showNormal();
+        mw->hide();
+        mw->close();
+        delete mw;
     }
-    this->show();
+    this->showNormal();
 }
